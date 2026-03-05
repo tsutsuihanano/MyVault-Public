@@ -69,7 +69,7 @@
     border-bottom: 1px solid #e9ecef;
   }
 
-  .sync-badge { display: inline-block; font-size: 13px; padding: 2px 0; }
+  .sync-badge { display: inline-block; font-size: 13px; }
   .sync-yes { color: #37b24d; }
   .sync-no { color: #e03131; }
 
@@ -193,27 +193,6 @@
     margin: 16px 0;
   }
 
-  .sync-flow {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    margin: 20px 0;
-    flex-wrap: wrap;
-  }
-  .sync-node {
-    background: white;
-    border: 2px solid #e9ecef;
-    border-radius: 10px;
-    padding: 14px 20px;
-    text-align: center;
-    min-width: 120px;
-  }
-  .sync-node.active { border-color: #667eea; background: #f0f0ff; }
-  .sync-node .icon { font-size: 24px; }
-  .sync-node .name { font-size: 13px; margin-top: 4px; font-weight: 500; }
-  .sync-arrow { font-size: 22px; color: #adb5bd; }
-
   .daily-routine {
     display: grid;
     grid-template-columns: auto 1fr;
@@ -228,7 +207,6 @@
     white-space: nowrap;
     padding-top: 2px;
   }
-  .daily-action { font-size: 14px; }
 
   .checklist {
     background: white;
@@ -268,11 +246,6 @@
     color: #adb5bd;
   }
 
-  @media (max-width: 600px) {
-    .sync-flow { flex-direction: column; }
-    .sync-arrow { transform: rotate(90deg); }
-  }
-
   @media print {
     body { background: white; }
     .header { padding: 24px; }
@@ -285,75 +258,43 @@
 
 <div class="header">
   <h1>別端末でのセットアップ手順</h1>
-  <p>Obsidian + Cursor + GitHub を同期して、どの端末でも同じ「第二の脳」を使う</p>
-  <div class="subtitle">⏱️ 所要時間：約15〜20分</div>
+  <p>Obsidian + Cursor を別端末でも使えるようにする</p>
+  <div class="subtitle">⏱️ 所要時間：約10分</div>
 </div>
 
 <div class="container">
 
   <!-- ===== 前提 ===== -->
   <div class="overview-box">
-    <h2>📌 このガイドの前提</h2>
-    <p style="font-size:14px; margin-bottom:12px;"><strong>メイン端末</strong>で以下が完了している状態で、<strong>別の端末</strong>に同じ環境を構築する手順です。</p>
-    <table>
-      <tr><th>項目</th><th>メイン端末の状態</th></tr>
-      <tr><td>Obsidian Vault</td><td><code>MyVault</code> を構築済み</td></tr>
-      <tr><td>Cursor</td><td>インストール済み・<code>.cursorrules</code> 設定済み</td></tr>
-      <tr><td>GitHub</td><td>プライベートリポジトリ <code>MyVault</code> に push 済み</td></tr>
-    </table>
-  </div>
-
-  <!-- ===== 同期の仕組み ===== -->
-  <h2>🔄 同期の仕組み</h2>
-  <p style="font-size:14px;">GitHub を経由して、どの端末でも同じVaultを使えるようにします。</p>
-
-  <div class="sync-flow">
-    <div class="sync-node active">
-      <div class="icon">🏠</div>
-      <div class="name">メイン端末</div>
-    </div>
-    <div class="sync-arrow">→ push →</div>
-    <div class="sync-node">
-      <div class="icon">🐙</div>
-      <div class="name">GitHub</div>
-    </div>
-    <div class="sync-arrow">→ pull →</div>
-    <div class="sync-node active">
-      <div class="icon">💻</div>
-      <div class="name">別端末</div>
+    <h2>📌 前提</h2>
+    <ul style="font-size:14px; padding-left:18px;">
+      <li>メイン端末で MyVault（Obsidian + Cursor + Git）が構築済み</li>
+      <li>別端末にも <strong>MyVault フォルダは既にある</strong></li>
+      <li><strong>Git の設定（<code>.git</code> フォルダ）も既にある</strong> → PAT の再設定は不要</li>
+    </ul>
+    <div class="note-green" style="margin-bottom:0;">
+      ✅ やることは <strong>ツールをインストール → 既存の MyVault フォルダを開く → git の動作確認</strong> だけ
     </div>
   </div>
-
-  <h2>📊 何が同期されるか</h2>
-  <table>
-    <tr><th>項目</th><th>同期</th><th>備考</th></tr>
-    <tr><td>ノート・フォルダ</td><td><span class="sync-badge sync-yes">✅</span></td><td>00_Inbox、20_Context、30_Projects など</td></tr>
-    <tr><td>Obsidian設定</td><td><span class="sync-badge sync-yes">✅</span></td><td><code>.obsidian/</code>（プラグイン・テーマ）</td></tr>
-    <tr><td>Cursorルール</td><td><span class="sync-badge sync-yes">✅</span></td><td><code>.cursorrules</code></td></tr>
-    <tr><td>Cursorエディタ設定</td><td><span class="sync-badge sync-no">❌</span></td><td>フォント・テーマ等は端末ごと</td></tr>
-    <tr><td>Cursorアカウント</td><td><span class="sync-badge sync-no">❌</span></td><td>端末ごとにログインが必要</td></tr>
-    <tr><td>Git認証情報</td><td><span class="sync-badge sync-no">❌</span></td><td>端末ごとに設定が必要</td></tr>
-  </table>
 
   <!-- ===== STEP 1: インストール ===== -->
   <div class="section-card">
     <span class="section-label">STEP 1</span>
     <h2>🛠️ ツールのインストール</h2>
-    <p style="font-size:14px; margin-bottom:16px;">3つのツールをインストールします。すべて無料です。</p>
 
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-content">
-        <strong>Git（バージョン管理）</strong>
+        <strong>Git</strong>
         <a href="https://git-scm.com/downloads" target="_blank">git-scm.com</a> → ダウンロード・インストール。
-        <div class="sub">インストーラーはすべてデフォルト設定でOK</div>
+        <div class="sub">インストーラーはデフォルト設定でOK</div>
       </div>
     </div>
 
     <div class="step">
       <div class="step-num">2</div>
       <div class="step-content">
-        <strong>Obsidian（ノートアプリ）</strong>
+        <strong>Obsidian</strong>
         <a href="https://obsidian.md" target="_blank">obsidian.md</a> → 「Get Obsidian for free」からダウンロード・インストール。
       </div>
     </div>
@@ -361,89 +302,22 @@
     <div class="step">
       <div class="step-num">3</div>
       <div class="step-content">
-        <strong>Cursor（AIエディタ）</strong>
+        <strong>Cursor</strong>
         <a href="https://cursor.com" target="_blank">cursor.com</a> → 「Download」からダウンロード・インストール。
         <div class="sub">初回起動時に「Sign in」→ Googleアカウントでログイン（メイン端末と同じアカウント推奨）</div>
       </div>
     </div>
   </div>
 
-  <!-- ===== STEP 2: Git設定 & clone ===== -->
+  <!-- ===== STEP 2: Obsidian ===== -->
   <div class="section-card">
     <span class="section-label">STEP 2</span>
-    <h2>🐙 GitHubからVaultを取得</h2>
-
-    <div class="note-red">
-      ⚠️ <strong>Personal Access Token（PAT）が必要です</strong><br>
-      メイン端末セットアップ時に発行したPATを用意してください。<br>
-      紛失した場合は <a href="https://github.com/settings/tokens/new" target="_blank">こちら</a>から再発行（<code>repo</code>にチェック、Expiration: No expiration）
-    </div>
-
-    <h3>🪟 Windows（PowerShell）</h3>
+    <h2>📂 Obsidian で MyVault を開く</h2>
 
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-content">
-        <strong>Git の初期設定</strong>
-        <div class="cmd-box">
-          <span class="prompt">$</span> git config --global user.name <span class="string">"あなたのGitHubユーザー名"</span><br>
-          <span class="prompt">$</span> git config --global user.email <span class="string">"あなたのメールアドレス"</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-num">2</div>
-      <div class="step-content">
-        <strong>リポジトリを clone</strong>
-        <div class="cmd-box">
-          <span class="prompt">$</span> cd ~\Documents<br>
-          <span class="prompt">$</span> git clone https://<span class="string">ユーザー名</span>:<span class="string">PAT</span>@github.com/<span class="string">ユーザー名</span>/MyVault.git
-        </div>
-        <div class="sub">→ Documents\MyVault フォルダが作成されます</div>
-      </div>
-    </div>
-
-    <h3>🍎 Mac（ターミナル）</h3>
-
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-content">
-        <strong>Git の初期設定</strong>
-        <div class="cmd-box">
-          <span class="prompt">$</span> git config --global user.name <span class="string">"あなたのGitHubユーザー名"</span><br>
-          <span class="prompt">$</span> git config --global user.email <span class="string">"あなたのメールアドレス"</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-num">2</div>
-      <div class="step-content">
-        <strong>リポジトリを clone</strong>
-        <div class="cmd-box">
-          <span class="prompt">$</span> cd ~/Documents<br>
-          <span class="prompt">$</span> git clone https://<span class="string">ユーザー名</span>:<span class="string">PAT</span>@github.com/<span class="string">ユーザー名</span>/MyVault.git
-        </div>
-      </div>
-    </div>
-
-    <div class="note">
-      💡 <strong>PAT をURLに含めたくない場合</strong><br>
-      <code>git clone https://github.com/ユーザー名/MyVault.git</code> で clone →
-      認証を聞かれたらユーザー名とPATを入力
-    </div>
-  </div>
-
-  <!-- ===== STEP 3: Obsidian ===== -->
-  <div class="section-card">
-    <span class="section-label">STEP 3</span>
-    <h2>📂 ObsidianでVaultを開く</h2>
-
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-content">
-        <strong>Obsidianを起動</strong>
+        <strong>Obsidian を起動</strong>
         「<strong>Open folder as vault</strong>」（既存のフォルダを開く）を選択。
       </div>
     </div>
@@ -451,55 +325,51 @@
     <div class="step">
       <div class="step-num">2</div>
       <div class="step-content">
-        <strong>clone した MyVault フォルダを指定</strong>
-        <div class="path-box">
-          Win: C:\Users\&lt;ユーザー名&gt;\Documents\MyVault<br>
-          Mac: ~/Documents/MyVault
-        </div>
+        <strong>既存の MyVault フォルダを選択</strong>
+        <div class="sub">場所がわからない場合は、エクスプローラー / Finder で「MyVault」を検索</div>
       </div>
     </div>
 
     <div class="step">
       <div class="step-num">3</div>
       <div class="step-content">
-        <strong>プラグインを有効化</strong>
-        「Trust author and enable plugins」を選択。
+        <strong>プラグインの有効化</strong>
+        「<strong>Trust author and enable plugins</strong>」を選択。
         <div class="sub">→ フォルダ構造（00_Inbox、20_Context...）とプラグイン・テーマが反映されればOK</div>
       </div>
     </div>
   </div>
 
-  <!-- ===== STEP 4: Cursor ===== -->
+  <!-- ===== STEP 3: Cursor ===== -->
   <div class="section-card">
-    <span class="section-label">STEP 4</span>
-    <h2>🤖 CursorでVaultを開く</h2>
+    <span class="section-label">STEP 3</span>
+    <h2>🤖 Cursor で MyVault を開く</h2>
 
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-content">
-        <strong>Cursorを起動してログイン</strong>
+        <strong>Cursor を起動してログイン</strong>
         「Sign in」→ Googleアカウントでログイン。
-        <div class="sub">メイン端末と同じアカウントを使うとPro/Businessプランが共有されます</div>
+        <div class="sub">メイン端末と同じアカウントを使うとProプランが共有されます</div>
       </div>
     </div>
 
     <div class="step">
       <div class="step-num">2</div>
       <div class="step-content">
-        <strong>MyVaultフォルダを開く</strong>
-        「File」→「Open Folder」→ clone した MyVault フォルダを選択。
+        <strong>「File」→「Open Folder」→ MyVault フォルダを選択</strong>
       </div>
     </div>
 
     <div class="step">
       <div class="step-num">3</div>
       <div class="step-content">
-        <strong>AIルールの動作確認</strong>
+        <strong>AI ルールの動作確認</strong>
         チャットを開いて（<code>Ctrl + L</code> / <code>Cmd + L</code>）以下を送信：
         <div class="cmd-box" style="background:#f8f9fa; color:#1a1a2e;">
-          テスト：.cursorrules が読み込めているか確認してください
+          テスト：.cursorrules が読み込めているか確認して
         </div>
-        <div class="sub">→ AIがVault構造やルールに言及すれば正常動作</div>
+        <div class="sub">→ AI がVault構造やルールに言及すれば正常</div>
       </div>
     </div>
 
@@ -509,20 +379,63 @@
     </div>
   </div>
 
+  <!-- ===== STEP 4: Git確認 ===== -->
+  <div class="section-card">
+    <span class="section-label">STEP 4</span>
+    <h2>🐙 Git の動作確認</h2>
+    <p style="font-size:14px; margin-bottom:16px;"><code>.git</code> フォルダは既にあるので、正しく動くか確認するだけです。</p>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <strong>Cursor のターミナルを開く</strong>
+        <code>Ctrl + `</code>（バッククォート）でターミナルパネルを表示。
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <strong>Git の状態を確認</strong>
+        <div class="cmd-box">
+          <span class="prompt">$</span> git status<br>
+          <span class="comment"># 「On branch main」と表示されればOK</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <strong>リモートとの接続確認</strong>
+        <div class="cmd-box">
+          <span class="prompt">$</span> git pull<br>
+          <span class="comment"># 「Already up to date.」 or 変更の取得が行われればOK</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="note">
+      ⚠️ <strong>git status でエラーが出る場合</strong><br>
+      Git がインストールされているか確認 → <code>git --version</code> で確認できます。
+    </div>
+  </div>
+
   <!-- ===== 日常の使い方 ===== -->
   <div class="section-card">
     <span class="section-label">毎日やること</span>
-    <h2>📅 日常の同期ルーティン</h2>
+    <h2>📅 日常の Git ルーティン</h2>
+    <p style="font-size:14px; margin-bottom:12px;">どの端末で作業しても、同じ GitHub を更新します。</p>
 
     <div class="daily-routine">
       <div class="daily-time">作業開始</div>
-      <div class="daily-action">
+      <div>
         <div class="cmd-box">
-          <span class="prompt">$</span> git pull <span class="comment"># 最新の変更を取得</span>
+          <span class="prompt">$</span> git pull
         </div>
       </div>
       <div class="daily-time">作業終了</div>
-      <div class="daily-action">
+      <div>
         <div class="cmd-box">
           <span class="prompt">$</span> git add .<br>
           <span class="prompt">$</span> git commit -m <span class="string">"更新メモ"</span><br>
@@ -531,14 +444,8 @@
       </div>
     </div>
 
-    <div class="note">
-      ⚠️ <strong>pull を忘れて作業すると</strong>、メイン端末の変更と衝突（コンフリクト）する可能性があります。<br>
-      <strong>作業開始時は必ず <code>git pull</code></strong> を習慣にしてください。
-    </div>
-
     <div class="note-blue">
-      💡 Cursor のターミナル（<code>Ctrl + `</code>）から直接 git コマンドを実行できます。<br>
-      別途ターミナルを開く必要はありません。
+      💡 Cursor のターミナル（<code>Ctrl + `</code>）から直接実行できます。
     </div>
   </div>
 
@@ -547,11 +454,11 @@
     <h2 style="border:none; margin-top:0;">✅ セットアップ完了チェック</h2>
     <ul>
       <li>Git・Obsidian・Cursor がインストールされている</li>
-      <li><code>git clone</code> で MyVault を取得できた</li>
-      <li>Obsidian でフォルダ構造・プラグインが表示される</li>
+      <li>Obsidian で MyVault を開いてフォルダ構造が見える</li>
+      <li>Obsidian のプラグイン・テーマがメイン端末と同じ</li>
       <li>Cursor で MyVault フォルダを開いている</li>
       <li>Cursor チャットで AI が .cursorrules を認識している</li>
-      <li><code>git pull</code> / <code>git push</code> が動作する</li>
+      <li><code>git pull</code> が正常に動作する</li>
     </ul>
   </div>
 
@@ -560,37 +467,42 @@
     <h2 style="border:none; margin-top:0;">🔧 トラブルシューティング</h2>
 
     <div class="trouble-item">
-      <div class="trouble-q">git clone で認証エラーが出る</div>
+      <div class="trouble-q">git status で「not a git repository」と出る</div>
       <div class="trouble-a">
-        ① PATの有効期限が切れていないか確認（<a href="https://github.com/settings/tokens" target="_blank">GitHub → Settings → Tokens</a>）<br>
-        ② PATに <code>repo</code> 権限があるか確認<br>
-        ③ ユーザー名・PATに特殊文字がある場合はURLエンコードが必要
+        <code>.git</code> フォルダが見つからない状態。MyVault フォルダの直下にいるか確認
+        （<code>cd</code> でフォルダに移動してから再度実行）。
       </div>
     </div>
 
     <div class="trouble-item">
-      <div class="trouble-q">Obsidianでプラグインが反映されない</div>
+      <div class="trouble-q">git pull で認証エラーが出る</div>
       <div class="trouble-a">
-        ① 「Trust author and enable plugins」を選択したか確認<br>
-        ② <code>.obsidian/</code> フォルダが clone に含まれているか確認<br>
-        ③ Obsidian を再起動
+        PAT（Personal Access Token）の期限切れの可能性。<br>
+        <a href="https://github.com/settings/tokens" target="_blank">GitHub → Settings → Tokens</a> で確認・再発行し、
+        リモートURLを更新：<br>
+        <code>git remote set-url origin https://ユーザー名:新PAT@github.com/ユーザー名/MyVault.git</code>
+      </div>
+    </div>
+
+    <div class="trouble-item">
+      <div class="trouble-q">Obsidian でプラグインが反映されない</div>
+      <div class="trouble-a">
+        「Trust author and enable plugins」を選択したか確認。していない場合は Obsidian を再起動。
       </div>
     </div>
 
     <div class="trouble-item">
       <div class="trouble-q">Cursor で AI ルールが効かない</div>
       <div class="trouble-a">
-        ① MyVault <strong>フォルダ自体</strong>を「Open Folder」で開いているか確認<br>
-        ② <code>.cursorrules</code> がフォルダ直下にあるか確認<br>
-        ③ Cursor を再起動
+        MyVault <strong>フォルダ自体</strong>を「Open Folder」で開いているか確認。ファイル単体ではルールは読み込まれません。
       </div>
     </div>
 
     <div class="trouble-item">
       <div class="trouble-q">git push で rejected と出る</div>
       <div class="trouble-a">
-        メイン端末の変更が先に push されている。<br>
-        → <code>git pull --rebase</code> → 競合があれば修正 → <code>git push</code>
+        別端末から先に push されている場合に発生。<br>
+        <code>git pull --rebase</code> → 競合があれば修正 → <code>git push</code>
       </div>
     </div>
   </div>
