@@ -25,14 +25,22 @@
   }
   .header h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
   .header p { font-size: 15px; opacity: 0.9; }
+  .header .subtitle {
+    display: inline-block;
+    margin-top: 12px;
+    background: rgba(255,255,255,0.15);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+  }
 
   .container {
-    max-width: 800px;
+    max-width: 820px;
     margin: 0 auto;
     padding: 32px 24px 64px;
   }
 
-  .quick-start {
+  .overview-box {
     background: white;
     border-radius: 12px;
     padding: 24px 28px;
@@ -40,7 +48,23 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     border-left: 4px solid #667eea;
   }
-  .quick-start h2 { font-size: 18px; margin-bottom: 12px; color: #667eea; }
+  .overview-box h2 { font-size: 18px; margin-bottom: 12px; color: #667eea; border: none; padding: 0; }
+
+  .role-table {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 12px 0;
+  }
+  .role-card {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 14px 16px;
+    text-align: center;
+  }
+  .role-card .icon { font-size: 24px; margin-bottom: 4px; }
+  .role-card .label { font-size: 12px; color: #868e96; margin-bottom: 4px; }
+  .role-card .desc { font-size: 13px; font-weight: 500; }
 
   table {
     width: 100%;
@@ -64,6 +88,7 @@
   .sync-badge { display: inline-block; font-size: 13px; padding: 2px 0; }
   .sync-yes { color: #37b24d; }
   .sync-no { color: #e03131; }
+  .sync-opt { color: #f59f00; }
 
   h2 {
     font-size: 20px;
@@ -80,19 +105,19 @@
     color: #495057;
   }
 
-  .os-section {
+  .section-card {
     background: white;
     border-radius: 12px;
     padding: 24px 28px;
     margin-bottom: 20px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   }
-  .os-section h2 {
+  .section-card h2 {
     border: none;
     margin-top: 0;
     padding-bottom: 0;
   }
-  .os-label {
+  .section-label {
     display: inline-block;
     font-size: 12px;
     font-weight: 500;
@@ -102,6 +127,10 @@
     border-radius: 20px;
     margin-bottom: 12px;
   }
+  .section-label.git { background: #f0fdf4; color: #166534; }
+  .section-label.win { background: #eff6ff; color: #1e40af; }
+  .section-label.mac { background: #f5f3ff; color: #5b21b6; }
+  .section-label.important { background: #fef2f2; color: #991b1b; }
 
   .step {
     display: flex;
@@ -122,9 +151,27 @@
     align-items: center;
     justify-content: center;
   }
+  .step-num.green { background: #37b24d; }
+  .step-num.orange { background: #f59f00; }
   .step-content { flex: 1; }
   .step-content strong { display: block; margin-bottom: 2px; }
   .step-content .sub { color: #868e96; font-size: 13px; margin-top: 2px; }
+
+  .cmd-box {
+    background: #1e1e2e;
+    color: #cdd6f4;
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-family: 'Courier New', Consolas, monospace;
+    font-size: 13px;
+    margin: 8px 0;
+    word-break: break-all;
+    line-height: 1.6;
+    overflow-x: auto;
+  }
+  .cmd-box .comment { color: #6c7086; }
+  .cmd-box .prompt { color: #89b4fa; }
+  .cmd-box .string { color: #a6e3a1; }
 
   .path-box {
     background: #f1f3f5;
@@ -144,6 +191,81 @@
     font-size: 13px;
     margin: 16px 0;
   }
+  .note-blue {
+    background: #e7f5ff;
+    border-left: 4px solid #339af0;
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    font-size: 13px;
+    margin: 16px 0;
+  }
+  .note-green {
+    background: #ebfbee;
+    border-left: 4px solid #51cf66;
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    font-size: 13px;
+    margin: 16px 0;
+  }
+  .note-red {
+    background: #fff5f5;
+    border-left: 4px solid #ff6b6b;
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    font-size: 13px;
+    margin: 16px 0;
+  }
+
+  .sync-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+  }
+  .sync-node {
+    background: white;
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    padding: 12px 16px;
+    text-align: center;
+    min-width: 100px;
+  }
+  .sync-node.active { border-color: #667eea; background: #f0f0ff; }
+  .sync-node .icon { font-size: 20px; }
+  .sync-node .name { font-size: 12px; margin-top: 4px; font-weight: 500; }
+  .sync-arrow { font-size: 20px; color: #adb5bd; }
+
+  .method-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 16px 0;
+  }
+  .method-card {
+    background: white;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .method-card.recommended { border-color: #667eea; }
+  .method-card h4 {
+    font-size: 15px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .method-card .badge {
+    font-size: 11px;
+    background: #667eea;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+  .method-card ul { font-size: 13px; margin: 0; padding-left: 18px; }
+  .method-card li { margin: 4px 0; }
 
   .checklist {
     background: white;
@@ -169,11 +291,28 @@
     border-radius: 12px;
     padding: 24px 28px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    margin-bottom: 20px;
   }
   .trouble-item { margin-bottom: 16px; }
   .trouble-item:last-child { margin-bottom: 0; }
   .trouble-q { font-weight: 700; font-size: 14px; color: #e03131; margin-bottom: 4px; }
   .trouble-a { font-size: 13px; color: #495057; }
+
+  .daily-routine {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 8px 16px;
+    align-items: start;
+    margin: 12px 0;
+  }
+  .daily-time {
+    font-weight: 700;
+    font-size: 13px;
+    color: #667eea;
+    white-space: nowrap;
+    padding-top: 2px;
+  }
+  .daily-action { font-size: 14px; }
 
   .footer {
     text-align: center;
@@ -182,11 +321,18 @@
     color: #adb5bd;
   }
 
+  @media (max-width: 600px) {
+    .method-compare { grid-template-columns: 1fr; }
+    .role-table { grid-template-columns: 1fr; }
+    .sync-flow { flex-direction: column; }
+    .sync-arrow { transform: rotate(90deg); }
+  }
+
   @media print {
     body { background: white; }
     .header { padding: 24px; }
     .container { padding: 16px; }
-    .os-section, .quick-start, .checklist, .trouble { box-shadow: none; border: 1px solid #e9ecef; }
+    .section-card, .overview-box, .checklist, .trouble { box-shadow: none; border: 1px solid #e9ecef; }
   }
 </style>
 </head>
@@ -194,131 +340,509 @@
 
 <div class="header">
   <h1>別端末でのセットアップ手順</h1>
-  <p>Obsidian + Cursor を同期して、別のPC・Macでも同じように使う</p>
+  <p>Obsidian + Cursor + GitHub を同期して、どの端末でも同じ「第二の脳」を使う</p>
+  <div class="subtitle">⏱️ 所要時間：約20〜30分</div>
 </div>
 
 <div class="container">
 
-  <div class="quick-start">
-    <h2>📌 クイックスタート</h2>
+  <!-- ===== 前提 ===== -->
+  <div class="overview-box">
+    <h2>📌 このガイドの前提</h2>
+    <p style="font-size:14px; margin-bottom:12px;"><strong>メイン端末</strong>で以下が完了している状態で、<strong>別の端末</strong>に同じ環境を構築する手順です。</p>
     <table>
-      <tr><th>端末</th><th>やること</th></tr>
-      <tr><td><strong>Windows</strong></td><td>OneDriveログイン → Obsidian・Cursorインストール → MyVaultフォルダを開く</td></tr>
-      <tr><td><strong>Mac</strong></td><td>同上。パスは <code>~/Library/CloudStorage/OneDrive-.../Documents/MyVault</code></td></tr>
+      <tr><th>項目</th><th>メイン端末の状態</th></tr>
+      <tr><td>Obsidian Vault</td><td>OneDrive 内の <code>Documents/MyVault</code> に構築済み</td></tr>
+      <tr><td>Cursor</td><td>インストール済み・<code>.cursorrules</code> 設定済み</td></tr>
+      <tr><td>GitHub</td><td>プライベートリポジトリ <code>MyVault</code> に連携済み</td></tr>
+      <tr><td>同期方法</td><td>OneDrive（自動同期）＋ GitHub（バックアップ・版管理）</td></tr>
     </table>
-    <p style="font-size:13px; color:#495057;">VaultはすでにOneDrive内にあるので、<strong>同じMicrosoftアカウントでログインすれば自動同期</strong>されます。</p>
   </div>
 
+  <!-- ===== 同期の仕組み ===== -->
+  <h2>🔄 同期の全体像</h2>
+
+  <div class="sync-flow">
+    <div class="sync-node active">
+      <div class="icon">🏠</div>
+      <div class="name">メイン端末</div>
+    </div>
+    <div class="sync-arrow">⟷</div>
+    <div class="sync-node">
+      <div class="icon">☁️</div>
+      <div class="name">OneDrive</div>
+    </div>
+    <div class="sync-arrow">⟷</div>
+    <div class="sync-node active">
+      <div class="icon">💻</div>
+      <div class="name">別端末</div>
+    </div>
+  </div>
+  <div class="sync-flow" style="margin-top:4px;">
+    <div class="sync-node active">
+      <div class="icon">🏠</div>
+      <div class="name">メイン端末</div>
+    </div>
+    <div class="sync-arrow">→</div>
+    <div class="sync-node">
+      <div class="icon">🐙</div>
+      <div class="name">GitHub</div>
+    </div>
+    <div class="sync-arrow">→</div>
+    <div class="sync-node active">
+      <div class="icon">💻</div>
+      <div class="name">別端末</div>
+    </div>
+  </div>
+
+  <div class="method-compare">
+    <div class="method-card recommended">
+      <h4>☁️ OneDrive 同期 <span class="badge">推奨</span></h4>
+      <ul>
+        <li>自動で常時同期</li>
+        <li>操作不要（保存すれば反映）</li>
+        <li>同じMSアカウントでログインするだけ</li>
+        <li>⚠️ 同時編集すると競合する可能性あり</li>
+      </ul>
+    </div>
+    <div class="method-card">
+      <h4>🐙 GitHub 同期</h4>
+      <ul>
+        <li>手動で pull / push が必要</li>
+        <li>変更履歴が残る（版管理）</li>
+        <li>OneDriveが使えない環境で有効</li>
+        <li>⚠️ pull 忘れると古い状態で作業してしまう</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="note-blue">
+    💡 <strong>どちらを使う？</strong><br>
+    同じMicrosoftアカウントが使える端末 → <strong>OneDrive</strong>（何もしなくても同期）<br>
+    共有PCやMSアカウントが異なる端末 → <strong>GitHub</strong>（手動 pull/push）<br>
+    ※ 両方併用する場合は、片方で編集中はもう片方を閉じること
+  </div>
+
+  <!-- ===== 何が同期されるか ===== -->
   <h2>📊 何が同期されるか</h2>
   <table>
-    <tr><th>項目</th><th>同期</th><th>備考</th></tr>
-    <tr><td>ノート・フォルダ</td><td><span class="sync-badge sync-yes">✅</span></td><td>00_Inbox、20_Context、30_Projects など</td></tr>
-    <tr><td>Obsidian設定</td><td><span class="sync-badge sync-yes">✅</span></td><td><code>.obsidian</code>（プラグイン・テーマ）</td></tr>
-    <tr><td>Cursorルール</td><td><span class="sync-badge sync-yes">✅</span></td><td><code>.cursorrules</code></td></tr>
-    <tr><td>Cursorエディタ設定</td><td><span class="sync-badge sync-no">❌</span></td><td>フォント・テーマ等は端末ごと。手動で合わせる</td></tr>
+    <tr><th>項目</th><th>OneDrive</th><th>GitHub</th><th>備考</th></tr>
+    <tr><td>ノート・フォルダ</td><td><span class="sync-badge sync-yes">✅ 自動</span></td><td><span class="sync-badge sync-yes">✅ push時</span></td><td>00_Inbox、20_Context、30_Projects など</td></tr>
+    <tr><td>Obsidian設定</td><td><span class="sync-badge sync-yes">✅ 自動</span></td><td><span class="sync-badge sync-yes">✅ push時</span></td><td><code>.obsidian/</code>（プラグイン・テーマ）</td></tr>
+    <tr><td>Cursorルール</td><td><span class="sync-badge sync-yes">✅ 自動</span></td><td><span class="sync-badge sync-yes">✅ push時</span></td><td><code>.cursorrules</code></td></tr>
+    <tr><td>Cursorエディタ設定</td><td><span class="sync-badge sync-no">❌</span></td><td><span class="sync-badge sync-no">❌</span></td><td>フォント・テーマ等は端末ごと</td></tr>
+    <tr><td>Cursorアカウント</td><td><span class="sync-badge sync-no">❌</span></td><td><span class="sync-badge sync-no">❌</span></td><td>端末ごとにログインが必要</td></tr>
+    <tr><td>Gitの認証情報</td><td><span class="sync-badge sync-no">❌</span></td><td>—</td><td>端末ごとに設定が必要</td></tr>
   </table>
 
-  <div class="os-section">
-    <span class="os-label">🪟 Windows</span>
-    <h2>Windows でのセットアップ</h2>
+  <!-- ===== STEP 1: ツールのインストール ===== -->
+  <div class="section-card">
+    <span class="section-label">STEP 1</span>
+    <h2>🛠️ ツールのインストール</h2>
+    <p style="font-size:14px; margin-bottom:16px;">3つのツールをインストールします。すべて無料です。</p>
 
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-content">
-        <strong>OneDrive</strong>
-        OneDriveをインストール・起動し、<strong>同じMicrosoftアカウント</strong>でサインイン。「ドキュメント」フォルダの同期がオンか確認。
+        <strong>Obsidian（ノートアプリ）</strong>
+        <a href="https://obsidian.md" target="_blank">obsidian.md</a> → 「Get Obsidian for free」からダウンロード・インストール。
+        <div class="sub">※ まだ起動しなくてOK。先にOneDriveの同期を待つ</div>
       </div>
     </div>
 
     <div class="step">
       <div class="step-num">2</div>
       <div class="step-content">
-        <strong>Obsidian</strong>
-        <a href="https://obsidian.md">obsidian.md</a> からダウンロード・インストール。起動 →「既存のフォルダを開く」→ パスを指定：
+        <strong>Cursor（AIエディタ）</strong>
+        <a href="https://cursor.com" target="_blank">cursor.com</a> → 「Download」からダウンロード・インストール。
+        <div class="sub">初回起動時に「Sign in」→ <strong>Googleアカウント</strong>でログイン（メイン端末と同じアカウント推奨）</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <strong>Git（バージョン管理）</strong>
+        <a href="https://git-scm.com/downloads" target="_blank">git-scm.com</a> → ダウンロード・インストール。
+        <div class="sub">インストーラーはすべてデフォルト設定でOK</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== STEP 2A: OneDrive ===== -->
+  <div class="section-card">
+    <span class="section-label win">方法A：OneDrive で同期する場合</span>
+    <h2>☁️ OneDrive でVaultを同期</h2>
+    <p style="font-size:14px; margin-bottom:16px;">同じMicrosoftアカウントでログインすれば自動でVaultが降ってきます。</p>
+
+    <h3>🪟 Windows</h3>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <strong>OneDriveにサインイン</strong>
+        タスクバーのOneDriveアイコンをクリック → <strong>メイン端末と同じMicrosoftアカウント</strong>でサインイン。
+        <div class="sub">Windows 10/11 なら OneDrive はプリインストール済み</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <strong>「ドキュメント」フォルダの同期を確認</strong>
+        OneDrive設定 →「バックアップ」→「フォルダーのバックアップを管理」→ <strong>「ドキュメント」がオン</strong>であることを確認。
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <strong>同期完了を待つ</strong>
+        エクスプローラーで以下のパスに <code>MyVault</code> フォルダが表示されるまで待つ：
         <div class="path-box">C:\Users\&lt;ユーザー名&gt;\OneDrive\ドキュメント\Documents\MyVault</div>
+        <div class="sub">※ OneDriveアイコンに✅が付いたら同期完了</div>
       </div>
     </div>
 
     <div class="step">
-      <div class="step-num">3</div>
+      <div class="step-num">4</div>
       <div class="step-content">
-        <strong>Cursor</strong>
-        <a href="https://cursor.com">cursor.com</a> からダウンロード・インストール。起動 →「フォルダを開く」→ 上記と同じ MyVault フォルダを指定。
-        <div class="sub">→ <code>.cursorrules</code> が読み込まれ、同じAIルールで動作します。</div>
+        <strong>ファイルをオフライン利用可能にする</strong>
+        MyVaultフォルダを<strong>右クリック</strong> →「<strong>常にこのデバイスに保持する</strong>」を選択。
+        <div class="sub">これでオフラインでも編集可能になります</div>
       </div>
     </div>
-  </div>
 
-  <div class="os-section">
-    <span class="os-label">🍎 Mac</span>
-    <h2>Mac でのセットアップ</h2>
+    <h3>🍎 Mac</h3>
 
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-content">
-        <strong>OneDrive</strong>
-        OneDriveをインストール・起動し、<strong>同じMicrosoftアカウント</strong>でサインイン。同期先を確認。
+        <strong>OneDriveをインストール・サインイン</strong>
+        App Store または <a href="https://www.microsoft.com/ja-jp/microsoft-365/onedrive/download" target="_blank">公式サイト</a>からインストール → 同じMSアカウントでサインイン。
       </div>
     </div>
 
     <div class="step">
       <div class="step-num">2</div>
       <div class="step-content">
-        <strong>Obsidian</strong>
-        <a href="https://obsidian.md">obsidian.md</a> からダウンロード・インストール。起動 →「既存のフォルダを開く」→ パス例：
+        <strong>Vaultフォルダを確認</strong>
+        Finder で以下のパスを確認：
         <div class="path-box">~/Library/CloudStorage/OneDrive-個人/Documents/MyVault</div>
-        <div class="sub">※「OneDrive-個人」はアカウント名で変わる場合があります</div>
+        <div class="sub">※「OneDrive-個人」部分はアカウント種別で異なる場合があります</div>
+      </div>
+    </div>
+
+    <div class="note">
+      ⚠️ <strong>Macでパスがわからない場合</strong><br>
+      Finder → OneDrive → ドキュメント → MyVault を開く → フォルダを右クリック →「パス名をコピー」
+    </div>
+  </div>
+
+  <!-- ===== STEP 2B: GitHub ===== -->
+  <div class="section-card">
+    <span class="section-label git">方法B：GitHub で同期する場合</span>
+    <h2>🐙 GitHub でVaultを同期</h2>
+    <p style="font-size:14px; margin-bottom:16px;">OneDriveが使えない環境や、バックアップ目的で使用します。</p>
+
+    <div class="note-red">
+      ⚠️ <strong>GitHub Personal Access Token（PAT）が必要です</strong><br>
+      メイン端末のセットアップ時に発行したPATを用意してください。紛失した場合は
+      <a href="https://github.com/settings/tokens/new" target="_blank">こちら</a>から再発行
+      （<code>repo</code>にチェック、Expiration: No expiration）
+    </div>
+
+    <h3>🪟 Windows（PowerShell）</h3>
+
+    <div class="step">
+      <div class="step-num green">1</div>
+      <div class="step-content">
+        <strong>Git の初期設定</strong>
+        PowerShellを開いて以下を実行：
+        <div class="cmd-box">
+          <span class="prompt">$</span> git config --global user.name <span class="string">"あなたのGitHubユーザー名"</span><br>
+          <span class="prompt">$</span> git config --global user.email <span class="string">"あなたのメールアドレス"</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num green">2</div>
+      <div class="step-content">
+        <strong>リポジトリを clone</strong>
+        Vaultを置きたいフォルダに移動して clone：
+        <div class="cmd-box">
+          <span class="prompt">$</span> cd ~\Documents<br>
+          <span class="prompt">$</span> git clone https://<span class="string">あなたのユーザー名</span>:<span class="string">あなたのPAT</span>@github.com/<span class="string">あなたのユーザー名</span>/MyVault.git
+        </div>
+        <div class="sub">→ Documents/MyVault フォルダが作成されます</div>
+      </div>
+    </div>
+
+    <h3>🍎 Mac（ターミナル）</h3>
+
+    <div class="step">
+      <div class="step-num green">1</div>
+      <div class="step-content">
+        <strong>Git の初期設定</strong>
+        ターミナルを開いて以下を実行：
+        <div class="cmd-box">
+          <span class="prompt">$</span> git config --global user.name <span class="string">"あなたのGitHubユーザー名"</span><br>
+          <span class="prompt">$</span> git config --global user.email <span class="string">"あなたのメールアドレス"</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num green">2</div>
+      <div class="step-content">
+        <strong>リポジトリを clone</strong>
+        <div class="cmd-box">
+          <span class="prompt">$</span> cd ~/Documents<br>
+          <span class="prompt">$</span> git clone https://<span class="string">あなたのユーザー名</span>:<span class="string">あなたのPAT</span>@github.com/<span class="string">あなたのユーザー名</span>/MyVault.git
+        </div>
+      </div>
+    </div>
+
+    <div class="note">
+      ⚠️ <strong>PAT をURLに含めたくない場合</strong><br>
+      <code>git clone https://github.com/ユーザー名/MyVault.git</code> で clone →
+      認証を聞かれたらユーザー名とPATを入力
+    </div>
+  </div>
+
+  <!-- ===== STEP 3: Obsidian で Vault を開く ===== -->
+  <div class="section-card">
+    <span class="section-label">STEP 3</span>
+    <h2>📂 ObsidianでVaultを開く</h2>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <strong>Obsidianを起動</strong>
+        「<strong>Open folder as vault</strong>」（既存のフォルダを開く）を選択
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <strong>MyVaultフォルダを指定</strong>
+        <table style="margin:8px 0; font-size:13px;">
+          <tr><th>同期方法</th><th>パス</th></tr>
+          <tr><td>OneDrive（Win）</td><td><code>C:\Users\&lt;名前&gt;\OneDrive\ドキュメント\Documents\MyVault</code></td></tr>
+          <tr><td>OneDrive（Mac）</td><td><code>~/Library/CloudStorage/OneDrive-.../Documents/MyVault</code></td></tr>
+          <tr><td>GitHub clone</td><td><code>~/Documents/MyVault</code></td></tr>
+        </table>
       </div>
     </div>
 
     <div class="step">
       <div class="step-num">3</div>
       <div class="step-content">
-        <strong>Cursor</strong>
-        <a href="https://cursor.com">cursor.com</a> からダウンロード・インストール。起動 →「フォルダを開く」→ 上記の MyVault フォルダを指定。
+        <strong>同期を確認</strong>
+        左サイドバーにフォルダ構造（00_Inbox、10_Goals、20_Context...）が表示されればOK。
+        プラグインやテーマもメイン端末と同じものが反映されているか確認。
+      </div>
+    </div>
+
+    <div class="note-green">
+      ✅ <strong>「信頼しますか？」と聞かれたら</strong><br>
+      「Trust author and enable plugins」（信頼してプラグインを有効化）を選択してください。
+    </div>
+  </div>
+
+  <!-- ===== STEP 4: Cursor で Vault を開く ===== -->
+  <div class="section-card">
+    <span class="section-label">STEP 4</span>
+    <h2>🤖 CursorでVaultを開く</h2>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <strong>Cursorを起動してログイン</strong>
+        「Sign in」→ <strong>Google</strong>（またはメール）でログイン。
+        <div class="sub">メイン端末と同じCursorアカウントを使うと、Pro/Businessプランが共有されます</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <strong>MyVaultフォルダを開く</strong>
+        「File」→「Open Folder」→ STEP 3と同じMyVaultフォルダを選択。
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <strong>AIルールの動作確認</strong>
+        チャットパネルを開いて（<code>Ctrl + L</code> / <code>Cmd + L</code>）、以下を送信：
+        <div class="cmd-box" style="background:#f8f9fa; color:#1a1a2e;">
+          テスト：.cursorrules が読み込めているか確認してください
+        </div>
+        <div class="sub">→ AIが Vault構造やルールについて言及すれば正常に動作しています</div>
+      </div>
+    </div>
+
+    <div class="note-red">
+      ⚠️ <strong>重要：ファイル単体ではなくフォルダを開く</strong><br>
+      <code>.cursorrules</code> はフォルダをルートとして開いたときに読み込まれます。
+      ファイル単体を開いてもルールは適用されません。
+    </div>
+  </div>
+
+  <!-- ===== STEP 5: Git設定（GitHub同期の場合） ===== -->
+  <div class="section-card">
+    <span class="section-label git">方法Bの場合のみ</span>
+    <h2>⚙️ Cursor から Git を使う設定</h2>
+    <p style="font-size:14px; margin-bottom:16px;">Cursor のターミナルから push/pull できるようにします。OneDrive のみの場合はスキップ可。</p>
+
+    <div class="step">
+      <div class="step-num green">1</div>
+      <div class="step-content">
+        <strong>Cursor内ターミナルを開く</strong>
+        <code>Ctrl + `</code>（バッククォート）でターミナルパネルを表示。
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num green">2</div>
+      <div class="step-content">
+        <strong>リモートの確認</strong>
+        <div class="cmd-box">
+          <span class="prompt">$</span> git remote -v<br>
+          <span class="comment"># origin https://github.com/ユーザー名/MyVault.git (fetch)</span><br>
+          <span class="comment"># origin https://github.com/ユーザー名/MyVault.git (push)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num green">3</div>
+      <div class="step-content">
+        <strong>動作テスト</strong>
+        <div class="cmd-box">
+          <span class="prompt">$</span> git status<br>
+          <span class="comment"># On branch main / nothing to commit であれば正常</span>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="note">
-    ⚠️ <strong>Gitで同期する場合</strong>（OneDriveが使えない環境）<br>
-    初回：<code>git clone https://github.com/&lt;ユーザー名&gt;/MyVault.git</code><br>
-    作業開始：<code>git pull</code> → 作業後：<code>git add . → git commit → git push</code><br>
-    ※OneDriveとGitを両方使うと競合する場合あり。どちらか一方をメインに。
+  <!-- ===== 日常の使い方 ===== -->
+  <h2>📅 日常の同期ルーティン</h2>
+
+  <div class="section-card">
+    <h3>☁️ OneDrive の場合</h3>
+    <div class="note-green">
+      ✅ <strong>何もする必要はありません</strong>。保存すれば自動で同期されます。<br>
+      ただし、<strong>同時に複数端末で同じファイルを編集しない</strong>こと。
+    </div>
+
+    <h3 style="margin-top:24px;">🐙 GitHub の場合</h3>
+    <div class="daily-routine">
+      <div class="daily-time">作業開始時</div>
+      <div class="daily-action">
+        <div class="cmd-box">
+          <span class="prompt">$</span> git pull <span class="comment"># 最新の変更を取得</span>
+        </div>
+      </div>
+      <div class="daily-time">作業終了時</div>
+      <div class="daily-action">
+        <div class="cmd-box">
+          <span class="prompt">$</span> git add .<br>
+          <span class="prompt">$</span> git commit -m <span class="string">"更新内容のメモ"</span><br>
+          <span class="prompt">$</span> git push
+        </div>
+      </div>
+    </div>
+
+    <div class="note">
+      ⚠️ <strong>pull を忘れて作業すると</strong>、メイン端末の変更と衝突（コンフリクト）する可能性があります。<br>
+      作業開始時は必ず <code>git pull</code> を習慣にしてください。
+    </div>
   </div>
 
+  <!-- ===== 完了チェック ===== -->
   <div class="checklist">
     <h2 style="border:none; margin-top:0;">✅ セットアップ完了チェック</h2>
     <ul>
-      <li>Vaultフォルダが同期されている</li>
-      <li>ObsidianでMyVaultを開ける</li>
-      <li>プラグイン・テーマが反映されている</li>
-      <li>CursorでMyVaultを開ける</li>
-      <li>チャットでルールが効いている</li>
+      <li>Obsidian・Cursor・Git がインストールされている</li>
+      <li>MyVault フォルダが同期されている（OneDrive or clone）</li>
+      <li>Obsidian で MyVault を開き、フォルダ構造が見える</li>
+      <li>Obsidian のプラグイン・テーマがメイン端末と同じ</li>
+      <li>Cursor で MyVault フォルダを開いている</li>
+      <li>Cursor にログインできている</li>
+      <li>Cursor チャットで AI が <code>.cursorrules</code> を認識している</li>
+      <li>（GitHub同期の場合）<code>git pull</code> / <code>git push</code> が動作する</li>
     </ul>
   </div>
 
+  <!-- ===== トラブルシューティング ===== -->
   <div class="trouble">
     <h2 style="border:none; margin-top:0;">🔧 トラブルシューティング</h2>
+
     <div class="trouble-item">
-      <div class="trouble-q">OneDriveで同期されない</div>
-      <div class="trouble-a">設定で「ドキュメント」がオンか確認。右クリック→「常にこのデバイスで保持」でオフライン対応。</div>
+      <div class="trouble-q">OneDriveでMyVaultが表示されない</div>
+      <div class="trouble-a">
+        ① OneDrive設定 →「バックアップ」→「ドキュメント」がオンか確認<br>
+        ② 同期中の場合は時間を置く（初回は数分〜数十分かかる場合あり）<br>
+        ③ MyVaultフォルダを右クリック →「常にこのデバイスに保持する」を選択
+      </div>
     </div>
+
     <div class="trouble-item">
-      <div class="trouble-q">Macでパスが分からない</div>
-      <div class="trouble-a">FinderでOneDrive → ドキュメント → MyVault を開く → 右クリック →「パスをコピー」</div>
+      <div class="trouble-q">git clone で認証エラーが出る</div>
+      <div class="trouble-a">
+        ① PATの有効期限が切れていないか確認（<a href="https://github.com/settings/tokens" target="_blank">GitHub → Settings → Tokens</a>）<br>
+        ② PATに <code>repo</code> 権限があるか確認<br>
+        ③ ユーザー名・PATに特殊文字がある場合はURLエンコードが必要
+      </div>
     </div>
+
     <div class="trouble-item">
-      <div class="trouble-q">Cursorでルールが効かない</div>
-      <div class="trouble-a">MyVault <strong>フォルダ自体</strong> を開いているか確認（中のファイルではなく）</div>
+      <div class="trouble-q">Obsidianでプラグインが反映されない</div>
+      <div class="trouble-a">
+        ① Vault を開いた直後に「Trust author and enable plugins」を選択したか確認<br>
+        ② <code>.obsidian/</code> フォルダが同期されているか確認<br>
+        ③ Obsidian を再起動してみる
+      </div>
     </div>
+
     <div class="trouble-item">
-      <div class="trouble-q">競合ファイルができる</div>
-      <div class="trouble-a">同時編集を避ける。片方で編集 → 保存 → もう片方で開く。</div>
+      <div class="trouble-q">Cursor で AI ルールが効かない</div>
+      <div class="trouble-a">
+        ① <strong>MyVaultフォルダ自体</strong>を「Open Folder」で開いているか確認（ファイル単体ではダメ）<br>
+        ② <code>.cursorrules</code> がフォルダ直下にあるか確認<br>
+        ③ Cursor を再起動
+      </div>
+    </div>
+
+    <div class="trouble-item">
+      <div class="trouble-q">git push で rejected と出る</div>
+      <div class="trouble-a">
+        メイン端末の変更が先に push されている場合に発生。<br>
+        <code>git pull --rebase</code> → 競合があればファイルを修正 → <code>git push</code>
+      </div>
+    </div>
+
+    <div class="trouble-item">
+      <div class="trouble-q">OneDriveで競合ファイルができた</div>
+      <div class="trouble-a">
+        複数端末で同時編集すると「〇〇 (競合コピー).md」が生成される。<br>
+        → 中身を見比べて正しい方を残し、競合コピーを削除。<br>
+        → 同時編集を避けるルールを徹底する。
+      </div>
     </div>
   </div>
 
-  <div class="footer">作成日: 2026-03-04</div>
+  <div class="footer">
+    最終更新: 2026-03-05<br>
+    <a href="https://nishimura-axis.github.io/second-brain-guide/" style="color:#868e96;">初回セットアップガイド（メイン端末用）はこちら</a>
+  </div>
+
 </div>
 
 </body>
