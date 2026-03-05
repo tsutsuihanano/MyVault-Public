@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>別端末でのセットアップ手順 | Obsidian + Cursor</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap');
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    color: #1a1a2e;
+    background: #f8f9fa;
+    line-height: 1.8;
+    padding: 0;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 48px 32px;
+    text-align: center;
+  }
+  .header h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+  .header p { font-size: 15px; opacity: 0.9; }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 32px 24px 64px;
+  }
+
+  .quick-start {
+    background: white;
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 32px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border-left: 4px solid #667eea;
+  }
+  .quick-start h2 { font-size: 18px; margin-bottom: 12px; color: #667eea; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 16px;
+    font-size: 14px;
+  }
+  th {
+    background: #f1f3f5;
+    text-align: left;
+    padding: 10px 14px;
+    font-weight: 500;
+    font-size: 13px;
+    color: #495057;
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #e9ecef;
+  }
+
+  .sync-badge { display: inline-block; font-size: 13px; padding: 2px 0; }
+  .sync-yes { color: #37b24d; }
+  .sync-no { color: #e03131; }
+
+  h2 {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 36px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #e9ecef;
+  }
+
+  h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 24px 0 8px;
+    color: #495057;
+  }
+
+  .os-section {
+    background: white;
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .os-section h2 {
+    border: none;
+    margin-top: 0;
+    padding-bottom: 0;
+  }
+  .os-label {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 500;
+    background: #e9ecef;
+    color: #495057;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+
+  .step {
+    display: flex;
+    gap: 14px;
+    margin: 16px 0;
+    align-items: flex-start;
+  }
+  .step-num {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #667eea;
+    color: white;
+    font-weight: 700;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .step-content { flex: 1; }
+  .step-content strong { display: block; margin-bottom: 2px; }
+  .step-content .sub { color: #868e96; font-size: 13px; margin-top: 2px; }
+
+  .path-box {
+    background: #f1f3f5;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    margin: 8px 0;
+    word-break: break-all;
+  }
+
+  .note {
+    background: #fff9db;
+    border-left: 4px solid #fcc419;
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    font-size: 13px;
+    margin: 16px 0;
+  }
+
+  .checklist {
+    background: white;
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .checklist ul { list-style: none; padding: 0; }
+  .checklist li {
+    padding: 8px 0;
+    border-bottom: 1px solid #f1f3f5;
+    font-size: 14px;
+  }
+  .checklist li::before {
+    content: '☐';
+    margin-right: 10px;
+    font-size: 16px;
+  }
+
+  .trouble {
+    background: white;
+    border-radius: 12px;
+    padding: 24px 28px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .trouble-item { margin-bottom: 16px; }
+  .trouble-item:last-child { margin-bottom: 0; }
+  .trouble-q { font-weight: 700; font-size: 14px; color: #e03131; margin-bottom: 4px; }
+  .trouble-a { font-size: 13px; color: #495057; }
+
+  .footer {
+    text-align: center;
+    margin-top: 48px;
+    font-size: 12px;
+    color: #adb5bd;
+  }
+
+  @media print {
+    body { background: white; }
+    .header { padding: 24px; }
+    .container { padding: 16px; }
+    .os-section, .quick-start, .checklist, .trouble { box-shadow: none; border: 1px solid #e9ecef; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>別端末でのセットアップ手順</h1>
+  <p>Obsidian + Cursor を同期して、別のPC・Macでも同じように使う</p>
+</div>
+
+<div class="container">
+
+  <div class="quick-start">
+    <h2>📌 クイックスタート</h2>
+    <table>
+      <tr><th>端末</th><th>やること</th></tr>
+      <tr><td><strong>Windows</strong></td><td>OneDriveログイン → Obsidian・Cursorインストール → MyVaultフォルダを開く</td></tr>
+      <tr><td><strong>Mac</strong></td><td>同上。パスは <code>~/Library/CloudStorage/OneDrive-.../Documents/MyVault</code></td></tr>
+    </table>
+    <p style="font-size:13px; color:#495057;">VaultはすでにOneDrive内にあるので、<strong>同じMicrosoftアカウントでログインすれば自動同期</strong>されます。</p>
+  </div>
+
+  <h2>📊 何が同期されるか</h2>
+  <table>
+    <tr><th>項目</th><th>同期</th><th>備考</th></tr>
+    <tr><td>ノート・フォルダ</td><td><span class="sync-badge sync-yes">✅</span></td><td>00_Inbox、20_Context、30_Projects など</td></tr>
+    <tr><td>Obsidian設定</td><td><span class="sync-badge sync-yes">✅</span></td><td><code>.obsidian</code>（プラグイン・テーマ）</td></tr>
+    <tr><td>Cursorルール</td><td><span class="sync-badge sync-yes">✅</span></td><td><code>.cursorrules</code></td></tr>
+    <tr><td>Cursorエディタ設定</td><td><span class="sync-badge sync-no">❌</span></td><td>フォント・テーマ等は端末ごと。手動で合わせる</td></tr>
+  </table>
+
+  <div class="os-section">
+    <span class="os-label">🪟 Windows</span>
+    <h2>Windows でのセットアップ</h2>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <strong>OneDrive</strong>
+        OneDriveをインストール・起動し、<strong>同じMicrosoftアカウント</strong>でサインイン。「ドキュメント」フォルダの同期がオンか確認。
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <strong>Obsidian</strong>
+        <a href="https://obsidian.md">obsidian.md</a> からダウンロード・インストール。起動 →「既存のフォルダを開く」→ パスを指定：
+        <div class="path-box">C:\Users\&lt;ユーザー名&gt;\OneDrive\ドキュメント\Documents\MyVault</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <strong>Cursor</strong>
+        <a href="https://cursor.com">cursor.com</a> からダウンロード・インストール。起動 →「フォルダを開く」→ 上記と同じ MyVault フォルダを指定。
+        <div class="sub">→ <code>.cursorrules</code> が読み込まれ、同じAIルールで動作します。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="os-section">
+    <span class="os-label">🍎 Mac</span>
+    <h2>Mac でのセットアップ</h2>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <strong>OneDrive</strong>
+        OneDriveをインストール・起動し、<strong>同じMicrosoftアカウント</strong>でサインイン。同期先を確認。
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <strong>Obsidian</strong>
+        <a href="https://obsidian.md">obsidian.md</a> からダウンロード・インストール。起動 →「既存のフォルダを開く」→ パス例：
+        <div class="path-box">~/Library/CloudStorage/OneDrive-個人/Documents/MyVault</div>
+        <div class="sub">※「OneDrive-個人」はアカウント名で変わる場合があります</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <strong>Cursor</strong>
+        <a href="https://cursor.com">cursor.com</a> からダウンロード・インストール。起動 →「フォルダを開く」→ 上記の MyVault フォルダを指定。
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    ⚠️ <strong>Gitで同期する場合</strong>（OneDriveが使えない環境）<br>
+    初回：<code>git clone https://github.com/&lt;ユーザー名&gt;/MyVault.git</code><br>
+    作業開始：<code>git pull</code> → 作業後：<code>git add . → git commit → git push</code><br>
+    ※OneDriveとGitを両方使うと競合する場合あり。どちらか一方をメインに。
+  </div>
+
+  <div class="checklist">
+    <h2 style="border:none; margin-top:0;">✅ セットアップ完了チェック</h2>
+    <ul>
+      <li>Vaultフォルダが同期されている</li>
+      <li>ObsidianでMyVaultを開ける</li>
+      <li>プラグイン・テーマが反映されている</li>
+      <li>CursorでMyVaultを開ける</li>
+      <li>チャットでルールが効いている</li>
+    </ul>
+  </div>
+
+  <div class="trouble">
+    <h2 style="border:none; margin-top:0;">🔧 トラブルシューティング</h2>
+    <div class="trouble-item">
+      <div class="trouble-q">OneDriveで同期されない</div>
+      <div class="trouble-a">設定で「ドキュメント」がオンか確認。右クリック→「常にこのデバイスで保持」でオフライン対応。</div>
+    </div>
+    <div class="trouble-item">
+      <div class="trouble-q">Macでパスが分からない</div>
+      <div class="trouble-a">FinderでOneDrive → ドキュメント → MyVault を開く → 右クリック →「パスをコピー」</div>
+    </div>
+    <div class="trouble-item">
+      <div class="trouble-q">Cursorでルールが効かない</div>
+      <div class="trouble-a">MyVault <strong>フォルダ自体</strong> を開いているか確認（中のファイルではなく）</div>
+    </div>
+    <div class="trouble-item">
+      <div class="trouble-q">競合ファイルができる</div>
+      <div class="trouble-a">同時編集を避ける。片方で編集 → 保存 → もう片方で開く。</div>
+    </div>
+  </div>
+
+  <div class="footer">作成日: 2026-03-04</div>
+</div>
+
+</body>
+</html>
