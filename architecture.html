@@ -183,6 +183,66 @@
         }
         footer a { color: var(--accent2); text-decoration: none; }
 
+        .rule-block {
+            background: var(--bg);
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid var(--border);
+            margin-bottom: 16px;
+        }
+        .rule-block:last-child { margin-bottom: 0; }
+        .rule-block h3 {
+            font-size: 1.05rem;
+            margin-bottom: 12px;
+            color: var(--accent2);
+        }
+        .rule-block ol, .rule-block ul {
+            padding-left: 20px;
+            color: var(--text-muted);
+            font-size: 0.93rem;
+        }
+        .rule-block li { padding: 3px 0; }
+        .rule-block .sub { padding-left: 18px; font-size: 0.88rem; color: #64748b; }
+        .rule-block code {
+            background: #334155;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: #f59e0b;
+        }
+        .rule-block .note {
+            margin-top: 12px;
+            padding: 12px 16px;
+            background: #1a1a2e;
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+        }
+        .bu-table { margin-top: 8px; }
+        .bu-table td, .bu-table th { padding: 8px 14px; font-size: 0.9rem; }
+        .flow-step {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+        .flow-step .step-num {
+            background: var(--accent);
+            color: #fff;
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+        .flow-step .step-content { flex: 1; }
+        .flow-step .step-content strong { color: var(--text); }
+        .flow-step .step-content p { color: var(--text-muted); font-size: 0.9rem; margin-top: 4px; }
+
         @media (max-width: 600px) {
             .hero h1 { font-size: 1.6rem; }
             section .section-body { padding: 20px; }
@@ -335,6 +395,114 @@ sequenceDiagram
                     <tr><td>プッシュ前プル</td><td>ON</td><td>コンフリクト防止</td></tr>
                 </tbody>
             </table>
+        </div>
+    </section>
+
+    <!-- AI Brain Rules -->
+    <section>
+        <div class="section-header"><h2>🧠 「第二の脳」AI運用ルール（.cursorrules）</h2></div>
+        <div class="section-body">
+            <div class="rule-block">
+                <h3>会話開始フロー（必須ヒアリング）</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 12px;">
+                    Cursorは新しい話題・作業を始める前に、必ず以下を確認してから動き出す：
+                </p>
+                <div class="flow-step">
+                    <div class="step-num">1</div>
+                    <div class="step-content">
+                        <strong>何についての話か？</strong>
+                        <p>壁打ち / 要件定義 / 開発 / 振り返り / その他</p>
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-num">2</div>
+                    <div class="step-content">
+                        <strong>どの事業部/PJに関連するか？</strong>
+                        <p>HD / AXIS-Ads / AXIS-PR / WEEVA / FanMarketing / Clay</p>
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-num">3</div>
+                    <div class="step-content">
+                        <strong>読み込むべきコンテキストの確認</strong>
+                        <p>20_Context/{事業部}/ や 30_Projects/{PJ名}/ を読み込むか確認</p>
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-num">4</div>
+                    <div class="step-content">
+                        <strong>ユーザーの確認を得てから読み込み開始</strong>
+                        <p>勝手に進めず、必ず承認を取る</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rule-block">
+                <h3>出力ルール</h3>
+                <ul>
+                    <li>推測・創作を禁止。不明点は必ず <code>TODO:</code> を残す</li>
+                    <li>事実と解釈を分離。解釈を書く場合は <code>Assumption:</code> と明示</li>
+                    <li>新規ノート作成時は必ず該当テンプレートを使用</li>
+                    <li>全ノートにYAMLフロントマターを必須</li>
+                    <li>不明点は勝手に埋めず、必ず質問する</li>
+                </ul>
+            </div>
+
+            <div class="rule-block">
+                <h3>開発モード</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 8px;">
+                    実装・デバッグ・デプロイ時は以下を常に参照した状態で進める：
+                </p>
+                <ol>
+                    <li><strong>コンテキスト</strong> — <code>20_Context/{事業部}/</code> 前提情報</li>
+                    <li><strong>要件定義</strong> — <code>30_Projects/{PJ}/</code> 内の要件</li>
+                    <li><strong>技術要件</strong> — <code>System_Spec.md</code> or <code>technical-spec.md</code></li>
+                </ol>
+                <div class="note">
+                    要件を勝手に変更しない / デプロイ前は必ずユーザー確認 / 進捗は 30_Projects に随時ログ
+                </div>
+            </div>
+
+            <div class="rule-block">
+                <h3>フォルダ別ルール</h3>
+                <table class="bu-table">
+                    <thead><tr><th>フォルダ</th><th>ルール</th></tr></thead>
+                    <tbody>
+                        <tr><td>00_Inbox</td><td>仕分け前の一時メモ。週次で整理（PJ追加 / Knowledge化 / 削除）</td></tr>
+                        <tr><td>10_Goals</td><td>会計年度4月始まり（Q1=4-6月）。FY表記。上位目標との紐付け必須</td></tr>
+                        <tr><td>20_Context</td><td>会社の全情報（AIの前提知識）。3層構造：L1概要 → L2領域 → L3詳細</td></tr>
+                        <tr><td>30_Projects</td><td>事業部ごとにフォルダ分け。開始時に目標との紐付け確認</td></tr>
+                        <tr><td>40_Knowledge</td><td>PJ横断の普遍的ノウハウ。重要決定は Decision_Log に記録</td></tr>
+                        <tr><td>50_Literature</td><td>外部インプットは「自分の言葉で」要約。「自分への適用」必須</td></tr>
+                        <tr><td>70_Meetings</td><td>定例MTG・レビュー会の記録</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="rule-block">
+                <h3>事業部コード</h3>
+                <table class="bu-table">
+                    <thead><tr><th>コード</th><th>事業部 / 法人</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>hd</code></td><td>AXISホールディングス</td></tr>
+                        <tr><td><code>axis-ads</code></td><td>AXIS アド事業部</td></tr>
+                        <tr><td><code>axis-pr</code></td><td>AXIS PR事業部</td></tr>
+                        <tr><td><code>weeva</code></td><td>WEEVA</td></tr>
+                        <tr><td><code>fanmarketing</code></td><td>ファンマーケ事業部</td></tr>
+                        <tr><td><code>clay</code></td><td>クレイ</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="rule-block">
+                <h3>禁止事項</h3>
+                <ul>
+                    <li>機密情報の外部出力</li>
+                    <li>要件の勝手な変更</li>
+                    <li>確認なしのデプロイ作業</li>
+                    <li>ヒアリングなしでのコンテキスト読み込み</li>
+                </ul>
+            </div>
         </div>
     </section>
 
