@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第二の脳 - システム構成</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --border: #334155;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent: #7c3aed;
+            --accent2: #0ea5e9;
+            --accent3: #f59e0b;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .hero {
+            text-align: center;
+            padding: 60px 20px 40px;
+            background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 50%, #0c4a6e 100%);
+            border-bottom: 1px solid var(--border);
+        }
+        .hero h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #a78bfa, #38bdf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        .hero p { color: var(--text-muted); font-size: 1.05rem; }
+        .container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+
+        section {
+            margin: 40px 0;
+            background: var(--surface);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+        section .section-header {
+            padding: 20px 28px 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        section .section-header h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        section .section-body {
+            padding: 28px;
+        }
+
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            overflow-x: auto;
+        }
+        .mermaid svg { max-width: 100%; height: auto; }
+
+        .role-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+        .role-card {
+            background: var(--bg);
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid var(--border);
+        }
+        .role-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .role-card .dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .role-card ul { list-style: none; padding: 0; }
+        .role-card li {
+            padding: 4px 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+        .role-card li::before {
+            content: "→ ";
+            color: var(--accent);
+        }
+        .obsidian .dot { background: var(--accent); }
+        .cursor .dot { background: var(--accent2); }
+        .github .dot { background: #e2e8f0; }
+        .obsidian h3 { color: #a78bfa; }
+        .cursor h3 { color: #38bdf8; }
+        .github h3 { color: #e2e8f0; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+        th, td {
+            text-align: left;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        th {
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        tr:last-child td { border-bottom: none; }
+        td:first-child { font-weight: 600; }
+
+        .folder-tree {
+            background: var(--bg);
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid var(--border);
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.9;
+            color: var(--text-muted);
+            overflow-x: auto;
+        }
+        .folder-tree .folder { color: var(--accent3); font-weight: 600; }
+        .folder-tree .desc { color: var(--text-muted); }
+        .folder-tree .count { color: var(--accent2); font-size: 0.8rem; }
+
+        .status-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+        .status-item {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 20px;
+            flex: 1;
+            min-width: 140px;
+            text-align: center;
+        }
+        .status-item .num {
+            font-size: 1.6rem;
+            font-weight: 800;
+            display: block;
+            background: linear-gradient(135deg, #a78bfa, #38bdf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .status-item .label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 32px 20px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+        footer a { color: var(--accent2); text-decoration: none; }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 1.6rem; }
+            section .section-body { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <h1>第二の脳 - システム構成</h1>
+    <p>Obsidian + Cursor + GitHub による知識管理アーキテクチャ</p>
+</div>
+
+<div class="container">
+
+    <!-- Status -->
+    <div class="status-bar" style="margin-top: 40px;">
+        <div class="status-item">
+            <span class="num">66+</span>
+            <span class="label">管理ファイル</span>
+        </div>
+        <div class="status-item">
+            <span class="num">16</span>
+            <span class="label">Context（業務知識）</span>
+        </div>
+        <div class="status-item">
+            <span class="num">7</span>
+            <span class="label">Projects</span>
+        </div>
+        <div class="status-item">
+            <span class="num">19</span>
+            <span class="label">Templates</span>
+        </div>
+    </div>
+
+    <!-- Architecture -->
+    <section>
+        <div class="section-header"><h2>🏗️ 全体アーキテクチャ</h2></div>
+        <div class="section-body">
+            <div class="mermaid">
+graph TB
+    subgraph CLOUD["☁️ クラウド"]
+        GH["GitHub\nMyVault リポジトリ\n（バージョン管理・同期ハブ）"]
+    end
+
+    subgraph DEVA["💻 端末A（メイン）"]
+        OA["Obsidian\nノート閲覧・編集"]
+        CA["Cursor\nAI アシスタント"]
+        FA["📁 MyVault フォルダ"]
+    end
+
+    subgraph DEVB["💻 端末B（サブ）"]
+        OB["Obsidian\nノート閲覧・編集"]
+        CB["Cursor\nAI アシスタント"]
+        FB["📁 MyVault フォルダ"]
+    end
+
+    FA <-->|"Obsidian Git\n5分ごと自動 push/pull"| GH
+    FB <-->|"Obsidian Git\n5分ごと自動 push/pull"| GH
+
+    OA --- FA
+    CA --- FA
+    OB --- FB
+    CB --- FB
+
+    style GH fill:#24292e,color:#fff,stroke:#475569
+    style OA fill:#7c3aed,color:#fff,stroke:#6d28d9
+    style OB fill:#7c3aed,color:#fff,stroke:#6d28d9
+    style CA fill:#0ea5e9,color:#fff,stroke:#0284c7
+    style CB fill:#0ea5e9,color:#fff,stroke:#0284c7
+    style FA fill:#f59e0b,color:#000,stroke:#d97706
+    style FB fill:#f59e0b,color:#000,stroke:#d97706
+    style CLOUD fill:#1e293b,stroke:#334155,color:#e2e8f0
+    style DEVA fill:#1e293b,stroke:#334155,color:#e2e8f0
+    style DEVB fill:#1e293b,stroke:#334155,color:#e2e8f0
+            </div>
+        </div>
+    </section>
+
+    <!-- Roles -->
+    <section>
+        <div class="section-header"><h2>🔧 各ツールの役割</h2></div>
+        <div class="section-body">
+            <div class="role-grid">
+                <div class="role-card obsidian">
+                    <h3><span class="dot"></span>Obsidian</h3>
+                    <ul>
+                        <li>ノートの作成・編集</li>
+                        <li>双方向リンクで知識を接続</li>
+                        <li>グラフビューで全体俯瞰</li>
+                        <li>Git プラグインで自動同期</li>
+                    </ul>
+                </div>
+                <div class="role-card cursor">
+                    <h3><span class="dot"></span>Cursor</h3>
+                    <ul>
+                        <li>AI による情報整理・構造化</li>
+                        <li>タスク管理の自動化</li>
+                        <li>スクリプト実行・API連携</li>
+                        <li>ドキュメント・資料生成</li>
+                    </ul>
+                </div>
+                <div class="role-card github">
+                    <h3><span class="dot"></span>GitHub</h3>
+                    <ul>
+                        <li>バージョン管理（履歴保全）</li>
+                        <li>複数端末間の同期ハブ</li>
+                        <li>クラウドバックアップ</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Data Flow -->
+    <section>
+        <div class="section-header"><h2>🔄 データの流れ</h2></div>
+        <div class="section-body">
+            <div class="mermaid">
+sequenceDiagram
+    participant U as 👤 ユーザー
+    participant O as Obsidian
+    participant G as GitHub
+    participant O2 as Obsidian（別端末）
+
+    U->>O: ノートを編集
+    Note over O: 5分ごとに自動バックアップ
+    O->>G: git commit + push（自動）
+    Note over G: 変更を保存
+    O2->>G: git pull（自動 / 起動時）
+    G->>O2: 最新のノートを取得
+    U->>O2: 別端末でも最新状態で作業
+            </div>
+        </div>
+    </section>
+
+    <!-- Sync Config -->
+    <section>
+        <div class="section-header"><h2>⚙️ 同期設定</h2></div>
+        <div class="section-body">
+            <table>
+                <thead>
+                    <tr><th>設定項目</th><th>値</th><th>説明</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>自動コミット＆プッシュ</td><td>5分間隔</td><td>変更があれば5分ごとにGitHubへ反映</td></tr>
+                    <tr><td>自動プル</td><td>5分間隔</td><td>他端末の変更を5分ごとに取得</td></tr>
+                    <tr><td>起動時プル</td><td>ON</td><td>Obsidian起動時に最新状態を自動取得</td></tr>
+                    <tr><td>ファイル変更時バックアップ</td><td>ON</td><td>ファイル保存時にもバックアップ発動</td></tr>
+                    <tr><td>プッシュ前プル</td><td>ON</td><td>コンフリクト防止</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Folder Structure -->
+    <section>
+        <div class="section-header"><h2>📁 Vault フォルダ構成</h2></div>
+        <div class="section-body">
+            <div class="folder-tree">
+<span class="folder">MyVault/</span><br>
+├── <span class="folder">00_Inbox/</span> <span class="desc">… 未整理メモの一時置き場</span><br>
+├── <span class="folder">10_Goals/</span> <span class="desc">… 目標管理</span><br>
+├── <span class="folder">20_Context/</span> <span class="desc">… 業務の前提情報・ナレッジ</span> <span class="count">(16)</span><br>
+│&nbsp;&nbsp; ├── AXIS/Ads/ <span class="desc">… 広告運用の講義ノート（9本）</span><br>
+│&nbsp;&nbsp; ├── AXIS/System/ <span class="desc">… システム関連ナレッジ</span><br>
+│&nbsp;&nbsp; └── アド管理/ <span class="desc">… アド管理の業務知識</span><br>
+├── <span class="folder">30_Projects/</span> <span class="desc">… アクティブなプロジェクト</span> <span class="count">(7)</span><br>
+├── <span class="folder">40_Knowledge/</span> <span class="desc">… 普遍的なノウハウ</span><br>
+├── <span class="folder">50_Literature/</span> <span class="desc">… 読書・記事メモ</span><br>
+├── <span class="folder">60_Templates/</span> <span class="desc">… 再利用テンプレート</span> <span class="count">(19)</span><br>
+├── <span class="folder">70_Meetings/</span> <span class="desc">… MTGログ</span><br>
+├── <span class="folder">.obsidian/</span> <span class="desc">… Obsidian設定・プラグイン</span><br>
+├── <span class="folder">.cursor/</span> <span class="desc">… Cursor AI スキル・ルール</span><br>
+└── <span class="folder">.git/</span> <span class="desc">… Git管理（GitHub同期）</span>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<footer>
+    第二の脳 — Obsidian + Cursor + GitHub | 
+    <a href="https://github.com/tsutsuihanano/MyVault-Public">GitHub Pages</a>
+</footer>
+
+<script>
+    mermaid.initialize({
+        startOnLoad: true,
+        theme: 'dark',
+        themeVariables: {
+            primaryColor: '#7c3aed',
+            primaryTextColor: '#e2e8f0',
+            lineColor: '#64748b',
+            secondaryColor: '#1e293b',
+            tertiaryColor: '#0f172a',
+            background: '#1e293b',
+            mainBkg: '#1e293b',
+            nodeBorder: '#475569',
+            clusterBkg: '#1e293b',
+            clusterBorder: '#334155',
+            titleColor: '#e2e8f0',
+            actorBkg: '#7c3aed',
+            actorTextColor: '#fff',
+            actorBorder: '#6d28d9',
+            signalColor: '#e2e8f0',
+            signalTextColor: '#e2e8f0',
+            noteBkgColor: '#334155',
+            noteTextColor: '#e2e8f0',
+            noteBorderColor: '#475569',
+            activationBkgColor: '#7c3aed',
+            sequenceNumberColor: '#e2e8f0'
+        },
+        sequence: { mirrorActors: false }
+    });
+</script>
+
+</body>
+</html>
