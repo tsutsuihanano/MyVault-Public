@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YDA LINE面出稿とCV計測</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --border: #334155;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent: #7c3aed;
+            --accent2: #0ea5e9;
+            --accent3: #f59e0b;
+            --green: #22c55e;
+            --red: #ef4444;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .hero {
+            text-align: center;
+            padding: 60px 20px 40px;
+            background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 50%, #0c4a6e 100%);
+            border-bottom: 1px solid var(--border);
+        }
+        .hero h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #a78bfa, #38bdf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        .hero p { color: var(--text-muted); font-size: 1.05rem; }
+        .hero .badge {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 6px 16px;
+            background: rgba(124, 58, 237, 0.2);
+            border: 1px solid rgba(124, 58, 237, 0.4);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #a78bfa;
+        }
+        .container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+        .status-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 28px 0;
+        }
+        .status-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 20px;
+            flex: 1;
+            min-width: 140px;
+            text-align: center;
+        }
+        .status-item .num {
+            font-size: 1.5rem;
+            font-weight: 800;
+            display: block;
+            background: linear-gradient(135deg, #a78bfa, #38bdf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .status-item .label {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+        section {
+            margin: 40px 0;
+            background: var(--surface);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+        section .section-header {
+            padding: 20px 28px 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        section .section-header h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        section .section-body { padding: 28px; }
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+        .mermaid svg { max-width: 100%; height: auto; }
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background: var(--bg);
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid var(--border);
+        }
+        .card h3 {
+            font-size: 1.05rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .card ul { list-style: none; padding: 0; }
+        .card li {
+            padding: 4px 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+        .card li::before { content: "→ "; color: var(--accent); }
+        .card.green h3 { color: var(--green); }
+        .card.blue h3 { color: var(--accent2); }
+        .card.purple h3 { color: #a78bfa; }
+        .card.amber h3 { color: var(--accent3); }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+        th, td {
+            text-align: left;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        th {
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        tr:last-child td { border-bottom: none; }
+        td:first-child { font-weight: 600; }
+        .info-block {
+            background: var(--bg);
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid var(--border);
+            margin-bottom: 16px;
+        }
+        .info-block:last-child { margin-bottom: 0; }
+        .info-block h3 {
+            font-size: 1.05rem;
+            margin-bottom: 12px;
+            color: var(--accent2);
+        }
+        .info-block ul, .info-block ol {
+            padding-left: 20px;
+            color: var(--text-muted);
+            font-size: 0.93rem;
+        }
+        .info-block li { padding: 3px 0; }
+        .info-block code {
+            background: #334155;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: #f59e0b;
+        }
+        .info-block .note {
+            margin-top: 12px;
+            padding: 12px 16px;
+            background: #1a1a2e;
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+        }
+        .step-flow {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        .step-flow .step-num {
+            background: var(--accent);
+            color: #fff;
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+        .step-flow .step-content { flex: 1; }
+        .step-flow .step-content strong { color: var(--text); }
+        .step-flow .step-content p { color: var(--text-muted); font-size: 0.9rem; margin-top: 4px; }
+        .faq-item {
+            background: var(--bg);
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid var(--border);
+            margin-bottom: 16px;
+        }
+        .faq-item:last-child { margin-bottom: 0; }
+        .faq-item .q {
+            font-weight: 700;
+            color: var(--accent3);
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+        .faq-item .a {
+            color: var(--text-muted);
+            font-size: 0.93rem;
+        }
+        .faq-item .a strong { color: var(--text); }
+        .resource-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 8px;
+            text-decoration: none;
+            transition: border-color 0.2s;
+        }
+        .resource-link:hover { border-color: var(--accent2); }
+        .resource-link .tag {
+            background: rgba(14, 165, 233, 0.15);
+            color: var(--accent2);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .resource-link .title { color: var(--text); font-size: 0.92rem; }
+        footer {
+            text-align: center;
+            padding: 32px 20px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+        footer a { color: var(--accent2); text-decoration: none; }
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 1.6rem; }
+            section .section-body { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>YDA LINE面出稿とCV計測</h1>
+        <p>Yahoo!ディスプレイ広告経由でLINE面に配信 &amp; コンバージョン測定の全体像</p>
+        <span class="badge">Updated: 2026-03-10</span>
+    </div>
+
+    <div class="container">
+
+        <div class="status-bar">
+            <div class="status-item"><span class="num">6</span><span class="label">配信可能なLINE面</span></div>
+            <div class="status-item"><span class="num">2</span><span class="label">必要なタグ（新方式）</span></div>
+            <div class="status-item"><span class="num">6</span><span class="label">STEP（設定〜配信）</span></div>
+            <div class="status-item"><span class="num">13</span><span class="label">公式リソース</span></div>
+        </div>
+
+        <!-- Section 1: LINE面への配信 -->
+        <section>
+            <div class="section-header"><h2>📡 YDAからLINE面への配信</h2></div>
+            <div class="section-body">
+                <table>
+                    <tr><th>配信面</th><th>備考</th></tr>
+                    <tr><td>LINEトーク画面最上部</td><td>2023年追加。最もリーチが大きい</td></tr>
+                    <tr><td>LINEホーム</td><td></td></tr>
+                    <tr><td>LINEウォレット</td><td></td></tr>
+                    <tr><td>LINEニュース</td><td>トップ・記事内</td></tr>
+                    <tr><td>LINEファミリーアプリ</td><td>2023年追加</td></tr>
+                    <tr><td>LINE広告ネットワーク</td><td>2023年追加。13,000+アプリ</td></tr>
+                </table>
+                <div style="margin-top: 24px;">
+                    <div class="info-block">
+                        <h3>配信の仕組み</h3>
+                        <ul>
+                            <li>YDA管理画面の<strong>プレイスメントターゲティング</strong>でLINE面を指定</li>
+                            <li>プレイスメントURL：<code>ad.line.me</code>（OS共通）</li>
+                            <li>2025年1月〜 トークリスト・LINE NEWSなど配信面単位での指定が可能に</li>
+                            <li>LINE内の特定1面だけに絞る完全なコントロールはできない（ある程度自動配分）</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: YDA vs LINE広告 -->
+        <section>
+            <div class="section-header"><h2>⚖️ YDA経由 vs LINE広告（直接）</h2></div>
+            <div class="section-body">
+                <table>
+                    <tr><th>項目</th><th>YDA経由</th><th>LINE広告（直接）</th></tr>
+                    <tr><td>必要アカウント</td><td>Yahoo広告のみ</td><td>LINE広告アカウント</td></tr>
+                    <tr><td>ターゲティング</td><td>Yahoo検索・行動データ</td><td>LINEデータ（電話番号等）</td></tr>
+                    <tr><td>CV計測</td><td>Yahoo計測タグ</td><td>LINE Tag</td></tr>
+                    <tr><td>配信面の制御</td><td>プレイスメント指定（限定的）</td><td>LINE独自のターゲティング</td></tr>
+                    <tr><td>ピクセル構造</td><td>計測タグ（BM接続で共有可）</td><td>アカウント＝ピクセル</td></tr>
+                    <tr><td>審査・BAN</td><td>Yahoo基準</td><td>LINE基準（目視審査リスクあり）</td></tr>
+                </table>
+            </div>
+        </section>
+
+        <!-- Section 2: CV測定 -->
+        <section>
+            <div class="section-header"><h2>📊 コンバージョン測定の設定</h2></div>
+            <div class="section-body">
+                <div class="card-grid">
+                    <div class="card green">
+                        <h3>✅ 新方式（2025年6月〜推奨）</h3>
+                        <ul>
+                            <li><strong>グローバルスニペット</strong>：全ページの &lt;head&gt; に設置。アカウント1つにつき1つ</li>
+                            <li><strong>イベントスニペット</strong>：CVページ（サンクスページ等）に設置</li>
+                            <li>たった2つのタグで完結</li>
+                            <li>GTM経由でも設置可能</li>
+                        </ul>
+                    </div>
+                    <div class="card purple">
+                        <h3>🔌 コンバージョンAPI（上級）</h3>
+                        <ul>
+                            <li>サーバー間で直接イベントデータを送信</li>
+                            <li>広告ブロッカー・Cookie規制に強い</li>
+                            <li>CV計測 + オーディエンスリスト蓄積</li>
+                            <li>サーバーサイド実装が必要</li>
+                        </ul>
+                    </div>
+                    <div class="card amber">
+                        <h3>📦 旧方式（参考）</h3>
+                        <ul>
+                            <li>サイトジェネラルタグ</li>
+                            <li>コンバージョン測定補完機能タグ</li>
+                            <li>コンバージョン測定機能タグ</li>
+                            <li>3つ必要 → 新規では非推奨</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: BM接続 -->
+        <section>
+            <div class="section-header"><h2>🔗 ビジネスマネージャー（BM）接続</h2></div>
+            <div class="section-body">
+                <div class="info-block">
+                    <h3>BMとは</h3>
+                    <p style="color: var(--text-muted); font-size: 0.93rem;">LINEヤフーが提供する<strong style="color:var(--text)">組織単位の管理ツール</strong>。Yahoo広告アカウント、LINE公式アカウントなど複数サービスを1つの組織として束ねて管理できる。Metaの「ビジネスマネージャー」やTikTokの「ビジネスセンター（BC）」に相当。</p>
+                </div>
+
+                <div style="margin: 24px 0;">
+                    <div class="mermaid">
+graph LR
+    subgraph BEFORE["BM接続なし（従来）"]
+        A1["YDA\nアカウントA"] ---|専用| T1["計測タグA"]
+        A2["YDA\nアカウントB"] ---|専用| T2["計測タグB"]
+        A3["LINE\n公式アカウント"] ---|別管理| T3["LINE Tag"]
+    end
+    style BEFORE fill:#1e293b,stroke:#334155,color:#e2e8f0
+    style A1 fill:#334155,color:#e2e8f0,stroke:#475569
+    style A2 fill:#334155,color:#e2e8f0,stroke:#475569
+    style A3 fill:#334155,color:#e2e8f0,stroke:#475569
+    style T1 fill:#7c3aed,color:#fff,stroke:#6d28d9
+    style T2 fill:#7c3aed,color:#fff,stroke:#6d28d9
+    style T3 fill:#7c3aed,color:#fff,stroke:#6d28d9
+                    </div>
+                    <div class="mermaid">
+graph TB
+    BM["LINEヤフー\nビジネスマネージャー"]
+    BM --> A1["YDA アカウントA"]
+    BM --> A2["YDA アカウントB"]
+    BM --> A3["LINE 公式アカウント"]
+    BM ---|一元管理| T["共通の計測タグ"]
+    T --> A1
+    T --> A2
+    T --> A3
+
+    style BM fill:#0ea5e9,color:#fff,stroke:#0284c7
+    style T fill:#22c55e,color:#fff,stroke:#16a34a
+    style A1 fill:#334155,color:#e2e8f0,stroke:#475569
+    style A2 fill:#334155,color:#e2e8f0,stroke:#475569
+    style A3 fill:#334155,color:#e2e8f0,stroke:#475569
+                    </div>
+                </div>
+
+                <table>
+                    <tr><th>項目</th><th>BM接続なし</th><th>BM接続あり</th></tr>
+                    <tr><td>計測タグの発行</td><td>アカウント単位で1つ</td><td>BM側から発行。複数アカウントで共有可能</td></tr>
+                    <tr><td>LINE公式との連携</td><td>不可</td><td>同一BMなら共通タグでデータ横断利用可能</td></tr>
+                    <tr><td>タグの管理場所</td><td>各アカウントの管理画面</td><td>BM管理画面に集約</td></tr>
+                    <tr><td>既存タグ</td><td>—</td><td>自動移管（貼り替え不要）</td></tr>
+                </table>
+
+                <div style="margin-top: 24px;">
+                    <div class="info-block">
+                        <h3>BM接続の手順</h3>
+                        <ol>
+                            <li>YDA管理画面にログイン</li>
+                            <li>「ツール」→「アプリ・ツール連携」→「ビジネスマネージャー」</li>
+                            <li>接続先BMの<strong style="color:var(--text)">組織ID</strong>を入力 →「確認画面に進む」</li>
+                            <li>生成された<strong style="color:var(--text)">接続リクエスト用URL</strong>をBM管理者に送付</li>
+                            <li>BM管理者がURLをクリック →「接続を申し込む」で完了</li>
+                        </ol>
+                        <div class="note">⚠️ URLの有効期限は168時間（7日間）。BM認証済み＆権限が「管理者」or「運用者」であることが条件。</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: 媒体対比 -->
+        <section>
+            <div class="section-header"><h2>🔍 媒体別タグ/ピクセル管理の比較</h2></div>
+            <div class="section-body">
+                <table>
+                    <tr><th>媒体</th><th>上位管理単位</th><th>ピクセル/タグの所属</th><th>BANの影響</th></tr>
+                    <tr><td>Meta</td><td>ビジネスマネージャー</td><td>ビジマネに所属。付け替え可能</td><td>ピクセルは生きる</td></tr>
+                    <tr><td>TikTok</td><td>ビジネスセンター（BC）</td><td>BCに所属</td><td>ピクセルは生きる</td></tr>
+                    <tr><td>LINE広告</td><td>法人アカウント</td><td>アカウント＝ピクセル</td><td>データごと消失</td></tr>
+                    <tr><td style="color: var(--accent2);">YDA（BM接続時）</td><td>LINEヤフー BM</td><td>BMに所属</td><td style="color: var(--green);">タグは生きる ✓</td></tr>
+                </table>
+            </div>
+        </section>
+
+        <!-- Section 4: 操作フロー -->
+        <section>
+            <div class="section-header"><h2>🗺️ YDA管理画面 操作フロー（STEP 0〜5）</h2></div>
+            <div class="section-body">
+                <div class="mermaid">
+flowchart TD
+    START(["YDAでLINE面に\nCV計測付きで配信したい"]) --> S0
+
+    subgraph S0["STEP 0: BM接続（初回のみ）"]
+        S0A["ツール → アプリ・ツール連携"] --> S0B["組織IDを入力"]
+        S0B --> S0C["接続リクエストURL発行"]
+        S0C --> S0D["BM管理者が承認"]
+    end
+
+    S0 --> S1
+
+    subgraph S1["STEP 1: 計測タグの発行"]
+        S1A["ツール → 権限・データ → 計測タグ"] --> S1B["詳細マッチング設定"]
+        S1B --> S1C["タグを発行"]
+        S1C --> S1D["スニペット2つを取得"]
+    end
+
+    S1 --> S2
+
+    subgraph S2["STEP 2: タグをWebサイトに設置"]
+        S2A["グローバルスニペット\n→ 全ページ"] --> S2B["イベントスニペット\n→ サンクスページ"]
+        S2B --> S2C["イベント受信履歴で\n発火を確認"]
+    end
+
+    S2 --> S3
+
+    subgraph S3["STEP 3: コンバージョン設定"]
+        S3A["ツール → コンバージョン測定"] --> S3B["ウェブ（計測タグ）で作成"]
+        S3B --> S3C["CV名・イベント種別・\n計測期間を入力"]
+    end
+
+    S3 --> S4
+
+    subgraph S4["STEP 4: キャンペーン作成"]
+        S4A["目的 = コンバージョン"] --> S4B["自動入札\n（CV数最大化 / 目標CPA）"]
+        S4B --> S4C["最適化に使用する\nCVを選択 ← ここが紐づけ"]
+    end
+
+    S4 --> S5
+
+    subgraph S5["STEP 5: 広告グループ＆広告"]
+        S5A["プレイスメント:\nad.line.me"] --> S5B["ターゲティング設定"]
+        S5B --> S5C["CR＆遷移先URL設定"]
+        S5C --> GOAL(["配信開始 🚀"])
+    end
+
+    style START fill:#7c3aed,color:#fff,stroke:#6d28d9
+    style GOAL fill:#22c55e,color:#fff,stroke:#16a34a
+    style S0 fill:#1e293b,stroke:#475569,color:#e2e8f0
+    style S1 fill:#1e293b,stroke:#475569,color:#e2e8f0
+    style S2 fill:#1e293b,stroke:#475569,color:#e2e8f0
+    style S3 fill:#1e293b,stroke:#475569,color:#e2e8f0
+    style S4 fill:#1e293b,stroke:#475569,color:#e2e8f0
+    style S5 fill:#1e293b,stroke:#475569,color:#e2e8f0
+                </div>
+
+                <div style="margin-top: 32px;">
+                    <div class="step-flow">
+                        <div class="step-num">0</div>
+                        <div class="step-content">
+                            <strong>BM接続（初回のみ）</strong>
+                            <p>一度接続すれば以降はBMからタグ管理できる。BM未接続でもアカウント単位で計測タグは発行・利用可能（BM接続は推奨だが必須ではない）。</p>
+                        </div>
+                    </div>
+                    <div class="step-flow">
+                        <div class="step-num">1</div>
+                        <div class="step-content">
+                            <strong>計測タグの発行</strong>
+                            <p>管理画面「ツール → 権限・データ → 計測タグ」から。アカウントにつき1つ（BM接続時はBM側で発行）。グローバルスニペットとイベントスニペットの2つをコピー。</p>
+                        </div>
+                    </div>
+                    <div class="step-flow">
+                        <div class="step-num">2</div>
+                        <div class="step-content">
+                            <strong>タグをWebサイトに設置</strong>
+                            <p>グローバルスニペット → 全ページの &lt;head&gt; 内。イベントスニペット → サンクスページ（CVページ）。GTM経由でも設置可能。設置後「イベント受信履歴」で発火確認。</p>
+                        </div>
+                    </div>
+                    <div class="step-flow">
+                        <div class="step-num">3</div>
+                        <div class="step-content">
+                            <strong>コンバージョン設定を作成</strong>
+                            <p>管理画面「ツール → ライブラリー → コンバージョン測定」から。種別「ウェブ（計測タグ）」を選択。コンバージョングループで複数CV設定をまとめることも可能（1グループ最大100件）。</p>
+                        </div>
+                    </div>
+                    <div class="step-flow">
+                        <div class="step-num" style="background: var(--accent3);">4</div>
+                        <div class="step-content">
+                            <strong>キャンペーン作成（CVと配信の紐づけポイント）</strong>
+                            <p>キャンペーン目的を「コンバージョン」に設定 → 自動入札を選択 → 「最適化に使用するコンバージョン」でSTEP 3のCV設定/グループを選択。ここがCVと配信が結びつくポイント。</p>
+                        </div>
+                    </div>
+                    <div class="step-flow">
+                        <div class="step-num" style="background: var(--green);">5</div>
+                        <div class="step-content">
+                            <strong>広告グループ＆広告作成</strong>
+                            <p>プレイスメント <code>ad.line.me</code> でLINE面を指定。オーディエンスカテゴリ、サーチターゲティング、サイトリターゲティングを設定。CR＋遷移先URLを入れて配信開始。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: CVデータの流れ -->
+        <section>
+            <div class="section-header"><h2>🔄 CVデータの流れ（LINE面配信時）</h2></div>
+            <div class="section-body">
+                <div class="mermaid">
+sequenceDiagram
+    participant U as 👤 ユーザー
+    participant LINE as LINE面<br>(トーク最上部等)
+    participant LP as 記事LP → 本LP
+    participant TY as サンクスページ
+    participant YDA as YDA管理画面
+    participant AI as 自動入札
+
+    U->>LINE: 広告をタップ
+    LINE->>LP: 遷移（Yahooパラメータ自動付与）
+    LP->>TY: CV完了（購入/予約等）
+    TY->>YDA: イベントスニペット発火 → CV記録
+    YDA->>AI: CVデータをフィードバック
+    AI->>LINE: 次の配信を最適化
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: FAQ -->
+        <section>
+            <div class="section-header"><h2>❓ よくある疑問</h2></div>
+            <div class="section-body">
+                <div class="faq-item">
+                    <div class="q">Q: タグ設置はアカウント毎にしかできない？</div>
+                    <div class="a"><strong>従来はYes、BM接続すればNo。</strong> 従来はアカウント単位で1つ発行だったが、2026年1月〜BM接続すれば組織単位で共有可能。BM未接続ならアカウント単位のまま。</div>
+                </div>
+                <div class="faq-item">
+                    <div class="q">Q: テストしない限りキャンペーン作成上でCVを選べない？</div>
+                    <div class="a"><strong>YDAではコンバージョン設定を作れば選べる。</strong> TikTokのようにデータが1以上必要という制約はない（Meta寄りの仕様）。テストは「選べるようにするため」ではなく「正しく発火するかの動作確認」。</div>
+                </div>
+                <div class="faq-item">
+                    <div class="q">Q: コンバージョン測定を作成したとて、どうやって配信と結びつけるの？</div>
+                    <div class="a"><strong>キャンペーン作成時の「最適化に使用するコンバージョン」で選択する。</strong> 自動入札（CV数最大化/目標CPA）を使うと、選択したCV設定のデータを参照して配信が最適化される。上の操作フローSTEP 4を参照。</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Resources -->
+        <section>
+            <div class="section-header"><h2>📚 公式リソース</h2></div>
+            <div class="section-body">
+                <a class="resource-link" href="https://lycbiz.com/jp/column/yahoo-ads/technique/conversion" target="_blank">
+                    <span class="tag">CV基本</span><span class="title">Yahoo!広告のコンバージョン測定の設定方法を解説</span>
+                </a>
+                <a class="resource-link" href="https://lycbiz.com/jp/column/displayads-auc/marketing/conversion-analytics/" target="_blank">
+                    <span class="tag">YDA CV</span><span class="title">ディスプレイ広告の効果を可視化｜コンバージョン測定の設定方法とは</span>
+                </a>
+                <a class="resource-link" href="https://ads-developers.yahoo.co.jp/ja/lytag/post/30590623.html" target="_blank">
+                    <span class="tag">新タグ</span><span class="title">計測タグ Developer Center</span>
+                </a>
+                <a class="resource-link" href="https://www.lycbiz.com/jp/manual/BusinessManager/tag/" target="_blank">
+                    <span class="tag">BM</span><span class="title">ビジネスマネージャー 計測タグについて</span>
+                </a>
+                <a class="resource-link" href="https://ads-help.yahoo-net.jp/s/article/H000052782?language=ja" target="_blank">
+                    <span class="tag">BM接続</span><span class="title">ビジネスマネージャー・LINE公式アカウントへの接続</span>
+                </a>
+                <a class="resource-link" href="https://bop-com.co.jp/column/10658" target="_blank">
+                    <span class="tag">CVグループ</span><span class="title">コンバージョンアクショングループについて</span>
+                </a>
+                <a class="resource-link" href="https://lymcampus.jp/yahoo-ads/courses/ya-preparation/lessons/ya-2-1-7" target="_blank">
+                    <span class="tag">キャンペーン</span><span class="title">キャンペーン・広告グループを作成する</span>
+                </a>
+                <a class="resource-link" href="https://lycbiz.com/jp/column/displayads-auc/marketing/ad-placement/" target="_blank">
+                    <span class="tag">配信面</span><span class="title">YDAの配信面と効果的な活用方法</span>
+                </a>
+                <a class="resource-link" href="https://www.glad-cube.com/blog/?p=42907" target="_blank">
+                    <span class="tag">LINE面</span><span class="title">YDAでLINE面への配信が拡大（グラッドキューブ）</span>
+                </a>
+                <a class="resource-link" href="https://ads-developers.yahoo.co.jp/ja/conversion-api/" target="_blank">
+                    <span class="tag">CV API</span><span class="title">コンバージョンAPI Developer Center</span>
+                </a>
+                <a class="resource-link" href="https://www.lycbiz.com/jp/news/yahoo-ads/20241218/" target="_blank">
+                    <span class="tag">配信面</span><span class="title">プレイスメントターゲティングの設定機能改善</span>
+                </a>
+                <a class="resource-link" href="https://lycbiz.com/jp/column/displayads-auc/technique/autobid_guide" target="_blank">
+                    <span class="tag">自動入札</span><span class="title">自動入札活用ガイド</span>
+                </a>
+                <div class="info-block" style="margin-top: 16px;">
+                    <h3>リサーチのコツ</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">公式ドメイン <code>lycbiz.com</code> がLINEヤフーの公式情報源。2025年6月にタグ体系が刷新されたため、それ以前の記事は旧方式の説明が多い点に注意。</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        YDA LINE面出稿とCV計測 — AXIS Ads ナレッジ |
+        <a href="https://tsutsuihanano.github.io/MyVault-Public/">GitHub Pages</a>
+    </footer>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark',
+            themeVariables: {
+                primaryColor: '#7c3aed',
+                primaryTextColor: '#e2e8f0',
+                lineColor: '#64748b',
+                secondaryColor: '#1e293b',
+                tertiaryColor: '#0f172a',
+                background: '#1e293b',
+                mainBkg: '#1e293b',
+                nodeBorder: '#475569',
+                clusterBkg: '#1e293b',
+                clusterBorder: '#334155',
+                titleColor: '#e2e8f0',
+                actorBkg: '#7c3aed',
+                actorTextColor: '#fff',
+                actorBorder: '#6d28d9',
+                signalColor: '#e2e8f0',
+                signalTextColor: '#e2e8f0',
+                noteBkgColor: '#334155',
+                noteTextColor: '#e2e8f0',
+                noteBorderColor: '#475569',
+                activationBkgColor: '#7c3aed',
+                sequenceNumberColor: '#e2e8f0',
+                edgeLabelBackground: '#1e293b'
+            },
+            sequence: { mirrorActors: false },
+            flowchart: { curve: 'basis' }
+        });
+    </script>
+</body>
+</html>
