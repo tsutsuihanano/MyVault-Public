@@ -213,7 +213,8 @@ graph TD
 <details><summary>CSVズレ修正</summary><div class="detail-body"><p><strong>期限:</strong> 月初2営（媒体起因で1営はエラーになるため）</p>
 <p><strong>所要時間:</strong> ～4H</p>
 <p><strong>手順:</strong> <span class="badge badge-star">★ 具体手順を記入</span></p>
-<p><strong>依存:</strong> これが完了しないと支出確定（消化金額確定）と売上確定に進めない</p></div></details><details><summary>売上作業ログシートの更新</summary><div class="detail-body"><p><strong>期限:</strong> 2-3営</p>
+<p><strong>依存:</strong> これが完了しないと支出確定（消化金額確定）と売上確定に進めない</p>
+<p><strong>背景:</strong> 木口さんがエンターキーの補填額を交渉する材料としてCSV保管を使うため、最速で完了させ木口さんに連携する必要がある。</p></div></details><details><summary>売上作業ログシートの更新</summary><div class="detail-body"><p><strong>期限:</strong> 2-3営</p>
 <p><strong>手順:</strong> 集計シートのセットアップ（URLと指定期間）→ 集計ツール実行</p></div></details>
 </div></section>
 
@@ -223,22 +224,40 @@ graph TD
 <div class="sub-section"><h4>アド</h4></div>
 <details><summary>売上請求書の共通フロー</summary><div class="detail-body"><div class="pre">成果情報受領 → 成果確認（ASP管理画面） → ASP/CL件数と突合 → CSV保管と比較 → 請求書発行 → 送付 → フォルダ格納 → チェックリスト更新</div></div></details><details><summary>ファンネルアド — DIO脱毛</summary><div class="detail-body"><p><strong>期限:</strong> 成果〆1営15時 / 発行〆3営</p>
 <p><strong>手順:</strong></p><ol><li>【売上】数字合わせログ 脱毛用FMを複製→該当月用に更新</li><li><strong>運用管理シートが正</strong></li><li>成果情報をアクシス計算用シートで整理</li><li>アドエビスを確認し乖離確認（大きすぎる場合は先方に確認）</li><li>CSV保管とASP管理画面が差異なしであること確認</li></ol>
-<p><strong>課題:</strong> 脱毛専用FM必要（痩身とは大違い）/ 運用管理シートとの相関性の関数</p></div></details><details><summary>ファンネルアド — DIO痩身</summary><div class="detail-body"><p><strong>期限:</strong> 成果〆1営15時 / 発行〆3営</p>
-<p><strong>手順:</strong> 脱毛と同様の流れだがFMが異なる</p>
+<p><strong>注意:</strong> ファンネルアドは案件ごとに請求書を分けて発行する必要がある。</p>
+<p><strong>課題:</strong> 脱毛専用FM必要（痩身とは大違い）/ 運用管理シートとの相関性の関数</p></div></details><details><summary>ファンネルアド — DIO痩身（CPF）</summary><div class="detail-body"><p><strong>期限:</strong> 成果〆1営15時 / 発行〆3営</p>
+<p><strong>手順:</strong> FINクリニック（CPF）とほぼ同様の流れだがFMが異なる</p>
+<p><strong>CPF乖離確認:</strong> FINクリニックと同じくCATS vs Lステップで乖離確認。5%以内なら許容。</p>
+<p><strong>注意:</strong> ファンネルアドは案件ごとに請求書を分けて発行する必要がある。</p>
 <p><strong>課題:</strong> 痩身用FMの整備が必要</p></div></details><details><summary>ファンネルアド — FINクリニック（CPF）</summary><div class="detail-body"><p><strong>期限:</strong> 成果〆1営15時 / 発行〆3営</p>
 <p><strong>CPF乖離確認:</strong> CATS vs Lステップ。乖離率 = (CATS−Lステップ)/CATS×100。<strong>5%以内なら許容。</strong></p>
-<p><strong>課題:</strong> 乖離を減らす動きは必要（計測ツールの意味がなくなるため）</p></div></details><details><summary>サルクルー</summary><div class="detail-body"><p><strong>期限:</strong> 成果〆1営終日 / 発行〆4営18時</p><p>共通フロー通り。</p></div></details><details><summary>WEBGRAM</summary><div class="detail-body"><p><strong>期限:</strong> 成果〆2営 / 発行〆3営</p><p>共通フロー通り。</p></div></details><details><summary>FORCE</summary><div class="detail-body"><p><strong>期限:</strong> 成果〆2営 / 発行〆4営</p><p>宛先: 株式会社DenDe</p></div></details><details><summary>いんてぐる</summary><div class="detail-body"><p><strong>期限:</strong> 成果〆2営19時 / 発行〆4営</p><p><strong>注意:</strong> メール送付（CWではない）</p></div></details><details><summary>ラヴィリ（30日/60日サイト）</summary><div class="detail-body"><p><strong>期限:</strong> 成果〆2営19時 / 発行〆4営19時</p><p>30日サイト・60日サイトで<strong>2種類</strong>の請求書を発行。</p></div></details><details><summary>ピアラ（売上）</summary><div class="detail-body"><p><strong>期限:</strong> ※情報来てから1営（デッドライン4営）</p>
-<p><strong>注意:</strong> 成果情報の期日が固定でなく「来てから1営」→ 催促管理が重要</p></div></details><details><summary>PG</summary><div class="detail-body"><p><strong>期限:</strong> 成果〆3営16時 / 発行〆5営19時</p><p>PG(YT)は営業代行費対象外なので分けて管理。</p></div></details><details><summary>エンターキー（売上）</summary><div class="detail-body"><p><strong>期限:</strong> 成果〆3-5営 / 発行〆5営19時</p>
+<p><strong>注意:</strong> ファンネルアドは案件ごとに請求書を分けて発行する必要がある。</p>
+<p><strong>課題:</strong> 乖離を減らす動きは必要（計測ツールの意味がなくなるため）</p></div></details><details><summary>サルクルー</summary><div class="detail-body"><p><strong>期限:</strong> 成果〆1営終日 / 発行〆4営18時</p>
+<p><strong>宛先:</strong> 博報堂DY ONE</p>
+<p><strong>注意:</strong> 請求書は<strong>メール送付</strong>（CWではない）</p>
+<p>共通フロー通り。</p></div></details><details><summary>WEBGRAM</summary><div class="detail-body"><p><strong>期限:</strong> 成果〆2営 / 発行〆3営</p><p>共通フロー通り。</p></div></details><details><summary>FORCE（株式会社DenDe）</summary><div class="detail-body"><p><strong>期限:</strong> 成果〆2営 / 発行〆4営</p>
+<p><strong>請求書宛名:</strong> 株式会社DenDe</p>
+<p>共通フロー通り。</p></div></details><details><summary>いンテグル（株式会社いンテグル）</summary><div class="detail-body"><p><strong>期限:</strong> 成果〆2営19時 / 発行〆4営</p>
+<p><strong>請求書宛名:</strong> 株式会社いンテグル</p>
+<p><strong>注意:</strong> メール送付（CWではない）</p></div></details><details><summary>ラヴィリ（30日/60日サイト）</summary><div class="detail-body"><p><strong>期限:</strong> 成果〆2営19時 / 発行〆4営19時</p><p>30日サイト・60日サイトで<strong>2種類</strong>の請求書を発行。</p></div></details><details><summary>ピアラ（売上）</summary><div class="detail-body"><p><strong>期限:</strong> ※情報来てから1営（デッドライン4営）</p>
+<p><strong>注意:</strong> 成果情報の期日が固定でなく「来てから1営」→ 催促管理が重要</p></div></details><details><summary>PG（株式会社ミチガエル）</summary><div class="detail-body"><p><strong>期限:</strong> 成果〆3営16時 / 発行〆5営19時</p>
+<p><strong>請求書宛名:</strong> 株式会社ミチガエル</p>
+<p>PG(YT)は営業代行費対象外なので分けて管理。</p></div></details><details><summary>エンターキー（売上）</summary><div class="detail-body"><p><strong>期限:</strong> 成果〆3-5営 / 発行〆5営19時</p>
 <p><strong>前提:</strong> 木口さんが村田さんと請求額をすり合わせ済み → 降りてくる。<strong>件数確認は不要。</strong></p>
+<p><strong>背景:</strong> 木口さんが補填額を交渉する材料として<strong>CSV保管</strong>を使うため、CSVズレ修正は最速で完了させ木口さんに連携する必要がある。これもCSVズレ修正を2営で終わらせるべき理由の一つ。</p>
 <p><strong>注意:</strong> 案件数が社内最多のため、1件でもズレると金額に直結。慎重な確認が必要。</p></div></details><details><summary>ナハトへアド売上連携</summary><div class="detail-body"><p><strong>期限:</strong> 6営 | トリガー: アド売上完了後</p>
 <p>アド売上の請求書をフォルダにまとめてナハトへ連携。</p>
 <p><strong>重要:</strong> ナハトに連携するのは<strong>アド売上とアド支出（手数料）のみ</strong>。ASP・貸アカ・出稿立替費・PR等は営業代行費の対象外のため、ナハトには渡さない。</p></div></details><details><summary>ナハト商流売上</summary><div class="detail-body"><p><strong>期限:</strong> 8営 | トリガー: アド売上・消化金額・手数料がすべて確定した後</p>
 <p><strong>背景:</strong> ナハトとの協業関係上、アクシス側のアド売上請求書・消化金額・手数料請求書が<strong>すべて確定してからでないと、ナハトが成果情報を出してくれない</strong>。そのため工程が営業代行費の直前（8営）になる。</p>
-<p>ナハトからの成果情報到着次第、請求書発行・送付。</p>
-<p><span class="badge badge-star">★ 具体手順を記入</span></p></div></details>
+<p>ナハトからの成果情報到着次第、共通フローに沿って請求書発行・送付。</p>
+<p><strong>注意:</strong> 案件ごとに速報値の管理画面と成果（実CV）の管理画面が異なる（場合によってはスプシやエクセル）。<strong>案件×管理画面の対応リストが必要。</strong></p>
+<p><span class="badge badge-star">★ 案件×管理画面の対応リストを作成</span></p></div></details>
 <div class="sub-section"><h4>ASP</h4></div>
 <details><summary>エンターキーASP売上</summary><div class="detail-body"><p><strong>期限:</strong> 6営</p>
-<p>木口→村田すり合わせ後に降りてくる。件数確認不要。営業代行費対象外。</p></div></details><details><summary>リバティーASP売上</summary><div class="detail-body"><p><span class="badge badge-star">★ 期限・手順を記入</span></p>
+<p>木口→村田すり合わせ後に降りてくる。件数確認不要。営業代行費対象外。</p>
+<p><strong>内容:</strong> ナハトにTCBをおろしている（<strong>TCBは二次卸禁止のため社外秘</strong>）。そのマージンを計算する。</p></div></details><details><summary>リバティーASP売上</summary><div class="detail-body"><p><strong>開始:</strong> 2026年3月〜</p>
+<p>TCBをおろしており、単価は別個で渡している。エンターキーからこれ用の請求書が来るイメージ。</p>
+<p><strong>注意:</strong> 3月から初めて発生するため、実際の運用はやってみないとわからない部分がある。</p>
 <p>営業代行費対象外。</p></div></details>
 <div class="sub-section"><h4>貸アカ</h4></div>
 <details><summary>LIBERTY CORE 貸アカ請求書発行</summary><div class="detail-body"><p><strong>期限:</strong> 2-3営</p>
