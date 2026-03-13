@@ -105,6 +105,14 @@ details .detail-body{padding:18px 20px;border-top:1px solid var(--border);line-h
 </ul>
 <h3>前提（協業体制）</h3>
 <p>アクシスはナハトとの<strong>協業</strong> → アド事業部はナハトに<strong>営業代行費（粗利の20%）</strong>を支払う。</p>
+
+<div style="margin:20px 0;padding:16px 20px;background:rgba(239,68,68,.12);border:2px solid rgba(239,68,68,.4);border-radius:12px">
+<h4 style="color:#f87171;margin:0 0 10px;font-size:1.05rem">🚨 絶対厳守事項</h4>
+<ul style="margin:0">
+<li><strong>営業代行費対象外の請求書・エビデンスは絶対にナハトに連携しないこと。</strong>対象外: ASP・貸アカ・出稿立替費・PR・運用代行費</li>
+<li><strong>TCBの二次卸は絶対に禁止。</strong>社内でも機密情報として扱う認識を持つこと（エンターキーASP・リバティーASP関連）</li>
+</ul>
+</div>
 <h3>データの所在（現行フロー）</h3>
 <p>※以下は現行の運用で使用しているシート。今後の改善でシート統合・廃止の可能性あり。</p>
 <div class="card-grid">
@@ -281,18 +289,18 @@ graph TD
 <li>手入力箇所を修正（I列,K列,L列,S列,Y列,AC列）</li>
 <li>指定期間別データ抽出タブからコピペ</li>
 <li>S列に「ナハトアカウント」or「ナハト立替」を手入力</li>
-<li>関数チェック: N/Aなし / デマンド入り / LIBERTY貸アカ・ASP両方あり / <strong>予算運用が記載されていないこと</strong></li></ol>
+<li>関数チェック: N/Aなし / デマンド入り / <strong>営業代行費対象外のものが混入していないこと</strong> / <strong>予算運用が記載されていないこと</strong></li></ol>
 <p><strong>課題:</strong> AT列コピペが#N/Aになることが多発</p></div></details><details><summary>使用アカウントスクショ</summary><div class="detail-body"><p><strong>期限:</strong> 2営 | トリガー: CSVズレ修正完了後</p>
 <p><strong>所要時間:</strong> ～1.5H</p>
 <p><strong>手順:</strong></p><ol>
-<li><strong>FB:</strong> 広告レポート→ソート先月→<strong>リバティー・ローコスト省く</strong></li>
-<li><strong>TikTok:</strong> アナリティクスからCSV→「ローコスト」「LIBERTY」削除</li>
+<li><strong>FB:</strong> 広告レポート→ソート先月→<strong>営業代行費対象外のアカウントを省く</strong></li>
+<li><strong>TikTok:</strong> アナリティクスからCSV→<strong>営業代行費対象外のアカウントを削除</strong></li>
 <li><strong>YouTube:</strong> DBシートとVLOOK→各アカウントスクショ</li>
 <li>フォルダにまとめる</li></ol>
 <p><strong>課題:</strong> FB/TikのCSV自動取得 / YTのGmail紐づけVLOOK毎回必要</p></div></details><details><summary>ナハトに連携（シート＋スクショ）</summary><div class="detail-body"><p><strong>期限:</strong> 2営 | トリガー: 上記2つ完了後</p>
 <p><strong>手順:</strong></p><ol>
 <li>ナハトシートをソート→出稿料合計算出</li>
-<li><strong>クロスチェック: ローコスト・LIBERTY入っていないか</strong></li>
+<li><strong>クロスチェック: 営業代行費対象外のアカウント・案件が含まれていないか必ず確認</strong></li>
 <li>ナハトシート＋スクショzipをナハトへ連携</li></ol></div></details>
 <div class="sub-section"><h4>手数料</h4></div>
 <details><summary>手数料請求書受領</summary><div class="detail-body"><p><strong>デッドライン:</strong> 4営 | 対象社は月によって変動</p>
@@ -310,12 +318,19 @@ graph TD
 <p><strong>重要:</strong> ナハトに連携するのは<strong>アド支出（手数料）のみ</strong>。運用代行費・出稿立替費等はナハトには渡さない（営業代行費の計算対象外）。</p></div></details>
 <div class="sub-section"><h4>運用代行費</h4></div>
 <details><summary>きっぺいさん請求書</summary><div class="detail-body"><p><strong>期限:</strong> 1-3営 | 粗利の30%</p>
-<p>タスク化で依頼→請求書受領→金額確認→MF送付→フォルダ格納→チェックリスト更新</p></div></details><details><summary>しゅんごさん請求書</summary><div class="detail-body"><p><strong>期限:</strong> 1-3営</p>
+<p><strong>成果確認:</strong> きっぺいさんにDAIKONのID/パスを渡しているため、ASP管理画面と同様に確認可能。きっぺいさんが運用しているリンクを1つ1つ確認する必要あり。</p>
+<p><strong>締め日:</strong> TCBと異なり<strong>月末締め</strong>のため、「発生件数」で粗利計算してOK。</p>
+<p>タスク化で依頼→請求書受領→金額確認→MF送付→フォルダ格納→チェックリスト更新</p></div></details><details><summary>しゅんごさん請求書（株式会社GDA）</summary><div class="detail-body"><p><strong>期限:</strong> <strong>2営（デッドライン）</strong> ※柔軟性はあるが基本はデッドライン厳守</p>
 <p>請求書1枚（YTコンサル費30万＋PR運用代行費）</p></div></details><details><summary>長谷川さん請求書</summary><div class="detail-body"><p><strong>期限:</strong> 1-3営</p>
-<p>粗利の33%を支払い。赤字の場合は消化金額のみ。</p></div></details><details><summary>ナハト営業代行費受領</summary><div class="detail-body"><p><strong>期限:</strong> 8営</p>
-<p>ナハトからの営業代行費（アド売上 − アド支出の粗利 × 20%）の請求書を受領 → MF送付確認</p>
+<p>粗利の33%を支払い。赤字の場合は消化金額のみ。</p></div></details><details><summary>ナハト営業代行費受領</summary><div class="detail-body"><p><strong>期限:</strong> 8営〜 | トリガー: ナハト商流の売上請求書が締まった後（最後の最後）</p>
+<p><strong>計算:</strong> アクシスの粗利（アド売上 − アド支出）× 20%。ナハト側が関数で算出してくるので、<strong>計算式が合っているか確認</strong>できれば受領。</p>
+<p><strong>受領方法:</strong> バクラクでメール送付される → こちらでダウンロード。プラスMF送付もしてもらう。</p>
 <p><strong>対象:</strong> アド売上とアド支出（手数料）のみが計算ベース。ASP・貸アカ・出稿立替費・PRは対象外。</p>
-<p><span class="badge badge-star">★ 具体手順を記入</span></p></div></details>
+<p><strong>注意:</strong></p>
+<ul>
+<li>TikTokのリベート等で相殺が入ることがある</li>
+<li>出稿立替費がある場合、営業代行費と一緒に請求書が来る場合もある</li>
+</ul></div></details>
 <div class="sub-section"><h4>出稿立替費</h4></div>
 <details><summary>エンターキーTCB-FB出稿立替費</summary><div class="detail-body"><table>
 <tr><th>#</th><th>サブステップ</th><th>期限</th><th>担当</th></tr>
