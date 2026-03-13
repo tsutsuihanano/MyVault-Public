@@ -91,13 +91,18 @@ nav.toc a:hover{background:var(--surface);color:var(--text)}
 <h3>業務の大枠</h3>
 <table>
 <tr><th>区分</th><th>内容</th></tr>
-<tr><td>アドアフィ事業</td><td>粗利確定（売上−支出）</td></tr>
+<tr><td>アド事業部</td><td>粗利確定（売上−支出）</td></tr>
 <tr><td>PR事業部</td><td>粗利確定（再生回数×単価）</td></tr>
 </table>
-<p>粗利 = <strong>収入</strong>（売上: 単価×成果）− <strong>支出</strong>（出稿料: 各媒体の消化金額）</p>
+<p>粗利 = <strong>収入</strong>（売上）− <strong>支出</strong></p>
+<ul>
+<li><strong>収入（売上）:</strong> 単価×成果（承認CV数、再生回数、投稿件数など）</li>
+<li><strong>支出:</strong> 出稿料（各媒体の消化金額）に加え、運用代行費、コンサル費、アカウント貸手数料、出稿立替費なども含む</li>
+</ul>
 <h3>前提（協業体制）</h3>
-<p>アクシスはナハトとの<strong>協業</strong> → アドアフィ事業はナハトに<strong>営業代行費（粗利の20%）</strong>を支払う。</p>
-<h3>データの所在</h3>
+<p>アクシスはナハトとの<strong>協業</strong> → アド事業部はナハトに<strong>営業代行費（粗利の20%）</strong>を支払う。</p>
+<h3>データの所在（現行フロー）</h3>
+<p>※以下は現行の運用で使用しているシート。今後の改善でシート統合・廃止の可能性あり。</p>
 <div class="card-grid">
 <div class="card"><h4>CSV保管シート</h4><p>CPN毎のデータが日別で記載。<strong>ここに当月の全数値が入っていないと総合シートが正しくならない。</strong></p></div>
 <div class="card"><h4>総合シート</h4><p>CSV保管から吸い上げた売上・出稿料が事業部・案件ごとにまとまっている。</p></div>
@@ -109,18 +114,20 @@ nav.toc a:hover{background:var(--surface);color:var(--text)}
 <section id="structure">
 <div class="section-header"><h2>業務構造（4大分類 × 小分類）</h2></div>
 <div class="section-body">
+<p>※対象社・社数は月によって変動する。以下は構造の定義であり、特定月の実績ではない。</p>
 <table>
 <tr><th>大分類</th><th>小分類</th><th>主な業務</th></tr>
 <tr><td rowspan="1"><span class="badge badge-prep">準備</span></td><td>準備</td><td>シート複製、タブ更新、チェックリスト、CSVズレ修正、タスク化、PRヒアリング、作業ログ更新、エビデンス催促</td></tr>
-<tr><td rowspan="4"><span class="badge badge-rev">売上確定</span></td><td>アド</td><td>ファンネルアド, サルクルー, WEBGRAM, FORCE, いんてぐる, ラヴィリ, ピアラ, PG, エンターキー + ナハトへ売上連携</td></tr>
-<tr><td>ASP</td><td>エンターキーASP + ナハト商流売上</td></tr>
+<tr><td rowspan="5"><span class="badge badge-rev">売上確定</span></td><td>アド</td><td>各商流の売上請求書発行（対象社は月によって変動）+ ナハトへアド売上連携</td></tr>
+<tr><td>ASP</td><td>エンターキーASP、リバティーASP</td></tr>
 <tr><td>貸アカ</td><td>LIBERTY CORE（3%手数料の請求書発行）</td></tr>
-<tr><td>PR</td><td>PR売上請求書発行（3〜4社）</td></tr>
+<tr><td>PR</td><td>PR売上請求書発行（対象社は月によって変動）</td></tr>
+<tr><td>ナハト商流</td><td>ナハト商流の売上請求書発行 ※配置検討中</td></tr>
 <tr><td rowspan="4"><span class="badge badge-cost">支出確定</span></td><td>消化金額確定</td><td>ナハトシート記入、使用アカスクショ、ナハトに連携</td></tr>
-<tr><td>手数料</td><td>手数料請求書受領5社 + ナハトへ手数料連携</td></tr>
-<tr><td>運用代行費</td><td>きっぺい, しゅんご, 長谷川 + ナハト営業代行費</td></tr>
+<tr><td>手数料</td><td>手数料請求書受領（対象社は月によって変動）+ ナハトへ手数料連携</td></tr>
+<tr><td>運用代行費</td><td>運用代行者への支払い（対象者は月によって変動）+ ナハト営業代行費</td></tr>
 <tr><td>出稿立替費</td><td>エンターキーTCB-FB（のあ→集計→古田→村田）</td></tr>
-<tr><td rowspan="1"><span class="badge badge-fin">最終</span></td><td>最終</td><td>管理部連携（PR管理部、入金確認・振込依頼）、完了報告</td></tr>
+<tr><td rowspan="1"><span class="badge badge-fin">最終</span></td><td>最終</td><td>管理部連携（全請求書を管理部に渡す）、完了報告</td></tr>
 </table>
 
 <div class="mermaid">
@@ -129,31 +136,32 @@ graph TD
         P["シート複製・タブ更新<br/>チェックリスト・タスク化<br/>CSVズレ修正・PRヒアリング<br/>作業ログ・エビデンス催促"]
     end
     subgraph REV["🟢 売上確定"]
-        R1["アド売上 約15社"]
-        R2["ASP（エンターキーASP）<br/>＋ナハト商流売上"]
+        R1["アド売上（社数は月変動）"]
+        R2["ASP<br/>（エンターキーASP・リバティーASP）"]
         R3["貸アカ（LIBERTY CORE）"]
-        R4["PR売上 3-4社"]
-        RN["ナハトへ売上連携"]
+        R4["PR売上（社数は月変動）"]
+        R5["ナハト商流売上"]
+        RN["ナハトへアド売上連携"]
     end
     subgraph COST["🔴 支出確定"]
         C1["消化金額確定<br/>ナハトシート・スクショ"]
-        C2["手数料 4-5社"]
-        C3["運用代行費 3名"]
+        C2["手数料（社数は月変動）"]
+        C3["運用代行費（人数は月変動）"]
         C4["出稿立替費（TCB）"]
         CN["ナハトへ手数料連携<br/>＋営業代行費受領"]
     end
     subgraph FIN["⚪ 最終"]
-        F1["管理部連携"]
+        F1["管理部連携<br/>（全請求書を渡す）"]
         F2["完了報告"]
     end
-    P --> R1 & R2 & R3 & R4
+    P --> R1 & R2 & R3 & R4 & R5
     P --> C1 & C2 & C3 & C4
     R1 --> RN
     C2 --> CN
-    C3 --> CN
+    R1 & R2 & R3 & R4 & R5 --> F1
+    C2 & C3 & C4 --> F1
     RN --> F1
     CN --> F1
-    R4 --> F1
     F1 --> F2
 </div>
 </div></section>
@@ -161,7 +169,12 @@ graph TD
 <section id="timeline">
 <div class="section-header"><h2>期限サマリ</h2></div>
 <div class="section-body"><div class="timeline">
-<div class="tl-item"><strong>月初1営</strong><p>【準備】チェックリスト作成、各所タスク化、経理フロー概要欄</p></div><div class="tl-item"><strong>月初2営</strong><p>【準備】CSVズレ修正（～4H）<br>【支出-消化金額】ナハトシート記入、使用アカスクショ、ナハト連携<br>【支出-出稿立替】TCB請求書抽出(のあさん)</p></div><div class="tl-item"><strong>月初3営</strong><p>【支出-出稿立替】TCB集計・古田さん連携<br>【支出-運用代行】きっぺい/しゅんご/長谷川 請求書受領<br>【売上-貸アカ】LIBERTY CORE請求書発行</p></div><div class="tl-item"><strong>月初4営 ⚠</strong><p>【支出-手数料】手数料請求書5社（デッドライン）<br>【支出-手数料】ナハトへ手数料連携</p></div><div class="tl-item"><strong>月初5営 ⚠</strong><p>【支出-運用代行】PR運用代行（デッドライン）<br>【売上-PR】PR売上請求書（デッドライン）<br>【支出-出稿立替】TCB差異確認</p></div><div class="tl-item"><strong>月初6営 ⚠</strong><p>【売上-アド】アド売上請求書15社（デッドライン）<br>【売上-ASP】エンターキーASP<br>【売上-アド】ナハトへ売上連携<br>【支出-出稿立替】TCB村田さん発行→MF確認</p></div><div class="tl-item"><strong>月初8営</strong><p>【売上-ASP】ナハト商流売上<br>【支出-運用代行】ナハト営業代行費・出稿立替費</p></div><div class="tl-item"><strong>月初10営 🔥</strong><p>【最終】入金確認・振込依頼＠管理部（最終デッドライン）<br>【最終】数字合わせ完了報告</p></div></div></div></section>
+<div class="tl-item"><strong>月初1営</strong><p>【準備】チェックリスト作成、各所タスク化、経理フロー概要欄</p></div><div class="tl-item"><strong>月初2営〜</strong><p>【準備】CSVズレ修正（～4H）<br><span style='color:var(--text-muted);font-size:.88rem'>※2営以降にする理由: 1営が1日の場合、土日関係なく媒体管理画面上で集計が走っている関係で数値エラーが起きうるため。2日以降の営業日からスタートする前提。</span><br>【支出-消化金額】ナハトシート記入、使用アカスクショ、ナハト連携<br>【支出-出稿立替】TCB請求書抽出(のあさん)</p></div><div class="tl-item"><strong>月初3営</strong><p>【支出-出稿立替】TCB集計・古田さん連携<br>【支出-運用代行】運用代行者の請求書受領（対象者は月変動）<br>【売上-貸アカ】LIBERTY CORE請求書発行</p></div><div class="tl-item"><strong>月初4営 <span class='badge badge-star' title='デッドライン: この日までに完了する必要がある期限'>DL</span></strong><p>【支出-手数料】手数料請求書受領（対象社は月変動）<br>【支出-手数料】ナハトへ手数料連携</p></div><div class="tl-item"><strong>月初5営 <span class='badge badge-star' title='デッドライン: この日までに完了する必要がある期限'>DL</span></strong><p>【支出-運用代行】PR運用代行<br>【売上-PR】PR売上請求書<br>【支出-出稿立替】TCB差異確認</p></div><div class="tl-item"><strong>月初6営 <span class='badge badge-star' title='デッドライン: この日までに完了する必要がある期限'>DL</span></strong><p>【売上-アド】アド売上請求書（対象社は月変動）<br>【売上-ASP】エンターキーASP、リバティーASP<br>【売上-アド】ナハトへアド売上連携<br>【支出-出稿立替】TCB村田さん発行→MF確認</p></div><div class="tl-item"><strong>月初8営</strong><p>【売上-ナハト商流】ナハト商流売上<br>【支出-運用代行】ナハト営業代行費・出稿立替費</p></div><div class="tl-item"><strong>月初10営 <span class='badge badge-star' title='最終デッドライン'>最終DL</span></strong><p>【最終】管理部連携（全請求書を渡す: アド・ASP・貸アカ・PR・出稿立替費すべて）<br>【最終】入金確認・振込依頼＠管理部<br>【最終】数字合わせ完了報告</p></div>
+<div style="margin-top:16px;padding:12px 16px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);border-radius:8px;font-size:.9rem">
+<strong>凡例:</strong>
+<span class="badge badge-star">DL</span> = デッドライン（この営業日までに完了する必要がある期限）
+<span class="badge badge-star">最終DL</span> = 最終デッドライン
+</div></div></div></section>
 <section id="prep">
 <div class="section-header"><h2><span class="badge badge-prep">準備</span> 準備</h2></div>
 <div class="section-body">
@@ -207,23 +220,26 @@ graph TD
 <p><strong>課題:</strong> 乖離を減らす動きは必要（計測ツールの意味がなくなるため）</p></div></details><details><summary><span class="badge badge-rev"></span> サルクルー<span class="badge badge-sub">アド</span></summary><div class="detail-body"><p><strong>期限:</strong> 成果〆1営終日 / 発行〆4営18時</p><p>共通フロー通り。</p></div></details><details><summary><span class="badge badge-rev"></span> WEBGRAM<span class="badge badge-sub">アド</span></summary><div class="detail-body"><p><strong>期限:</strong> 成果〆2営 / 発行〆3営</p><p>共通フロー通り。</p></div></details><details><summary><span class="badge badge-rev"></span> FORCE<span class="badge badge-sub">アド</span></summary><div class="detail-body"><p><strong>期限:</strong> 成果〆2営 / 発行〆4営</p><p>宛先: 株式会社DenDe</p></div></details><details><summary><span class="badge badge-rev"></span> いんてぐる<span class="badge badge-sub">アド</span></summary><div class="detail-body"><p><strong>期限:</strong> 成果〆2営19時 / 発行〆4営</p><p><strong>注意:</strong> メール送付（CWではない）</p></div></details><details><summary><span class="badge badge-rev"></span> ラヴィリ（30日/60日サイト）<span class="badge badge-sub">アド</span></summary><div class="detail-body"><p><strong>期限:</strong> 成果〆2営19時 / 発行〆4営19時</p><p>30日サイト・60日サイトで<strong>2種類</strong>の請求書を発行。</p></div></details><details><summary><span class="badge badge-rev"></span> ピアラ（売上）<span class="badge badge-sub">アド</span></summary><div class="detail-body"><p><strong>期限:</strong> ※情報来てから1営（デッドライン4営）</p>
 <p><strong>注意:</strong> 成果情報の期日が固定でなく「来てから1営」→ 催促管理が重要</p></div></details><details><summary><span class="badge badge-rev"></span> PG<span class="badge badge-sub">アド</span></summary><div class="detail-body"><p><strong>期限:</strong> 成果〆3営16時 / 発行〆5営19時</p><p>PG(YT)は営業代行費対象外なので分けて管理。</p></div></details><details><summary><span class="badge badge-rev"></span> エンターキー（売上）<span class="badge badge-sub">アド</span></summary><div class="detail-body"><p><strong>期限:</strong> 成果〆3-5営 / 発行〆5営19時</p>
 <p><strong>前提:</strong> 木口さんが村田さんと請求額をすり合わせ済み → 降りてくる。<strong>件数確認は不要。</strong></p>
-<p><strong>注意:</strong> 案件数が社内最多のため、1件でもズレると金額に直結。慎重な確認が必要。</p></div></details><details><summary><span class="badge badge-rev"></span> ナハトへ売上連携<span class="badge badge-sub">アド</span></summary><div class="detail-body"><p><strong>期限:</strong> 6営 | トリガー: アド売上完了後</p>
-<p>売上請求書をフォルダにまとめてナハトへ連携（例: 2026年02月分売上資料_全商流_AXIS）</p>
-<p><strong>注意:</strong> 営業代行費対象外のものが含まれていないかダブルチェック</p></div></details>
+<p><strong>注意:</strong> 案件数が社内最多のため、1件でもズレると金額に直結。慎重な確認が必要。</p></div></details><details><summary><span class="badge badge-rev"></span> ナハトへアド売上連携<span class="badge badge-sub">アド</span></summary><div class="detail-body"><p><strong>期限:</strong> 6営 | トリガー: アド売上完了後</p>
+<p>アド売上の請求書をフォルダにまとめてナハトへ連携。</p>
+<p><strong>重要:</strong> ナハトに連携するのは<strong>アド売上とアド支出（手数料）のみ</strong>。ASP・貸アカ・出稿立替費・PR等は営業代行費の対象外のため、ナハトには渡さない。</p></div></details>
 <div class="sub-section"><h4>ASP</h4></div>
 <details><summary><span class="badge badge-rev"></span> エンターキーASP売上<span class="badge badge-sub">ASP</span></summary><div class="detail-body"><p><strong>期限:</strong> 6営</p>
-<p>木口→村田すり合わせ後に降りてくる。件数確認不要。営業代行費対象外。</p></div></details><details><summary><span class="badge badge-rev"></span> ナハト商流売上<span class="badge badge-sub">ASP</span></summary><div class="detail-body"><p><strong>期限:</strong> 8営</p>
-<p>ナハトからの成果情報到着次第、請求書発行・送付。</p>
-<p><span class="badge badge-star">★ 具体手順を記入</span></p></div></details>
+<p>木口→村田すり合わせ後に降りてくる。件数確認不要。営業代行費対象外。</p></div></details><details><summary><span class="badge badge-rev"></span> リバティーASP売上<span class="badge badge-sub">ASP</span></summary><div class="detail-body"><p><span class="badge badge-star">★ 期限・手順を記入</span></p>
+<p>営業代行費対象外。</p></div></details>
 <div class="sub-section"><h4>貸アカ</h4></div>
 <details><summary><span class="badge badge-rev"></span> LIBERTY CORE 貸アカ請求書発行<span class="badge badge-sub">貸アカ</span></summary><div class="detail-body"><p><strong>期限:</strong> 2-3営</p>
 <p>手数料3%。営業代行費対象外。</p>
 <p><strong>手順:</strong></p><ol><li>突き合わせシートからLIBERTY COREの消化金額を確認</li><li>手数料（消化金額の3%）を算出</li><li>請求書を発行→送付→MF送付→フォルダ格納→チェックリスト更新</li></ol></div></details>
 <div class="sub-section"><h4>PR</h4></div>
-<details><summary><span class="badge badge-rev"></span> PR売上請求書発行（3〜4社）<span class="badge badge-sub">PR</span></summary><div class="detail-body"><p><strong>期限:</strong> 5営（デッドライン）</p>
-<p>対象: ピアラ(成果〆1営/送付〆3営)。他にサルクルー・ナハト・スマートセクション・日本美心・Wacker等（月による）</p>
+<details><summary><span class="badge badge-rev"></span> PR売上請求書発行<span class="badge badge-sub">PR</span></summary><div class="detail-body"><p><strong>期限:</strong> 5営（デッドライン）</p>
+<p>対象社は月によって変動（ピアラ、サルクルー、ナハト、スマートセクション、日本美心、Wacker等）</p>
 <p><strong>共通フロー:</strong> 再生回数データ確認 → 成果情報確定 → 請求書発行 → 送付 → フォルダ格納</p>
 <p><strong>課題:</strong> PRは再生回数管理がされていないケースあり / 部長しか入っていないチャット</p></div></details>
+<div class="sub-section"><h4>ナハト商流</h4></div>
+<details><summary><span class="badge badge-rev"></span> ナハト商流売上<span class="badge badge-sub">ナハト商流</span></summary><div class="detail-body"><p><strong>期限:</strong> 8営</p>
+<p>ナハトからの成果情報到着次第、請求書発行・送付。</p>
+<p><span class="badge badge-star">★ 具体手順を記入</span></p></div></details>
 </div></section>
 
 <section id="cost">
@@ -251,9 +267,10 @@ graph TD
 <li><strong>クロスチェック: ローコスト・LIBERTY入っていないか</strong></li>
 <li>ナハトシート＋スクショzipをナハトへ連携</li></ol></div></details>
 <div class="sub-section"><h4>手数料</h4></div>
-<details><summary><span class="badge badge-cost"></span> 手数料請求書（毎月4〜5社）<span class="badge badge-sub">手数料</span></summary><div class="detail-body"><p><strong>デッドライン:</strong> 4営</p>
+<details><summary><span class="badge badge-cost"></span> 手数料請求書受領<span class="badge badge-sub">手数料</span></summary><div class="detail-body"><p><strong>デッドライン:</strong> 4営 | 対象社は月によって変動</p>
+<p style="color:var(--text-muted);font-size:.88rem">※以下は一例。月ごとに対象社・期日が変わるため都度確認が必要。</p>
 <table>
-<tr><th>社名</th><th>請求情報〆</th><th>受領〆</th><th>MF</th></tr>
+<tr><th>社名（例）</th><th>請求情報〆</th><th>受領〆</th><th>MF</th></tr>
 <tr><td>ピアラ</td><td>2営</td><td>3営</td><td>先方送付</td></tr>
 <tr><td>エンターキー</td><td>3営13時</td><td>4営</td><td>先方送付</td></tr>
 <tr><td>DYM</td><td>3営19時</td><td>4営</td><td>先方送付</td></tr>
@@ -261,13 +278,15 @@ graph TD
 <tr><td>セスグモ</td><td>3営16時</td><td>4営19時</td><td>こちら</td></tr>
 </table>
 <p><strong>共通フロー:</strong> エビデンス受領→突き合わせシート照合→請求書受領→金額確認→MF送付→フォルダ格納→チェックリスト更新</p></div></details><details><summary><span class="badge badge-cost"></span> ナハトへ手数料連携<span class="badge badge-sub">手数料</span></summary><div class="detail-body"><p><strong>期限:</strong> 4営 | トリガー: 手数料請求書完了後</p>
-<p>手数料請求書をフォルダにまとめてナハトへ連携。</p></div></details>
+<p>手数料請求書をフォルダにまとめてナハトへ連携。</p>
+<p><strong>重要:</strong> ナハトに連携するのは<strong>アド支出（手数料）のみ</strong>。運用代行費・出稿立替費等はナハトには渡さない（営業代行費の計算対象外）。</p></div></details>
 <div class="sub-section"><h4>運用代行費</h4></div>
 <details><summary><span class="badge badge-cost"></span> きっぺいさん請求書<span class="badge badge-sub">運用代行費</span></summary><div class="detail-body"><p><strong>期限:</strong> 1-3営 | 粗利の30%</p>
 <p>タスク化で依頼→請求書受領→金額確認→MF送付→フォルダ格納→チェックリスト更新</p></div></details><details><summary><span class="badge badge-cost"></span> しゅんごさん請求書<span class="badge badge-sub">運用代行費</span></summary><div class="detail-body"><p><strong>期限:</strong> 1-3営</p>
 <p>請求書1枚（YTコンサル費30万＋PR運用代行費）</p></div></details><details><summary><span class="badge badge-cost"></span> 長谷川さん請求書<span class="badge badge-sub">運用代行費</span></summary><div class="detail-body"><p><strong>期限:</strong> 1-3営</p>
-<p>粗利の33%を支払い。赤字の場合は消化金額のみ。</p></div></details><details><summary><span class="badge badge-cost"></span> ナハト営業代行費・出稿立替費<span class="badge badge-sub">運用代行費</span></summary><div class="detail-body"><p><strong>期限:</strong> 8営</p>
-<p>ナハト商流の売上・消化金額が確定後 → 営業代行費算出 → 請求書受領 → MF送付確認</p>
+<p>粗利の33%を支払い。赤字の場合は消化金額のみ。</p></div></details><details><summary><span class="badge badge-cost"></span> ナハト営業代行費受領<span class="badge badge-sub">運用代行費</span></summary><div class="detail-body"><p><strong>期限:</strong> 8営</p>
+<p>ナハトからの営業代行費（アド売上 − アド支出の粗利 × 20%）の請求書を受領 → MF送付確認</p>
+<p><strong>対象:</strong> アド売上とアド支出（手数料）のみが計算ベース。ASP・貸アカ・出稿立替費・PRは対象外。</p>
 <p><span class="badge badge-star">★ 具体手順を記入</span></p></div></details>
 <div class="sub-section"><h4>出稿立替費</h4></div>
 <details><summary><span class="badge badge-cost"></span> エンターキーTCB-FB出稿立替費<span class="badge badge-sub">出稿立替費</span></summary><div class="detail-body"><table>
@@ -285,7 +304,19 @@ graph TD
 <section id="final">
 <div class="section-header"><h2><span class="badge badge-fin">最終</span> 最終</h2></div>
 <div class="section-body">
-<details><summary><span class="badge badge-fin"></span> PR事業部売上 請求書連携＠管理部<span class="badge badge-sub">最終</span></summary><div class="detail-body"><p><strong>期限:</strong> 5営</p><p>請求書フォルダのリンクを管理部に連携。</p></div></details><details><summary><span class="badge badge-fin"></span> 入金確認・振込依頼＠管理部<span class="badge badge-sub">最終</span></summary><div class="detail-body"><p><strong>期限:</strong> 10営（最終デッドライン）</p>
+<details><summary><span class="badge badge-fin"></span> 管理部連携（全請求書）<span class="badge badge-sub">最終</span></summary><div class="detail-body"><p><strong>期限:</strong> 各請求書の完了次第〜10営</p>
+<p>管理部には<strong>すべての請求書</strong>を渡す:</p>
+<ul>
+<li>アド売上請求書</li>
+<li>ASP売上請求書（エンターキーASP、リバティーASP）</li>
+<li>貸アカ請求書（LIBERTY CORE）</li>
+<li>PR売上請求書</li>
+<li>ナハト商流売上請求書</li>
+<li>手数料請求書</li>
+<li>運用代行費請求書</li>
+<li>出稿立替費請求書</li>
+</ul>
+<p>請求書フォルダのリンクを管理部に連携。</p></div></details><details><summary><span class="badge badge-fin"></span> 入金確認・振込依頼＠管理部<span class="badge badge-sub">最終</span></summary><div class="detail-body"><p><strong>期限:</strong> 10営（最終デッドライン）</p>
 <p><span class="badge badge-star">★ 具体手順を記入</span></p></div></details><details><summary><span class="badge badge-fin"></span> 数字合わせ完了報告<span class="badge badge-sub">最終</span></summary><div class="detail-body"><p><strong>期限:</strong> 10営</p><p>請求書フォルダリンクを部課長陣にメンションで報告。</p></div></details></div></section>
 <section id="saisoku">
 <div class="section-header"><h2>催促のMECE化</h2></div>
