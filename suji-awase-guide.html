@@ -76,9 +76,9 @@ details .detail-body{padding:18px 20px;border-top:1px solid var(--border);line-h
 <a href="#revenue">売上確定</a>
 <a href="#cost">支出確定</a>
 <a href="#final">最終</a>
-<a href="#saisoku">催促MECE</a>
-<a href="#issues">課題</a>
-<a href="#kaizen">改善策</a>
+<a href="#problems">問題定義</a>
+<a href="#priority">優先度</a>
+<a href="#ai-human">AI×人間</a>
 </div></nav>
 
 <div class="hero">
@@ -360,69 +360,143 @@ graph TD
 </ul>
 <p>請求書フォルダのリンクを管理部に連携。</p></div></details><details><summary>入金確認・振込依頼＠管理部</summary><div class="detail-body"><p><strong>期限:</strong> 10営（最終デッドライン）</p>
 <p><strong>今後の運用:</strong> 管理部用のチェックボックス付きリストを用意して連携予定。これにより、これまで各請求書の説明を付けてチャットで送っていた作業が不要になる見込み。</p></div></details><details><summary>数字合わせ完了報告</summary><div class="detail-body"><p><strong>期限:</strong> 10営</p><p>請求書フォルダリンクを部課長陣にメンションで報告。</p></div></details></div></section>
-<section id="saisoku">
-<div class="section-header"><h2>催促のMECE化</h2></div>
+<section id="problems">
+<div class="section-header"><h2>問題定義</h2></div>
 <div class="section-body">
-<h3>3軸MECE</h3>
-<h4>軸1: 誰に</h4>
+<div style="margin-bottom:20px;padding:14px 18px;background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.3);border-radius:10px;font-size:.9rem">
+<p style="margin:0 0 6px"><strong>目標:</strong> 誰がやっても20Hで、正確に、抜け漏れなく完了できる設計</p>
+<p style="margin:0 0 6px"><strong>問題の定義:</strong> その事柄を解決しなければ目標達成できない事象（現状と目標の間にある障害）</p>
+<p style="margin:0"><strong>西村目線:</strong> 属人化脱却 / 全体進捗の可視化 / 抜け漏れ防止 / 情報集約 / AIに読み込ませて理想を構築 / AI×人間の役割分担</p>
+</div>
+<details><summary><span class="badge badge-">1</span> 全体進捗が一箇所で可視化されていない</summary><div class="detail-body"><p><strong>現状:</strong> 進捗管理シートのチェックリスト + 作業ログシート + 各CWのやりとり + 担当者の頭の中に進捗が散在</p>
+<p><strong>なぜ問題か:</strong> 代打者が「今どこまで終わっていて、次に何をすべきか」を即座に把握できない。20Hの時間配分も見えない。全体進捗の可視化・属人化脱却が不可能。</p>
+<p><strong>影響範囲:</strong> 全工程</p></div></details><details><summary><span class="badge badge-">2</span> 「誰が・いつまでに・何を」の情報が集約されていない</summary><div class="detail-body"><p><strong>現状:</strong> 期限はガイドに散在、担当は筒井さん前提。月ごとに対象社が変動するため毎月初に経理フロータブ×チェックリストで手動確定。タスク全量×担当×期限の一覧が一箇所に存在しない。</p>
+<p><strong>なぜ問題か:</strong> AIに読み込ませて現状把握もできない。代打者がタスクリストを自分で組み立てる必要がある。「誰がいつまでに何をやるのか」が明確になっていない = 情報集約ができていない。</p>
+<p><strong>影響範囲:</strong> 全工程</p></div></details><details><summary><span class="badge badge-">3</span> CSVズレ修正の手順が言語化されていない</summary><div class="detail-body"><p><strong>現状:</strong> 所要～4H。全工程のボトルネック（支出確定も売上確定もこれが終わらないと進めない + 木口さんへの連携も止まる）。にもかかわらず手順が★のまま。</p>
+<p><strong>なぜ問題か:</strong> クリティカルパス上の最大タスクの手順が完全に属人的。代打が来た瞬間に止まる。20H達成の最大リスク。</p>
+<p><strong>影響範囲:</strong> 準備 → 売上確定全体 → 支出確定全体 → 最終</p></div></details><details><summary><span class="badge badge-">4</span> ナハト商流の案件×管理画面の対応リストが存在しない</summary><div class="detail-body"><p><strong>現状:</strong> 案件ごとに速報値・実CVの管理画面が異なる（ASP管理画面/スプシ/エクセル）。このマッピングが筒井さんの頭にしかない。</p>
+<p><strong>なぜ問題か:</strong> 8営のタスク。ここで止まると営業代行費→最終連携が全部遅延する。代打者にはデータ取得先すらわからない。</p>
+<p><strong>影響範囲:</strong> 売上確定（ナハト商流）→ 支出確定（営業代行費）→ 最終</p></div></details><details><summary><span class="badge badge-">5</span> 手順の具体性が不足している箇所が複数ある</summary><div class="detail-body"><p><strong>現状:</strong> 「共通フロー通り」「確認する」で終わっているステップ多数。チェックリストタブ更新のセル範囲も★。各社の請求書発行手順で「何をどの画面で確認するか」が曖昧。</p>
+<p><strong>なぜ問題か:</strong> 「誰がやっても」の設計に反する。経験者なら暗黙知で動けるが、代打者には判断できない。正確さを担保するチェックポイントが欠落する。</p>
+<p><strong>影響範囲:</strong> 準備 / 売上確定 / 支出確定の各ステップ</p></div></details><details><summary><span class="badge badge-">6</span> 社数増加に対してタスク量が線形に増える構造</summary><div class="detail-body"><p><strong>現状:</strong> アド売上は社ごとに「成果確認→突合→請求書発行→送付→格納→チェック」を繰り返す。手数料も同様。社が増えれば回数が純粋に増加。</p>
+<p><strong>なぜ問題か:</strong> 現状でも10営ギリギリ。社数増加で20Hに収まらなくなる。AI×人間の役割分担でワークフローを再構築しなければスケールしない。</p>
+<p><strong>影響範囲:</strong> 売上確定（アド）/ 支出確定（手数料）</p></div></details><details><summary><span class="badge badge-">7</span> 催促の仕組みがない</summary><div class="detail-body"><p><strong>現状:</strong> ガイドに「余裕がないと抜け落ちる」と明記。期限超過のエビデンスを手動でチェックリストから拾ってCWリマインド。</p>
+<p><strong>なぜ問題か:</strong> 催促漏れ = エビデンス未受領 = 請求書発行できない = 全体遅延。しかも催促自体が属人的（担当者が覚えているから回っている）。抜け漏れなく業務を遂行できる状態になっていない。</p>
+<p><strong>影響範囲:</strong> 全工程（特に売上確定・手数料）</p></div></details><details><summary><span class="badge badge-">8</span> 営業代行費対象外の判定が「意識」に依存している</summary><div class="detail-body"><p><strong>現状:</strong> ナハトシート・スクショ・連携時に「対象外が入っていないか確認」と記載あるが、チェック方法は目視。対象外のマスタリスト（どのアカウント・案件が対象外か）が存在しない。</p>
+<p><strong>なぜ問題か:</strong> 絶対厳守事項に挙げた重大リスクの防止策が「意識」。ミスしたら情報漏洩。代打者は何が対象外かすら知らない。</p>
+<p><strong>影響範囲:</strong> 支出確定（消化金額・手数料連携）</p></div></details>
+<h3 style="margin-top:28px">問題ではないもの</h3>
+<p style="color:var(--text-muted);font-size:.9rem">思わしくないが、解決しなくても20H・正確・抜け漏れなしの目標は達成できる</p>
 <table>
-<tr><th>カテゴリ</th><th>相手</th><th>求めるもの</th></tr>
-<tr><td>ASP/CL（売上側）</td><td>ファンネルアド, サルクルー, WEBGRAM等</td><td>成果情報</td></tr>
-<tr><td>貸アカ元（手数料側）</td><td>ピアラ, エンターキー, DYM, FORCE, セスグモ</td><td>請求情報→請求書</td></tr>
-<tr><td>運用代行者（支出側）</td><td>きっぺいさん, しゅんごさん, 長谷川さん</td><td>請求書</td></tr>
-<tr><td>PR事業部（内部）</td><td>部長, 各運用者</td><td>案件情報, 再生回数</td></tr>
-<tr><td>ナハト（外部）</td><td>ナハト担当者</td><td>商流成果情報, 請求書</td></tr>
-<tr><td>内部連携先</td><td>古田さん, 村田さん, 管理部</td><td>突合結果, 発行完了, 振込</td></tr>
-</table>
-<h4>軸2: 何を</h4>
-<div class="pre">依頼（タスク化）→ エビデンス受領 → 成果/請求確認 → 請求書受領or発行 → MF送付 → MF送付確認</div>
-<h4>軸3: いつ</h4>
-<table>
-<tr><th>タイミング</th><th>条件</th><th>アクション</th></tr>
-<tr><td>事前リマインド</td><td>期限の1営前夕方</td><td>「明日〆です」</td></tr>
-<tr><td>当日午後</td><td>期限当日15時未着</td><td>「本日〆ですがまだ届いていません」</td></tr>
-<tr><td>超過翌営</td><td>期限超過の翌営午前</td><td>「いつまでに？」＋エスカレーション判断</td></tr>
+<tr><th>事象</th><th>理由</th></tr>
+<tr><td>YTスクショ工数</td><td>手間だが手順は明確。止まりはしない</td></tr>
+<tr><td>売上ログシートの見づらさ</td><td>見づらいが作業はできる</td></tr>
+<tr><td>スケジュールタブの存在意義</td><td>なくても業務は回る</td></tr>
+<tr><td>ナハトシートのN/A多発</td><td>手戻りは起きるがやり直せば進む</td></tr>
 </table>
 </div></section>
-
-<section id="issues">
-<div class="section-header"><h2>課題一覧</h2></div>
+<section id="priority">
+<div class="section-header"><h2>優先度と解決順序</h2></div>
 <div class="section-body">
-<h3>工数・時短</h3>
-<table><tr><th>課題</th><th>内容</th><th>関連</th></tr>
-<tr><td>YTスクショ工数</td><td>アカウント増→作業増大</td><td>支出-消化金額</td></tr>
-<tr><td>エンターキーカード手動集計</td><td>古田さんとの相違、問い合わせ多い</td><td>支出-出稿立替</td></tr>
-<tr><td>手順不明瞭</td><td>のあさんへzip解凍まで指定していない</td><td>支出-出稿立替</td></tr></table>
-<h3>エラー・手戻り</h3>
-<table><tr><th>課題</th><th>内容</th><th>関連</th></tr>
-<tr><td>ナハトシートN/A</td><td>AT列コピペでN/A多発</td><td>支出-消化金額</td></tr>
-<tr><td>貸しアカ出力されない</td><td>突き合わせシートで出力したい</td><td>準備</td></tr>
-<tr><td>ローコスト予算運用</td><td>「意識」だけで仕組み化なし</td><td>全般</td></tr>
-<tr><td>売上ログ見づらさ</td><td>サマリ・記載感を固定したい</td><td>準備</td></tr></table>
-<h3>遅延</h3>
-<table><tr><th>課題</th><th>内容</th><th>関連</th></tr>
-<tr><td>タスク細分化不足</td><td>リスト化されていない→漏れ</td><td>準備</td></tr>
-<tr><td>メンション先一覧なし</td><td>概要欄に記載したい</td><td>準備</td></tr>
-<tr><td>握りなし着手</td><td>PRで握り前に案件走り出す</td><td>売上-PR</td></tr></table>
-<h3>属人化</h3>
-<table><tr><th>課題</th><th>内容</th><th>関連</th></tr>
-<tr><td>筒井一人＋スポット</td><td>休み時の対応が文書化なし</td><td>全般</td></tr>
-<tr><td>遅延の連鎖</td><td>前工程遅れが全体に波及</td><td>全般</td></tr>
-<tr><td>社数増→線形工数増</td><td>社が増えると回数がそのまま増</td><td>売上-アド</td></tr></table>
+
+<h3>解決順序の考え方</h3>
+<p>問題間には<strong>依存関係</strong>がある。「情報が集約されていないとAIにも読み込ませられない」「手順が言語化されていないと誰がやっても設計ができない」——つまり<strong>基盤→構造→運用</strong>の順に解く。</p>
+
+<div class="mermaid">
+graph LR
+    subgraph L1["Layer 1: 基盤（知識の外部化）"]
+        P3["#3 CSVズレ修正<br/>手順言語化"]
+        P4["#4 ナハト商流<br/>対応リスト"]
+        P5["#5 全ステップ<br/>手順具体化"]
+        P8["#8 対象外<br/>マスタリスト"]
+    end
+    subgraph L2["Layer 2: 構造（情報集約と可視化）"]
+        P1["#1 全体進捗<br/>一元可視化"]
+        P2["#2 タスク×担当<br/>×期限 集約"]
+    end
+    subgraph L3["Layer 3: 運用（仕組み化と拡張）"]
+        P7["#7 催促<br/>自動化"]
+        P6["#6 社数増加<br/>スケール対応"]
+    end
+    P3 & P5 --> P2
+    P8 --> P2
+    P4 --> P2
+    P2 --> P1
+    P1 --> P7
+    P1 & P2 --> P6
+</div>
+
+<h3>Layer 1: 基盤（知識の外部化）— まずここ</h3>
+<p><strong>目的:</strong> 筒井さんの頭にしかない知識をすべて外に出す。これがないと何も始まらない。</p>
+<table>
+<tr><th>問題</th><th>アクション</th><th>工数目安</th><th>誰が</th></tr>
+<tr><td><strong>#3</strong> CSVズレ修正</td><td>筒井さんから手順を全ステップ聞き取り→ガイドに記載</td><td>2-3H</td><td>筒井×AI</td></tr>
+<tr><td><strong>#4</strong> ナハト商流リスト</td><td>案件×速報値画面×実CV画面×データ形式の対応表を作成</td><td>1H</td><td>筒井×AI</td></tr>
+<tr><td><strong>#5</strong> 手順具体化</td><td>★マークの箇所と「共通フロー通り」の箇所を全て言語化</td><td>3-5H</td><td>筒井×AI</td></tr>
+<tr><td><strong>#8</strong> 対象外マスタ</td><td>営業代行費対象外のアカウント・案件のマスタリストを作成</td><td>1H</td><td>筒井×AI</td></tr>
+</table>
+
+<h3>Layer 2: 構造（情報集約と可視化）— 次にここ</h3>
+<p><strong>目的:</strong> Layer 1で外部化した知識を、一元管理できる構造に載せる。</p>
+<table>
+<tr><th>問題</th><th>アクション</th><th>工数目安</th><th>誰が</th></tr>
+<tr><td><strong>#2</strong> タスク集約</td><td>全タスク×担当×期限×ステータスのマスタシートを設計・構築</td><td>3-4H</td><td>AI構築→筒井レビュー</td></tr>
+<tr><td><strong>#1</strong> 進捗可視化</td><td>マスタシートをベースにダッシュボード化（進捗率・残タスク・期限超過を一目で）</td><td>2-3H</td><td>AI構築→筒井レビュー</td></tr>
+</table>
+
+<h3>Layer 3: 運用（仕組み化と拡張）— 最後にここ</h3>
+<p><strong>目的:</strong> 構造ができた上で、自動化とスケール対応を入れる。</p>
+<table>
+<tr><th>問題</th><th>アクション</th><th>工数目安</th><th>誰が</th></tr>
+<tr><td><strong>#7</strong> 催促自動化</td><td>マスタシートの期限×ステータスを監視→期限前日/当日/超過でCW通知を自動送信</td><td>3-4H</td><td>AI構築→筒井検証</td></tr>
+<tr><td><strong>#6</strong> スケール対応</td><td>社ごとの繰り返し作業をテンプレ化＋AIで自動生成可能な部分を切り出し→ワークフロー再構築</td><td>5-8H</td><td>AI×筒井で設計</td></tr>
+</table>
+
 </div></section>
 
-<section id="kaizen">
-<div class="section-header"><h2>改善策</h2></div>
+<section id="ai-human">
+<div class="section-header"><h2>AI × 人間の役割分担</h2></div>
 <div class="section-body">
-<table><tr><th>改善策</th><th>効果</th><th>対応</th></tr>
-<tr><td>YTスクショ自動取得</td><td>時短</td><td>支出-消化金額</td></tr>
-<tr><td>エンターキーカード自動集計＋IMPORTRANGE</td><td>手動削減</td><td>支出-出稿立替</td></tr>
-<tr><td>突き合わせシートで貸しアカ出力</td><td>漏れ防止</td><td>準備</td></tr>
-<tr><td>ナハトシートN/A防止</td><td>手戻り削減</td><td>支出-消化金額</td></tr>
-<tr><td>売上ログシート記載感固定</td><td>確認時短</td><td>準備</td></tr>
-<tr><td>ローコスト予算運用の仕組み化</td><td>ミス防止</td><td>全般</td></tr>
-<tr><td>タスク細分化・リスト化</td><td>漏れ防止</td><td>準備</td></tr>
-<tr><td>チェックリストに内部連携追加</td><td>催促漏れ防止</td><td>全般</td></tr></table>
+
+<h3>原則</h3>
+<table>
+<tr><th>AI（自動化・効率化）</th><th>人間（判断・確認・交渉）</th></tr>
+<tr><td>定型的なデータ処理・集計・転記</td><td>正確性の最終確認（金額の妥当性）</td></tr>
+<tr><td>期限管理・催促・リマインド</td><td>対外交渉（木口さん・先方との調整）</td></tr>
+<tr><td>進捗ダッシュボード更新</td><td>例外判断（イレギュラー案件の処理）</td></tr>
+<tr><td>マスタリストとの突合チェック</td><td>請求書の発行・送付（最終承認）</td></tr>
+<tr><td>テンプレ・文言の自動生成</td><td>新規取引先の経理フロー握り</td></tr>
+</table>
+
+<h3>工程別の切り分け</h3>
+<table>
+<tr><th>工程</th><th>AI</th><th>人間</th></tr>
+<tr><td><strong>準備: シート複製・更新</strong></td><td>スクリプトで自動複製＋タブ初期化</td><td>経理フロータブの○/×判断</td></tr>
+<tr><td><strong>準備: チェックリスト</strong></td><td>経理フロータブからチェックリストを自動生成</td><td>レビュー＋例外確認</td></tr>
+<tr><td><strong>準備: タスク化</strong></td><td>チェックリストからCW送信文言を自動生成＋送信</td><td>発生不明瞭な社の判断</td></tr>
+<tr><td><strong>準備: CSVズレ修正</strong></td><td>CSV取得の自動化（API化できれば）</td><td>ズレの原因判断＋修正</td></tr>
+<tr><td><strong>準備: 催促</strong></td><td>期限超過の自動検知→CWリマインド自動送信</td><td>エスカレーション判断</td></tr>
+<tr><td><strong>売上: 各社請求書</strong></td><td>成果情報の自動取込→CSV保管との突合→差異レポート生成</td><td>差異確認→請求書発行→送付</td></tr>
+<tr><td><strong>売上: ナハト連携</strong></td><td>対象外チェック（マスタリスト突合）→フォルダ整理</td><td>連携内容の最終確認→送信</td></tr>
+<tr><td><strong>支出: 消化金額</strong></td><td>ナハトシート自動生成（CSV保管→転記）→対象外フラグ自動チェック</td><td>手入力箇所の確認＋関数チェック</td></tr>
+<tr><td><strong>支出: 手数料</strong></td><td>突き合わせシート照合の自動化→差異アラート</td><td>金額確認→MF送付</td></tr>
+<tr><td><strong>支出: 営業代行費</strong></td><td>粗利×20%の計算検証→ナハトの請求書との差異チェック</td><td>受領判断→ダウンロード</td></tr>
+<tr><td><strong>最終: 管理部連携</strong></td><td>全請求書チェックリスト自動生成→未完了アラート</td><td>管理部への連携・報告</td></tr>
+</table>
+
+<h3>ワークフロー再構築の方向性</h3>
+<div style="margin:16px 0;padding:16px 20px;background:rgba(14,165,233,.08);border:1px solid rgba(14,165,233,.3);border-radius:10px">
+<p><strong>現状:</strong> 筒井さんが全工程を手作業で直列処理。情報は複数シートに散在。進捗は頭の中。</p>
+<p><strong>理想:</strong></p>
+<ol>
+<li><strong>AIが毎月初に自動セットアップ</strong> — シート複製・チェックリスト生成・タスク化文言送信・フォルダ作成</li>
+<li><strong>マスタシートが唯一の情報源</strong> — 全タスク×担当×期限×ステータスが一箇所。AIも人間もここを見る</li>
+<li><strong>AIが常時監視</strong> — 期限管理・催促・対象外チェック・差異検知を自動実行</li>
+<li><strong>人間は判断と確認に集中</strong> — 差異の原因判断、金額の妥当性確認、例外処理、対外送信</li>
+<li><strong>ダッシュボードで全員が全体を把握</strong> — 代打者も「今何をすべきか」が即座にわかる</li>
+</ol>
+</div>
+
 </div></section>
 </div><button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 <script>mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
