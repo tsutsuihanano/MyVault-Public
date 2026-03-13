@@ -118,11 +118,10 @@ nav.toc a:hover{background:var(--surface);color:var(--text)}
 <table>
 <tr><th>大分類</th><th>小分類</th><th>主な業務</th></tr>
 <tr><td rowspan="1"><span class="badge badge-prep">準備</span></td><td>準備</td><td>シート複製、タブ更新、チェックリスト、CSVズレ修正、タスク化、PRヒアリング、作業ログ更新、エビデンス催促</td></tr>
-<tr><td rowspan="5"><span class="badge badge-rev">売上確定</span></td><td>アド</td><td>各商流の売上請求書発行（対象社は月によって変動）+ ナハトへアド売上連携</td></tr>
+<tr><td rowspan="4"><span class="badge badge-rev">売上確定</span></td><td>アド</td><td>各商流の売上請求書発行（対象社は月によって変動）+ ナハト商流売上 + ナハトへアド売上連携</td></tr>
 <tr><td>ASP</td><td>エンターキーASP、リバティーASP</td></tr>
 <tr><td>貸アカ</td><td>LIBERTY CORE（3%手数料の請求書発行）</td></tr>
 <tr><td>PR</td><td>PR売上請求書発行（対象社は月によって変動）</td></tr>
-<tr><td>ナハト商流</td><td>ナハト商流の売上請求書発行 ※配置検討中</td></tr>
 <tr><td rowspan="4"><span class="badge badge-cost">支出確定</span></td><td>消化金額確定</td><td>ナハトシート記入、使用アカスクショ、ナハトに連携</td></tr>
 <tr><td>手数料</td><td>手数料請求書受領（対象社は月によって変動）+ ナハトへ手数料連携</td></tr>
 <tr><td>運用代行費</td><td>運用代行者への支払い（対象者は月によって変動）+ ナハト営業代行費</td></tr>
@@ -140,28 +139,30 @@ graph TD
         R2["ASP<br/>（エンターキーASP・リバティーASP）"]
         R3["貸アカ（LIBERTY CORE）"]
         R4["PR売上（社数は月変動）"]
-        R5["ナハト商流売上"]
         RN["ナハトへアド売上連携"]
+        R5["ナハト商流売上<br/>（アド分類・8営）"]
     end
     subgraph COST["🔴 支出確定"]
         C1["消化金額確定<br/>ナハトシート・スクショ"]
         C2["手数料（社数は月変動）"]
         C3["運用代行費（人数は月変動）"]
         C4["出稿立替費（TCB）"]
-        CN["ナハトへ手数料連携<br/>＋営業代行費受領"]
+        CN["ナハトへ手数料連携"]
+        C5["ナハト営業代行費受領"]
     end
     subgraph FIN["⚪ 最終"]
         F1["管理部連携<br/>（全請求書を渡す）"]
         F2["完了報告"]
     end
-    P --> R1 & R2 & R3 & R4 & R5
+    P --> R1 & R2 & R3 & R4
     P --> C1 & C2 & C3 & C4
     R1 --> RN
+    RN --> R5
     C2 --> CN
+    RN & CN --> C5
+    R5 --> C5
     R1 & R2 & R3 & R4 & R5 --> F1
-    C2 & C3 & C4 --> F1
-    RN --> F1
-    CN --> F1
+    C2 & C3 & C4 & C5 --> F1
     F1 --> F2
 </div>
 </div></section>
@@ -222,7 +223,10 @@ graph TD
 <p><strong>前提:</strong> 木口さんが村田さんと請求額をすり合わせ済み → 降りてくる。<strong>件数確認は不要。</strong></p>
 <p><strong>注意:</strong> 案件数が社内最多のため、1件でもズレると金額に直結。慎重な確認が必要。</p></div></details><details><summary><span class="badge badge-rev"></span> ナハトへアド売上連携<span class="badge badge-sub">アド</span></summary><div class="detail-body"><p><strong>期限:</strong> 6営 | トリガー: アド売上完了後</p>
 <p>アド売上の請求書をフォルダにまとめてナハトへ連携。</p>
-<p><strong>重要:</strong> ナハトに連携するのは<strong>アド売上とアド支出（手数料）のみ</strong>。ASP・貸アカ・出稿立替費・PR等は営業代行費の対象外のため、ナハトには渡さない。</p></div></details>
+<p><strong>重要:</strong> ナハトに連携するのは<strong>アド売上とアド支出（手数料）のみ</strong>。ASP・貸アカ・出稿立替費・PR等は営業代行費の対象外のため、ナハトには渡さない。</p></div></details><details><summary><span class="badge badge-rev"></span> ナハト商流売上<span class="badge badge-sub">アド</span></summary><div class="detail-body"><p><strong>期限:</strong> 8営 | トリガー: アド売上・消化金額・手数料がすべて確定した後</p>
+<p><strong>背景:</strong> ナハトとの協業関係上、アクシス側のアド売上請求書・消化金額・手数料請求書が<strong>すべて確定してからでないと、ナハトが成果情報を出してくれない</strong>。そのため工程が営業代行費の直前（8営）になる。</p>
+<p>ナハトからの成果情報到着次第、請求書発行・送付。</p>
+<p><span class="badge badge-star">★ 具体手順を記入</span></p></div></details>
 <div class="sub-section"><h4>ASP</h4></div>
 <details><summary><span class="badge badge-rev"></span> エンターキーASP売上<span class="badge badge-sub">ASP</span></summary><div class="detail-body"><p><strong>期限:</strong> 6営</p>
 <p>木口→村田すり合わせ後に降りてくる。件数確認不要。営業代行費対象外。</p></div></details><details><summary><span class="badge badge-rev"></span> リバティーASP売上<span class="badge badge-sub">ASP</span></summary><div class="detail-body"><p><span class="badge badge-star">★ 期限・手順を記入</span></p>
@@ -236,10 +240,6 @@ graph TD
 <p>対象社は月によって変動（ピアラ、サルクルー、ナハト、スマートセクション、日本美心、Wacker等）</p>
 <p><strong>共通フロー:</strong> 再生回数データ確認 → 成果情報確定 → 請求書発行 → 送付 → フォルダ格納</p>
 <p><strong>課題:</strong> PRは再生回数管理がされていないケースあり / 部長しか入っていないチャット</p></div></details>
-<div class="sub-section"><h4>ナハト商流</h4></div>
-<details><summary><span class="badge badge-rev"></span> ナハト商流売上<span class="badge badge-sub">ナハト商流</span></summary><div class="detail-body"><p><strong>期限:</strong> 8営</p>
-<p>ナハトからの成果情報到着次第、請求書発行・送付。</p>
-<p><span class="badge badge-star">★ 具体手順を記入</span></p></div></details>
 </div></section>
 
 <section id="cost">
