@@ -5,85 +5,112 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>出稿研修ガイダンス — 手動出稿マスターになるために</title>
 <style>
-:root{--bg:#0f172a;--surface:#1e293b;--border:#334155;--text:#e2e8f0;--text-muted:#94a3b8;--accent:#7c3aed;--accent2:#0ea5e9;--accent3:#f59e0b;--ok:#22c55e;--warn:#ef4444}
+:root{
+  --bg:#f8f9fa;
+  --surface:#ffffff;
+  --border:#e5e7eb;
+  --border-soft:#f1f5f9;
+  --text:#1a1a2e;
+  --text-sub:#475569;
+  --text-muted:#64748b;
+  --accent:#7c3aed;
+  --accent2:#0369a1;
+  --accent2-soft:#e0f2fe;
+  --accent3:#b45309;
+  --accent3-soft:#fef3c7;
+  --ok:#15803d;
+  --ok-soft:#dcfce7;
+  --warn:#b91c1c;
+  --warn-soft:#fee2e2;
+  --shadow:0 2px 10px rgba(15,23,42,.06);
+  --shadow-md:0 4px 20px rgba(15,23,42,.08);
+}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);line-height:1.8}
-.hero{text-align:center;padding:60px 20px 40px;background:linear-gradient(135deg,#1e1b4b 0%,#0f172a 50%,#0c4a6e 100%);border-bottom:1px solid var(--border)}
-.hero h1{font-size:2.2rem;font-weight:800;background:linear-gradient(135deg,#a78bfa,#38bdf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
-.hero p{color:var(--text-muted);font-size:1.05rem}
-.container{max-width:860px;margin:0 auto;padding:0 20px 64px}
-nav.toc{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--border);z-index:100;padding:8px 0;overflow-x:auto;white-space:nowrap}
-nav.toc a{color:var(--text-muted);text-decoration:none;padding:6px 14px;font-size:.85rem;display:inline-block;border-radius:6px}
-nav.toc a:hover{background:var(--surface);color:var(--text)}
-section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px solid var(--border);overflow:hidden}
-.section-header{padding:20px 28px 14px;border-bottom:1px solid var(--border)}
-.section-header h2{font-size:1.3rem;font-weight:700;display:flex;align-items:center;gap:10px}
-.section-body{padding:28px}
-.section-body h3{font-size:1.1rem;margin:24px 0 12px;color:var(--accent2)}
-.section-body h3:first-child{margin-top:0}
-.section-body h4{font-size:1rem;margin:18px 0 8px;color:var(--accent3)}
-.section-body p,.section-body li{margin-bottom:6px}
-.section-body ul,.section-body ol{padding-left:1.5em;margin:8px 0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);line-height:1.85}
 
-.flow{display:flex;flex-direction:column;gap:10px;margin:18px 0}
-.flow-step{background:var(--bg);border:1px solid var(--border);border-left:4px solid var(--accent2);border-radius:10px;padding:14px 18px;display:flex;align-items:center;gap:14px}
-.flow-step .num{width:28px;height:28px;border-radius:50%;background:var(--accent2);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;flex-shrink:0}
+.hero{text-align:center;padding:72px 20px 56px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff}
+.hero h1{font-size:2.2rem;font-weight:800;margin-bottom:10px;color:#fff}
+.hero p{font-size:1.05rem;opacity:.92}
+
+.container{max-width:860px;margin:0 auto;padding:0 20px 64px}
+
+nav.toc{position:sticky;top:0;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);z-index:100;padding:10px 0;overflow-x:auto;white-space:nowrap;box-shadow:0 1px 4px rgba(15,23,42,.04)}
+nav.toc .container{padding-top:0;padding-bottom:0}
+nav.toc a{color:var(--text-sub);text-decoration:none;padding:6px 14px;font-size:.88rem;display:inline-block;border-radius:6px;font-weight:500}
+nav.toc a:hover{background:var(--accent2-soft);color:var(--accent2)}
+
+section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px solid var(--border);overflow:hidden;box-shadow:var(--shadow)}
+.section-header{padding:24px 32px 18px;border-bottom:1px solid var(--border-soft)}
+.section-header h2{font-size:1.35rem;font-weight:700;color:var(--text);display:flex;align-items:center;gap:10px}
+.section-body{padding:28px 32px 32px}
+
+/* flow */
+.flow{display:flex;flex-direction:column;gap:10px;margin:8px 0}
+.flow-step{background:#fff;border:1px solid var(--border);border-left:4px solid var(--accent2);border-radius:12px;padding:16px 20px;display:flex;align-items:center;gap:16px;box-shadow:var(--shadow)}
+.flow-step .num{width:32px;height:32px;border-radius:50%;background:var(--accent2);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.95rem;flex-shrink:0}
 .flow-step .body{flex:1}
-.flow-step .body strong{color:var(--text);font-size:1rem}
-.flow-step .body span{display:block;color:var(--text-muted);font-size:.85rem;margin-top:2px}
-.flow-arrow{text-align:center;color:var(--text-muted);font-size:1.1rem;line-height:1}
-.flow-goal{background:linear-gradient(135deg,rgba(34,197,94,.15),rgba(14,165,233,.08));border-left:4px solid var(--ok);color:var(--text)}
+.flow-step .body strong{color:var(--text);font-size:1.02rem;display:block;margin-bottom:2px}
+.flow-step .body span{display:block;color:var(--text-muted);font-size:.88rem}
+.flow-arrow{text-align:center;color:var(--text-muted);font-size:.95rem;line-height:1;padding:2px 0}
+.flow-check{align-self:center;background:var(--accent3-soft);color:var(--accent3);border:1px dashed #d97706;border-radius:20px;padding:6px 18px;font-size:.85rem;font-weight:600;display:inline-flex;align-items:center;gap:8px}
+.flow-check::before{content:'✓';background:var(--accent3);color:#fff;width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.7rem}
+.flow-goal{background:linear-gradient(135deg,rgba(34,197,94,.12),rgba(14,165,233,.06));border-left:4px solid var(--ok)}
 .flow-goal .num{background:var(--ok)}
 
-.box{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:18px 22px;margin:14px 0}
-.box.warn{border-left:4px solid var(--warn)}
-.box.info{border-left:4px solid var(--accent2)}
-.box.ok{border-left:4px solid var(--ok)}
-.box h4{margin-top:0;color:var(--text)}
-.box p:last-child,.box li:last-child{margin-bottom:0}
-
-.phase{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:18px 24px 20px;margin:14px 0}
-.phase.do{border-left:4px solid var(--accent2)}
-.phase.goal{border-left:4px solid var(--ok);background:linear-gradient(180deg,rgba(34,197,94,.06),transparent)}
-.phase.warn{border-left:4px solid var(--warn)}
-.phase-label{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;font-weight:700;letter-spacing:.08em;padding:4px 12px;border-radius:20px;margin-bottom:12px;text-transform:uppercase}
-.phase.do .phase-label{background:rgba(14,165,233,.15);color:#38bdf8}
-.phase.goal .phase-label{background:rgba(34,197,94,.18);color:#4ade80}
-.phase.warn .phase-label{background:rgba(239,68,68,.15);color:#f87171}
+/* phase blocks */
+.phase{background:#fff;border:1px solid var(--border);border-radius:12px;padding:22px 26px;margin:16px 0;box-shadow:var(--shadow)}
+.phase.do{border-left:4px solid var(--accent2);background:linear-gradient(180deg,rgba(3,105,161,.03),#fff 40%)}
+.phase.goal{border-left:4px solid var(--ok);background:linear-gradient(180deg,rgba(21,128,61,.05),#fff 40%)}
+.phase.warn{border-left:4px solid var(--warn);background:linear-gradient(180deg,rgba(185,28,28,.04),#fff 40%)}
+.phase-label{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;font-weight:700;letter-spacing:.08em;padding:5px 14px;border-radius:20px;margin-bottom:14px;text-transform:uppercase}
+.phase.do .phase-label{background:var(--accent2-soft);color:var(--accent2)}
+.phase.goal .phase-label{background:var(--ok-soft);color:var(--ok)}
+.phase.warn .phase-label{background:var(--warn-soft);color:var(--warn)}
 .phase-label::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor}
-.phase ul,.phase ol{padding-left:1.4em;margin:6px 0 0}
-.phase li{margin-bottom:6px;color:var(--text)}
+.phase ul,.phase ol{padding-left:1.45em;margin:8px 0 0}
+.phase li{margin-bottom:10px;color:var(--text-sub);line-height:1.8}
 .phase li:last-child{margin-bottom:0}
-.phase p{margin:4px 0;color:var(--text)}
+.phase p{margin:10px 0;color:var(--text-sub);line-height:1.85}
+.phase p:first-of-type{margin-top:0}
 .phase p:last-child{margin-bottom:0}
-.phase .must{display:inline-block;background:rgba(245,158,11,.22);color:#fbbf24;padding:2px 10px;border-radius:6px;font-size:.75rem;font-weight:700;margin-right:6px;vertical-align:middle}
+.phase .goal-line{font-size:1.02rem;color:var(--text);font-weight:600;margin:0 0 14px;padding:12px 16px;background:rgba(21,128,61,.07);border-radius:10px;border-left:3px solid var(--ok)}
+.phase .goal-line .must{display:inline-block;background:var(--ok);color:#fff;padding:2px 10px;border-radius:6px;font-size:.72rem;font-weight:700;margin-right:8px;vertical-align:middle;letter-spacing:.05em}
+.phase .why{font-size:.93rem;color:var(--text-muted);margin-top:12px}
 .phase strong{color:var(--accent3);font-weight:700}
-.phase.goal strong{color:#4ade80}
-.phase.warn strong{color:#f87171}
+.phase.goal strong{color:var(--ok)}
+.phase.warn strong{color:var(--warn)}
 
+/* mind list */
 .mind-list{display:flex;flex-direction:column;gap:14px;margin:20px 0 8px}
-.mind-item{display:flex;gap:22px;background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:24px 28px;align-items:flex-start;transition:border-color .2s,transform .2s}
-.mind-item:hover{border-color:rgba(14,165,233,.45);transform:translateX(2px)}
-.mind-item .num{flex-shrink:0;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.05rem;box-shadow:0 2px 8px rgba(124,58,237,.25)}
+.mind-item{display:flex;gap:22px;background:#fff;border:1px solid var(--border);border-radius:14px;padding:24px 28px;align-items:flex-start;box-shadow:var(--shadow);transition:box-shadow .2s,transform .2s}
+.mind-item:hover{box-shadow:var(--shadow-md);transform:translateX(2px)}
+.mind-item .num{flex-shrink:0;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#38bdf8);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.05rem;box-shadow:0 3px 10px rgba(124,58,237,.25)}
 .mind-item .content{flex:1;min-width:0}
-.mind-item h4{font-size:1.08rem;color:var(--text);margin:6px 0 10px;font-weight:700}
-.mind-item p{margin:0;color:var(--text-muted);font-size:.95rem;line-height:1.8}
+.mind-item h4{font-size:1.1rem;color:var(--text);margin:6px 0 10px;font-weight:700}
+.mind-item p{margin:0;color:var(--text-sub);font-size:.96rem;line-height:1.85}
 .mind-item strong{color:var(--accent3);font-weight:700}
 
-.closing{background:linear-gradient(135deg,rgba(124,58,237,.2),rgba(14,165,233,.12));border:1px solid rgba(124,58,237,.4);border-radius:14px;padding:28px;text-align:center;font-size:1.05rem;line-height:1.9;margin:32px 0 0}
-.closing strong{color:#fbbf24}
+.closing{background:linear-gradient(135deg,#f5f3ff,#eff6ff);border:1px solid #ddd6fe;border-radius:14px;padding:32px 28px;text-align:center;font-size:1.05rem;line-height:2;margin:32px 0 0;color:var(--text-sub)}
+.closing strong{color:var(--accent);font-weight:700}
 
-.badge{display:inline-block;padding:2px 10px;border-radius:6px;font-size:.78rem;font-weight:600;margin-left:8px;vertical-align:middle}
-.badge-star{background:rgba(245,158,11,.25);color:#fbbf24}
+.back-top{position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;opacity:.9;z-index:99;box-shadow:0 4px 14px rgba(124,58,237,.35)}
+.back-top:hover{opacity:1;transform:translateY(-2px);transition:all .15s}
 
-.back-top{position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;opacity:.7;z-index:99}
-.back-top:hover{opacity:1}
-@media(max-width:600px){.hero h1{font-size:1.5rem}.flow-step{padding:12px 14px}.mind-item{padding:18px 20px;gap:16px}.mind-item .num{width:38px;height:38px;font-size:1rem}}
+@media(max-width:600px){
+  .hero h1{font-size:1.6rem}
+  .hero{padding:52px 20px 40px}
+  .section-body{padding:22px 20px 26px}
+  .section-header{padding:20px 22px 16px}
+  .flow-step{padding:14px 16px;gap:12px}
+  .phase{padding:18px 20px}
+  .mind-item{padding:20px 22px;gap:16px}
+  .mind-item .num{width:38px;height:38px;font-size:1rem}
+}
 </style>
 </head>
 <body>
 
-<nav class="toc"><div class="container" style="padding-top:0;padding-bottom:0">
+<nav class="toc"><div class="container">
 <a href="#flow">この後の流れ</a>
 <a href="#test">テスト出稿</a>
 <a href="#real">出稿依頼対応</a>
@@ -101,15 +128,40 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 <div class="section-header"><h2>1. この後の流れ</h2></div>
 <div class="section-body">
 <div class="flow">
-  <div class="flow-step"><div class="num">1</div><div class="body"><strong>マニュアルを読む</strong><span>まずは自分のペースで全体を把握する</span></div></div>
+
+  <div class="flow-step">
+    <div class="num">1</div>
+    <div class="body"><strong>マニュアルを読む</strong><span>まずは自分のペースで全体を把握する</span></div>
+  </div>
   <div class="flow-arrow">↓</div>
-  <div class="flow-step"><div class="num">2</div><div class="body"><strong>Meta テスト出稿</strong><span>答えを見ながら1CPNを自分の手で出稿</span></div></div>
-  <div class="flow-arrow">↓ OK</div>
-  <div class="flow-step"><div class="num">3</div><div class="body"><strong>TikTok テスト出稿</strong><span>同じく1CPNを自分の手で出稿</span></div></div>
-  <div class="flow-arrow">↓ OK</div>
-  <div class="flow-step"><div class="num">4</div><div class="body"><strong>出稿依頼対応（ノルマ消化）</strong><span>実際の依頼シートを見て出稿する</span></div></div>
-  <div class="flow-arrow">↓ ノルマ達成で修了</div>
-  <div class="flow-step flow-goal"><div class="num">✓</div><div class="body"><strong>修了</strong><span>手動出稿を自力でできる状態</span></div></div>
+
+  <div class="flow-step">
+    <div class="num">2</div>
+    <div class="body"><strong>Meta テスト出稿</strong><span>答えを見ながら1CPNを自分の手で出稿</span></div>
+  </div>
+  <div class="flow-arrow">↓</div>
+  <div class="flow-check">友利チェックでOKなら次へ</div>
+  <div class="flow-arrow">↓</div>
+
+  <div class="flow-step">
+    <div class="num">3</div>
+    <div class="body"><strong>TikTok テスト出稿</strong><span>同じく1CPNを自分の手で出稿</span></div>
+  </div>
+  <div class="flow-arrow">↓</div>
+  <div class="flow-check">友利チェックでOKなら次へ</div>
+  <div class="flow-arrow">↓</div>
+
+  <div class="flow-step">
+    <div class="num">4</div>
+    <div class="body"><strong>出稿依頼対応（ノルマ消化）</strong><span>実際の依頼シートを見て出稿する</span></div>
+  </div>
+  <div class="flow-arrow">↓ ノルマ達成</div>
+
+  <div class="flow-step flow-goal">
+    <div class="num">✓</div>
+    <div class="body"><strong>修了</strong><span>手動出稿を自力でできる状態</span></div>
+  </div>
+
 </div>
 </div>
 </section>
@@ -129,15 +181,22 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 
 <div class="phase goal">
 <span class="phase-label">ゴール・目的</span>
-<p>受動的にマニュアルを読むだけでは身につかない。出稿だけに集中して時間を取れるのは今しかないので、能動的に使う時間。</p>
-<p><span class="must">ゴール</span><strong>1CPNを自分の手で出稿した経験があり、テスト中に出た疑問をすべて潰した状態で、現場（出稿依頼対応）に入れる。</strong></p>
+
+<div class="goal-line">
+<span class="must">GOAL</span>1CPNを自分の手で出稿した経験があり、テスト中に出た疑問をすべて潰した状態で、現場（出稿依頼対応）に入れること。
+</div>
+
+<p>マニュアルを読むだけでは実務では使えない。<br>
+ここは<strong>読んだ内容を実際に手を動かして自分のものにする時間</strong>。</p>
+
+<p class="why">出稿だけに集中できる期間は今しかない。能動的に時間を使ってほしい。</p>
 </div>
 
 <div class="phase warn">
 <span class="phase-label">注意点</span>
 <ul>
 <li>「手順通りやればできました」では意味がない。<strong>こなすだけの人は通しません。</strong></li>
-<li>チェック依頼のときに「どこをどう触ったか」「なぜそうしたか」をこちらから質問します。答えられる前提で取り組んでください。</li>
+<li>チェック依頼のときに「どこをどう触ったか」「なぜそうしたか」を質問します。答えられる前提で取り組んでください。</li>
 </ul>
 </div>
 
@@ -152,15 +211,21 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 <span class="phase-label">やること</span>
 <ul>
 <li>ノルマ：<strong>ノンタゲ・年齢・地域</strong> を FB / TikTok で各5CPNずつ</li>
-<li>振り分け担当：友利（きらちゃん）／前半3名・後半4名 に分けて進行</li>
+<li>振り分け担当：友利（きらちゃん）／ 前半3名・後半4名 に分けて進行</li>
 <li>流れ：友利から軽く説明 → 出稿 → 新人同士でWチェック → 友利にWチェック依頼</li>
 </ul>
 </div>
 
 <div class="phase goal">
 <span class="phase-label">ゴール・目的</span>
-<p><span class="must">ゴール</span><strong>FB・TikTokで基本的な出稿が手動でできる状態になる。</strong></p>
-<p>自動ツールはあるが、エラーが起きうるので手動は必ず習得しておく必要がある。出稿依頼シートを見て出稿することに慣れることもここで身につける。</p>
+
+<div class="goal-line">
+<span class="must">GOAL</span>FB・TikTokで基本的な出稿が、手動で自力でできる状態になること。
+</div>
+
+<p>自動ツールはあるが、エラーが起きうるので<strong>手動は必ず習得</strong>しておく必要がある。</p>
+
+<p class="why">依頼シートを見て出稿する感覚、そして「出稿部がどう読むか」という視点を、このフェーズで身につける。</p>
 </div>
 
 <div class="phase warn">
@@ -184,7 +249,8 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 <div class="num">1</div>
 <div class="content">
 <h4>出稿は運用者の利益に直結する</h4>
-<p>運用者のCPNを預かるということは、その人の<strong>売上と利益を預かる</strong>ということ。テスト出稿の時間は「練習のための練習」ではなく、本番に耐えるための準備期間として有効活用してほしい。</p>
+<p>運用者のCPNを預かるということは、その人の<strong>売上と利益を預かる</strong>ということ。<br>
+テスト出稿の時間は「練習のための練習」ではなく、本番に耐えるための準備期間として有効活用してほしい。</p>
 </div>
 </div>
 
@@ -192,7 +258,9 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 <div class="num">2</div>
 <div class="content">
 <h4>一手ずつに責任を持って触る</h4>
-<p>人間である以上、エラーを完全にゼロにはできない。ただ、運用者の利益を預かっている以上、「なんとなく」「たぶん大丈夫」で触るのは違う。<strong>一つひとつ、自分の判断に責任を持って進めてほしい。</strong></p>
+<p>人間である以上、エラーを完全にゼロにはできない。<br>
+ただ、運用者の利益を預かっている以上、「なんとなく」「たぶん大丈夫」で触るのは違う。<br>
+<strong>一つひとつ、自分の判断に責任を持って進めてほしい。</strong></p>
 </div>
 </div>
 
@@ -200,7 +268,9 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 <div class="num">3</div>
 <div class="content">
 <h4>これは自分自身の武器になる</h4>
-<p>出稿スキルは運用者のためだけのものじゃない。自分が運用者側になったとき、自分のCPNを自分の意図通りに配信するために必要なスキル。<strong>今ここで手を動かして身につけたことは、そのまま自分の戦力としてずっと残る。</strong></p>
+<p>出稿スキルは運用者のためだけのものじゃない。<br>
+自分が運用者側になったとき、自分のCPNを自分の意図通りに配信するために必要なスキル。<br>
+<strong>今ここで身につけたことは、そのまま自分の戦力としてずっと残る。</strong></p>
 </div>
 </div>
 
@@ -208,7 +278,8 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 <div class="num">4</div>
 <div class="content">
 <h4>新人同士で情報共有してほしい</h4>
-<p>質問窓口は基本きらちゃん一人。同じ質問が重複して飛ぶとかなり負担になる。<strong>同期同士で「これどうだった？」を共有</strong>してくれると助かる。</p>
+<p>質問窓口は基本きらちゃん一人。同じ質問が重複して飛ぶとかなり負担になる。<br>
+<strong>同期同士で「これどうだった？」を共有</strong>してくれると助かる。</p>
 </div>
 </div>
 
@@ -216,7 +287,8 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 <div class="num">5</div>
 <div class="content">
 <h4>初めての施策なので臨機応変に</h4>
-<p>この研修フロー自体が初めての試み。うまくいかない部分もあるかもしれないが、そこは臨機応変に対応していく。違和感やつまずきに気づいたら、<strong>遠慮せず声を上げてほしい。</strong></p>
+<p>この研修フロー自体が初めての試み。うまくいかない部分もあるかもしれないが、そこは臨機応変に対応していく。<br>
+違和感やつまずきに気づいたら、<strong>遠慮せず声を上げてほしい。</strong></p>
 </div>
 </div>
 
