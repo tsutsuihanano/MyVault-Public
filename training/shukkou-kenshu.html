@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>出稿研修ガイド（初回出稿後）</title>
+<title>出稿研修ガイダンス — 手動出稿マスターになるために</title>
 <style>
 :root{--bg:#0f172a;--surface:#1e293b;--border:#334155;--text:#e2e8f0;--text-muted:#94a3b8;--accent:#7c3aed;--accent2:#0ea5e9;--accent3:#f59e0b;--ok:#22c55e;--warn:#ef4444}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -42,12 +42,14 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 .box h4{margin-top:0;color:var(--text)}
 .box p:last-child,.box li:last-child{margin-bottom:0}
 
-.mind-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin:16px 0}
-.mind-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:20px}
-.mind-card .n{display:inline-block;background:var(--accent);color:#fff;width:26px;height:26px;border-radius:50%;text-align:center;line-height:26px;font-weight:700;font-size:.85rem;margin-right:8px}
-.mind-card h4{display:inline-block;font-size:1rem;color:var(--text);margin:0}
-.mind-card p{margin:10px 0 0;font-size:.92rem;color:var(--text-muted);line-height:1.7}
-.mind-card strong{color:var(--accent3)}
+.mind-list{display:flex;flex-direction:column;gap:14px;margin:20px 0 8px}
+.mind-item{display:flex;gap:22px;background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:24px 28px;align-items:flex-start;transition:border-color .2s,transform .2s}
+.mind-item:hover{border-color:rgba(14,165,233,.45);transform:translateX(2px)}
+.mind-item .num{flex-shrink:0;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.05rem;box-shadow:0 2px 8px rgba(124,58,237,.25)}
+.mind-item .content{flex:1;min-width:0}
+.mind-item h4{font-size:1.08rem;color:var(--text);margin:6px 0 10px;font-weight:700}
+.mind-item p{margin:0;color:var(--text-muted);font-size:.95rem;line-height:1.8}
+.mind-item strong{color:var(--accent3);font-weight:700}
 
 .closing{background:linear-gradient(135deg,rgba(124,58,237,.2),rgba(14,165,233,.12));border:1px solid rgba(124,58,237,.4);border-radius:14px;padding:28px;text-align:center;font-size:1.05rem;line-height:1.9;margin:32px 0 0}
 .closing strong{color:#fbbf24}
@@ -57,7 +59,7 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 
 .back-top{position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;opacity:.7;z-index:99}
 .back-top:hover{opacity:1}
-@media(max-width:600px){.hero h1{font-size:1.5rem}.mind-grid{grid-template-columns:1fr}.flow-step{padding:12px 14px}}
+@media(max-width:600px){.hero h1{font-size:1.5rem}.flow-step{padding:12px 14px}.mind-item{padding:18px 20px;gap:16px}.mind-item .num{width:38px;height:38px;font-size:1rem}}
 </style>
 </head>
 <body>
@@ -70,8 +72,8 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 </div></nav>
 
 <div class="hero">
-<h1>出稿研修ガイド</h1>
-<p>初回出稿のあと、何をやっていくか</p>
+<h1>出稿研修ガイダンス</h1>
+<p>手動出稿マスターになるために</p>
 </div>
 
 <div class="container">
@@ -162,31 +164,46 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 <div class="section-header"><h2>4. 必ず理解してほしいこと</h2></div>
 <div class="section-body">
 
-<div class="mind-grid">
+<div class="mind-list">
 
-<div class="mind-card">
-<span class="n">1</span><h4>出稿は運用者の利益に直結する</h4>
-<p>運用者のCPNを預かる＝その人の<strong>売上と利益を預かる</strong>ということ。テスト出稿の時間は「練習のための練習」ではなく、本番に耐えるための準備期間。<strong>有効活用してほしい。</strong></p>
+<div class="mind-item">
+<div class="num">1</div>
+<div class="content">
+<h4>出稿は運用者の利益に直結する</h4>
+<p>運用者のCPNを預かるということは、その人の<strong>売上と利益を預かる</strong>ということ。テスト出稿の時間は「練習のための練習」ではなく、本番に耐えるための準備期間として有効活用してほしい。</p>
+</div>
 </div>
 
-<div class="mind-card">
-<span class="n">2</span><h4>一手ずつに責任を持って触る</h4>
-<p>人間である以上、エラーを完全にゼロにはできない。ただ、運用者の利益を預かっている以上、<strong>「なんとなく」「たぶん大丈夫」で手を動かすのは違う</strong>。一つひとつ、自分の判断に責任を持って進めてほしい。</p>
+<div class="mind-item">
+<div class="num">2</div>
+<div class="content">
+<h4>一手ずつに責任を持って触る</h4>
+<p>人間である以上、エラーを完全にゼロにはできない。ただ、運用者の利益を預かっている以上、「なんとなく」「たぶん大丈夫」で触るのは違う。<strong>一つひとつ、自分の判断に責任を持って進めてほしい。</strong></p>
+</div>
 </div>
 
-<div class="mind-card">
-<span class="n">3</span><h4>これは自分自身の武器になる</h4>
-<p>出稿スキルは運用者のためだけのものじゃない。<strong>自分が運用者側になったとき、自分のCPNを自分の意図通りに配信する</strong>ために必要なスキルでもある。今ここで手を動かして身につけたことは、そのまま自分の戦力としてずっと残る。</p>
+<div class="mind-item">
+<div class="num">3</div>
+<div class="content">
+<h4>これは自分自身の武器になる</h4>
+<p>出稿スキルは運用者のためだけのものじゃない。自分が運用者側になったとき、自分のCPNを自分の意図通りに配信するために必要なスキル。<strong>今ここで手を動かして身につけたことは、そのまま自分の戦力としてずっと残る。</strong></p>
+</div>
 </div>
 
-<div class="mind-card">
-<span class="n">4</span><h4>新人同士で情報共有してほしい</h4>
+<div class="mind-item">
+<div class="num">4</div>
+<div class="content">
+<h4>新人同士で情報共有してほしい</h4>
 <p>質問窓口は基本きらちゃん一人。同じ質問が重複して飛ぶとかなり負担になる。<strong>同期同士で「これどうだった？」を共有</strong>してくれると助かる。</p>
 </div>
+</div>
 
-<div class="mind-card">
-<span class="n">5</span><h4>初めての施策なので臨機応変に</h4>
+<div class="mind-item">
+<div class="num">5</div>
+<div class="content">
+<h4>初めての施策なので臨機応変に</h4>
 <p>この研修フロー自体が初めての試み。うまくいかない部分もあるかもしれないが、そこは臨機応変に対応していく。違和感やつまずきに気づいたら、<strong>遠慮せず声を上げてほしい。</strong></p>
+</div>
 </div>
 
 </div>
