@@ -59,6 +59,16 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 .flow-goal{background:linear-gradient(135deg,rgba(34,197,94,.12),rgba(14,165,233,.06));border-left:4px solid var(--ok)}
 .flow-goal .num{background:var(--ok)}
 
+/* overview */
+.overview{display:grid;grid-template-columns:auto 1fr;gap:14px 22px;margin:4px 0;padding:24px 28px;background:#fff;border:1px solid var(--border);border-left:4px solid var(--accent2);border-radius:12px;box-shadow:var(--shadow)}
+.overview dt{font-size:.78rem;font-weight:700;letter-spacing:.08em;color:var(--accent2);text-transform:uppercase;padding-top:3px;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.overview dt::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent2);display:inline-block}
+.overview dd{margin:0;color:var(--text);font-size:.96rem;line-height:1.7}
+.overview dd .note{color:var(--text-muted);font-size:.85rem;margin-left:6px}
+.overview dd a{color:var(--accent2);text-decoration:none;font-weight:600;border-bottom:1px dashed var(--accent2)}
+.overview dd a:hover{color:var(--accent);border-color:var(--accent)}
+@media(max-width:600px){.overview{grid-template-columns:1fr;gap:4px 0;padding:20px 22px}.overview dt{margin-top:10px}.overview dt:first-child{margin-top:0}}
+
 /* team split */
 .owner-line{display:flex;align-items:center;gap:12px;padding:14px 20px;background:#f8fafc;border:1px solid var(--border);border-left:4px solid #475569;border-radius:10px;margin:4px 0 20px;font-size:.95rem;color:var(--text)}
 .owner-line .owner-label{font-size:.75rem;font-weight:700;letter-spacing:.08em;color:#475569;text-transform:uppercase;background:#e2e8f0;padding:3px 10px;border-radius:12px}
@@ -142,6 +152,7 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 <body>
 
 <nav class="toc"><div class="container">
+<a href="#overview">概要</a>
 <a href="#flow">この後の流れ</a>
 <a href="#teams">チーム編成と日程</a>
 <a href="#test">テスト出稿</a>
@@ -157,8 +168,27 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 
 <div class="container">
 
+<section id="overview">
+<div class="section-header"><h2>1. 概要</h2></div>
+<div class="section-body">
+<dl class="overview">
+  <dt>期間</dt>
+  <dd>4/6(月)〜 4/16(木) <span class="note">※目安</span></dd>
+
+  <dt>時間</dt>
+  <dd>毎日 16:00〜19:00 <span class="note">※カレンダー追加済</span></dd>
+
+  <dt>体制</dt>
+  <dd>前半・後半でチーム分け <span class="note">→ 詳細は <a href="#teams">チーム編成と日程</a></span></dd>
+
+  <dt>主担当</dt>
+  <dd>友利 <span class="note">※講義以降の質問窓口はすべて友利</span></dd>
+</dl>
+</div>
+</section>
+
 <section id="flow">
-<div class="section-header"><h2>1. この後の流れ</h2></div>
+<div class="section-header"><h2>2. この後の流れ</h2></div>
 <div class="section-body">
 <div class="flow">
 
@@ -202,7 +232,7 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 </section>
 
 <section id="teams">
-<div class="section-header"><h2>2. チーム編成と日程</h2></div>
+<div class="section-header"><h2>3. チーム編成と日程</h2></div>
 <div class="section-body">
 
 <div class="owner-line">
@@ -238,7 +268,7 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 </section>
 
 <section id="test">
-<div class="section-header"><h2>3. テスト出稿</h2></div>
+<div class="section-header"><h2>4. テスト出稿</h2></div>
 <div class="section-body">
 
 <div class="phase do">
@@ -275,7 +305,7 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 </section>
 
 <section id="real">
-<div class="section-header"><h2>4. 出稿依頼対応</h2></div>
+<div class="section-header"><h2>5. 出稿依頼対応</h2></div>
 <div class="section-body">
 
 <div class="phase do">
@@ -311,7 +341,7 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 </section>
 
 <section id="mind">
-<div class="section-header"><h2>5. 必ず理解してほしいこと</h2></div>
+<div class="section-header"><h2>6. 必ず理解してほしいこと</h2></div>
 <div class="section-body">
 
 <div class="mind-list">
@@ -375,7 +405,7 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 </section>
 
 <section id="resources">
-<div class="section-header"><h2>6. 使用する資料</h2></div>
+<div class="section-header"><h2>7. 使用する資料</h2></div>
 <div class="section-body">
 
 <div class="resources">
