@@ -58,32 +58,9 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 .back-top{position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;opacity:.7;z-index:99}
 .back-top:hover{opacity:1}
 @media(max-width:600px){.hero h1{font-size:1.5rem}.mind-grid{grid-template-columns:1fr}.flow-step{padding:12px 14px}}
-
-#auth-gate{position:fixed;inset:0;background:#0f172a;z-index:9999;display:flex;align-items:center;justify-content:center}
-#auth-gate.hidden{display:none}
-.auth-box{background:#1e293b;border:1px solid #334155;border-radius:16px;padding:40px;text-align:center;max-width:360px;width:90%}
-.auth-box h2{color:#e2e8f0;margin:0 0 8px;font-size:1.3rem}
-.auth-box p{color:#94a3b8;font-size:.9rem;margin:0 0 20px}
-.auth-box input{width:100%;padding:12px 16px;border:1px solid #334155;border-radius:8px;background:#0f172a;color:#e2e8f0;font-size:1rem;outline:none;margin-bottom:12px}
-.auth-box input:focus{border-color:#7c3aed}
-.auth-box button{width:100%;padding:12px;border:none;border-radius:8px;background:#7c3aed;color:#fff;font-size:1rem;font-weight:600;cursor:pointer}
-.auth-box button:hover{background:#6d28d9}
-.auth-box .error{color:#f87171;font-size:.85rem;margin-top:8px;display:none}
 </style>
 </head>
 <body>
-
-<div id="auth-gate">
-<div class="auth-box">
-<h2>出稿研修ガイド</h2>
-<p>閲覧にはパスワードが必要です</p>
-<input type="password" id="auth-pw" placeholder="パスワード" onkeydown="if(event.key==='Enter')checkPw()">
-<button onclick="checkPw()">Enter</button>
-<div class="error" id="auth-err">パスワードが違います</div>
-</div>
-</div>
-
-<div id="main-content" style="display:none">
 
 <nav class="toc"><div class="container" style="padding-top:0;padding-bottom:0">
 <a href="#flow">この後の流れ</a>
@@ -232,13 +209,5 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 
 <button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
-</div>
-
-<script>
-const HASH='0fecbcf7a6c24a42b9b2dacce3ab5c79e3693b3bb6e41e9e77347eb026d04418';
-async function sha256(m){const e=new TextEncoder().encode(m);const h=await crypto.subtle.digest('SHA-256',e);return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('')}
-async function checkPw(){const p=document.getElementById('auth-pw').value;const h=await sha256(p);if(h===HASH){document.getElementById('auth-gate').classList.add('hidden');document.getElementById('main-content').style.display='';sessionStorage.setItem('sk-auth','1')}else{document.getElementById('auth-err').style.display='block'}}
-if(sessionStorage.getItem('sk-auth')==='1'){document.addEventListener('DOMContentLoaded',()=>{document.getElementById('auth-gate').classList.add('hidden');document.getElementById('main-content').style.display=''})}
-</script>
 </body>
 </html>
