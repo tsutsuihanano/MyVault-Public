@@ -60,7 +60,10 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 .flow-goal .num{background:var(--ok)}
 
 /* team split */
-.teams{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0 4px}
+.owner-line{display:flex;align-items:center;gap:12px;padding:14px 20px;background:#faf5ff;border:1px solid #e9d5ff;border-left:4px solid var(--accent);border-radius:10px;margin:4px 0 20px;font-size:.95rem;color:var(--text)}
+.owner-line .owner-label{font-size:.75rem;font-weight:700;letter-spacing:.08em;color:var(--accent);text-transform:uppercase;background:#f3e8ff;padding:3px 10px;border-radius:12px}
+.owner-line strong{font-weight:700;color:var(--text)}
+.teams{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:8px 0 4px}
 .team{background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px 22px;box-shadow:var(--shadow);position:relative;overflow:hidden}
 .team.front{border-top:3px solid var(--accent2)}
 .team.back{border-top:3px solid var(--accent)}
@@ -201,6 +204,11 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 <section id="teams">
 <div class="section-header"><h2>2. チーム編成と日程</h2></div>
 <div class="section-body">
+
+<div class="owner-line">
+<span class="owner-label">出稿研修担当者</span>
+<strong>友利</strong>
+</div>
 
 <div class="teams">
   <div class="team front">
