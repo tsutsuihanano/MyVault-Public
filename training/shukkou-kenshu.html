@@ -42,6 +42,25 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 .box h4{margin-top:0;color:var(--text)}
 .box p:last-child,.box li:last-child{margin-bottom:0}
 
+.phase{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:18px 24px 20px;margin:14px 0}
+.phase.do{border-left:4px solid var(--accent2)}
+.phase.goal{border-left:4px solid var(--ok);background:linear-gradient(180deg,rgba(34,197,94,.06),transparent)}
+.phase.warn{border-left:4px solid var(--warn)}
+.phase-label{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;font-weight:700;letter-spacing:.08em;padding:4px 12px;border-radius:20px;margin-bottom:12px;text-transform:uppercase}
+.phase.do .phase-label{background:rgba(14,165,233,.15);color:#38bdf8}
+.phase.goal .phase-label{background:rgba(34,197,94,.18);color:#4ade80}
+.phase.warn .phase-label{background:rgba(239,68,68,.15);color:#f87171}
+.phase-label::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor}
+.phase ul,.phase ol{padding-left:1.4em;margin:6px 0 0}
+.phase li{margin-bottom:6px;color:var(--text)}
+.phase li:last-child{margin-bottom:0}
+.phase p{margin:4px 0;color:var(--text)}
+.phase p:last-child{margin-bottom:0}
+.phase .must{display:inline-block;background:rgba(245,158,11,.22);color:#fbbf24;padding:2px 10px;border-radius:6px;font-size:.75rem;font-weight:700;margin-right:6px;vertical-align:middle}
+.phase strong{color:var(--accent3);font-weight:700}
+.phase.goal strong{color:#4ade80}
+.phase.warn strong{color:#f87171}
+
 .mind-list{display:flex;flex-direction:column;gap:14px;margin:20px 0 8px}
 .mind-item{display:flex;gap:22px;background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:24px 28px;align-items:flex-start;transition:border-color .2s,transform .2s}
 .mind-item:hover{border-color:rgba(14,165,233,.45);transform:translateX(2px)}
@@ -96,66 +115,61 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 </section>
 
 <section id="test">
-<div class="section-header"><h2>2. テスト出稿の詳細</h2></div>
+<div class="section-header"><h2>2. テスト出稿</h2></div>
 <div class="section-body">
 
-<h3>やること</h3>
+<div class="phase do">
+<span class="phase-label">やること</span>
 <ul>
-<li>1CPNを「答え（見本）」をもとに出稿する</li>
+<li>1CPNを「答え（見本）」をもとに、自分の手で出稿する</li>
 <li>基本は自力で進める</li>
-<li>不明点はAIや周りの人に質問して<strong>全部潰す</strong></li>
+<li>不明点はAIや周りの人に質問して、<strong>全部その場で潰す</strong></li>
 </ul>
-
-<h3>目的</h3>
-<div class="box info">
-<p>受動的にマニュアルを読むだけでは身につかない。<strong>能動的に時間を使う</strong>ための時間。</p>
-<p>出稿だけに集中して時間を取れるのは今しかない。</p>
 </div>
 
-<h4>ゴール</h4>
-<ul>
-<li>1CPNを自分の手で出稿した経験がある</li>
-<li>テスト中に出た疑問を<strong>すべて潰した状態</strong>で、現場（出稿依頼対応）に入れる</li>
-</ul>
+<div class="phase goal">
+<span class="phase-label">ゴール・目的</span>
+<p>受動的にマニュアルを読むだけでは身につかない。出稿だけに集中して時間を取れるのは今しかないので、能動的に使う時間。</p>
+<p><span class="must">ゴール</span><strong>1CPNを自分の手で出稿した経験があり、テスト中に出た疑問をすべて潰した状態で、現場（出稿依頼対応）に入れる。</strong></p>
+</div>
 
-<h3>注意点</h3>
-<div class="box warn">
-<h4>「手順通りやればできました」では意味がない</h4>
-<p>こなすだけの人はすぐわかる。通しません。</p>
-<p>チェック依頼のときに<strong>「どこをどう触ったか」「なぜそうしたか」</strong>をこちらから質問します。答えられる前提で取り組んでください。</p>
+<div class="phase warn">
+<span class="phase-label">注意点</span>
+<ul>
+<li>「手順通りやればできました」では意味がない。<strong>こなすだけの人は通しません。</strong></li>
+<li>チェック依頼のときに「どこをどう触ったか」「なぜそうしたか」をこちらから質問します。答えられる前提で取り組んでください。</li>
+</ul>
 </div>
 
 </div>
 </section>
 
 <section id="real">
-<div class="section-header"><h2>3. 出稿依頼対応の詳細</h2></div>
+<div class="section-header"><h2>3. 出稿依頼対応</h2></div>
 <div class="section-body">
 
-<h3>ノルマ</h3>
+<div class="phase do">
+<span class="phase-label">やること</span>
 <ul>
-<li><strong>ノンタゲ・年齢・地域</strong> を <strong>FB / TikTok で各5CPNずつ</strong></li>
-<li>振り分け担当：<strong>友利（きらちゃん）</strong></li>
-<li><strong>前半3名・後半4名</strong> に分けて進行</li>
+<li>ノルマ：<strong>ノンタゲ・年齢・地域</strong> を FB / TikTok で各5CPNずつ</li>
+<li>振り分け担当：友利（きらちゃん）／前半3名・後半4名 に分けて進行</li>
+<li>流れ：友利から軽く説明 → 出稿 → 新人同士でWチェック → 友利にWチェック依頼</li>
 </ul>
-
-<h3>進め方</h3>
-<ol>
-<li>最初に友利から軽く流れ説明</li>
-<li>出稿する</li>
-<li><strong>新人同士でWチェック</strong></li>
-<li>友利にWチェック依頼</li>
-</ol>
-
-<h3>目的</h3>
-<div class="box ok">
-<h4>★ FB・TikTokで基本的な出稿が手動でできる状態になる<span class="badge badge-star">必達</span></h4>
-<p>自動ツールはあるが、エラーが起きうるので<strong>手動は必ず習得</strong>しておく必要がある。</p>
 </div>
+
+<div class="phase goal">
+<span class="phase-label">ゴール・目的</span>
+<p><span class="must">ゴール</span><strong>FB・TikTokで基本的な出稿が手動でできる状態になる。</strong></p>
+<p>自動ツールはあるが、エラーが起きうるので手動は必ず習得しておく必要がある。出稿依頼シートを見て出稿することに慣れることもここで身につける。</p>
+</div>
+
+<div class="phase warn">
+<span class="phase-label">注意点</span>
 <ul>
-<li>出稿依頼シートを見て出稿することに慣れる</li>
-<li>出稿部目線で<strong>「どう書いてあれば出稿しやすいか」</strong>を理解する</li>
+<li><strong>出稿部目線を常に意識する</strong>。「どう書いてあれば出稿しやすいか」を考えながら進めてほしい。</li>
+<li>Wチェックは必ず「新人同士 → 友利」の順番で回す。飛ばさないこと。</li>
 </ul>
+</div>
 
 </div>
 </section>
