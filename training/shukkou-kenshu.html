@@ -54,6 +54,8 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 .flow-arrow{text-align:center;color:var(--text-muted);font-size:.95rem;line-height:1;padding:2px 0}
 .flow-check{align-self:center;background:var(--accent3-soft);color:var(--accent3);border:1px dashed #d97706;border-radius:20px;padding:6px 18px;font-size:.85rem;font-weight:600;display:inline-flex;align-items:center;gap:8px}
 .flow-check::before{content:'✓';background:var(--accent3);color:#fff;width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.7rem}
+.flow-check.done{background:var(--ok-soft);color:var(--ok);border-color:var(--ok)}
+.flow-check.done::before{background:var(--ok)}
 .flow-goal{background:linear-gradient(135deg,rgba(34,197,94,.12),rgba(14,165,233,.06));border-left:4px solid var(--ok)}
 .flow-goal .num{background:var(--ok)}
 
@@ -170,7 +172,9 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
     <div class="num">4</div>
     <div class="body"><strong>出稿依頼対応（ノルマ消化）</strong><span>実際の依頼シートを見て出稿する</span></div>
   </div>
-  <div class="flow-arrow">↓ ノルマ達成</div>
+  <div class="flow-arrow">↓</div>
+  <div class="flow-check done">ノルマ達成で修了</div>
+  <div class="flow-arrow">↓</div>
 
   <div class="flow-step flow-goal">
     <div class="num">✓</div>
