@@ -57,6 +57,21 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 .flow-goal{background:linear-gradient(135deg,rgba(34,197,94,.12),rgba(14,165,233,.06));border-left:4px solid var(--ok)}
 .flow-goal .num{background:var(--ok)}
 
+/* team split */
+.teams{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0 4px}
+.team{background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px 22px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.team.front{border-top:3px solid var(--accent2)}
+.team.back{border-top:3px solid var(--accent)}
+.team-label{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;font-weight:700;letter-spacing:.08em;padding:4px 12px;border-radius:20px;margin-bottom:10px;text-transform:uppercase}
+.team.front .team-label{background:var(--accent2-soft);color:var(--accent2)}
+.team.back .team-label{background:#f3e8ff;color:var(--accent)}
+.team h3{font-size:1.05rem;color:var(--text);font-weight:700;margin:4px 0 10px}
+.team .members{list-style:none;padding:0;margin:0 0 12px;display:flex;flex-wrap:wrap;gap:6px}
+.team .members li{background:#f8fafc;border:1px solid var(--border);color:var(--text);padding:5px 12px;border-radius:16px;font-size:.88rem;margin:0}
+.team .deadline{font-size:.85rem;color:var(--text-muted);padding-top:10px;border-top:1px dashed var(--border);display:flex;align-items:center;gap:6px}
+.team .deadline strong{color:var(--text);font-weight:600}
+@media(max-width:600px){.teams{grid-template-columns:1fr}}
+
 /* phase blocks */
 .phase{background:#fff;border:1px solid var(--border);border-radius:12px;padding:22px 26px;margin:16px 0;box-shadow:var(--shadow)}
 .phase.do{border-left:4px solid var(--accent2);background:linear-gradient(180deg,rgba(3,105,161,.03),#fff 40%)}
@@ -163,6 +178,31 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
   </div>
 
 </div>
+
+<div class="teams">
+  <div class="team front">
+    <span class="team-label">前半</span>
+    <h3>Aチーム（4名）</h3>
+    <ul class="members">
+      <li>高仲</li>
+      <li>大畑</li>
+      <li>木村</li>
+      <li>宮崎</li>
+    </ul>
+    <div class="deadline">想定期限：<strong>〜 4/10（金）</strong></div>
+  </div>
+  <div class="team back">
+    <span class="team-label">後半</span>
+    <h3>Bチーム（3名）</h3>
+    <ul class="members">
+      <li>川原</li>
+      <li>井上</li>
+      <li>三冨</li>
+    </ul>
+    <div class="deadline">想定期限：<strong>〜 4/16（木）</strong></div>
+  </div>
+</div>
+
 </div>
 </section>
 
