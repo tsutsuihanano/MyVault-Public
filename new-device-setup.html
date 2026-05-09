@@ -184,7 +184,7 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
   <dd>デスクトップと同じ環境（MyVault・Obsidian設定・Cursor・Claudeメモリ）でMacbookを動かせる状態</dd>
 
   <dt>事前準備</dt>
-  <dd>Apple ID 設定済み・GitHub アカウント有り</dd>
+  <dd>Apple ID 設定済み・GitHub アカウント有り・<strong>Claude Max 契約済み</strong> <span class="note">※ Pro だと上限到達が早いので必ず Max（月$100）</span></dd>
 
   <dt>作業場所</dt>
   <dd><strong>このページの操作はすべてMacbookで実行</strong> <span class="note">※デスクトップ側の事前作業は完了済み</span></dd>
@@ -271,7 +271,7 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 
   <div class="flow-step">
     <div class="num">8</div>
-    <div class="body"><strong>Claude Code グローバル CLAUDE.md を Mac用に作成</strong><span>パス・シェルをMac仕様に</span></div>
+    <div class="body"><strong>Claude Code インストール → CLAUDE.md 配置</strong><span>面倒な部分は Claude 自身に依頼する</span></div>
     <div class="time">10分</div>
   </div>
   <div class="flow-arrow">↓</div>
@@ -521,50 +521,63 @@ ls -la "$TARGET"</div>
 </section>
 
 <section id="step8">
-<div class="section-header"><h2>STEP 8. Claude Code グローバル CLAUDE.md を Mac用に作成</h2></div>
+<div class="section-header"><h2>STEP 8. Claude Code インストール → グローバル CLAUDE.md 配置</h2></div>
 <div class="section-body">
 
 <div class="phase do">
 <span class="phase-label">考え方</span>
-<p>デスクトップの <span class="inline-code">~/.claude/CLAUDE.md</span> はWindowsパス・PowerShellコマンド前提で書かれている。<strong>そのままMacに持ち込むと矛盾する</strong>ので、Mac用にゼロから作る。プロジェクトCLAUDE.md（<span class="inline-code">MyVault/CLAUDE.md</span>）はMyVault同期で既に揃っているのでそのまま使える。</p>
+<p>デスクトップの <span class="inline-code">~/.claude/CLAUDE.md</span> はWindowsパス・PowerShellコマンド前提で書かれている。<strong>そのままMacに持ち込むと矛盾する</strong>ので、Mac用に作る。プロジェクトCLAUDE.md（<span class="inline-code">MyVault/CLAUDE.md</span>）はMyVault同期で既に揃っているのでそのまま使える。</p>
+<p>面倒な作業は <strong>Claude Code 自身に依頼</strong> する方が安全（パスやシェル差異の手書きミスを防げる）。これは西村さん推奨の方式。</p>
 </div>
 
 <div class="phase do">
-<span class="phase-label">手順</span>
+<span class="phase-label">Claude Code インストール</span>
 
 <div class="device-tag macbook">💻 Macbook</div>
-<div class="cmd-box"><span class="comment"># Claude Code をまだ入れていなければインストール</span>
+<div class="cmd-box"><span class="comment"># Cursor のターミナル（⌃+`）で実行</span>
 npm install -g @anthropic-ai/claude-code
 
-<span class="comment"># Claude Code を一度起動して ~/.claude/ を初期化</span>
+<span class="comment"># MyVaultフォルダで Claude Code 起動</span>
 cd ~/Documents/MyVault
-claude  <span class="comment"># 一度起動して /quit で抜ける</span>
+claude</div>
+</div>
 
-<span class="comment"># グローバル CLAUDE.md を Mac用に作成</span>
-cat &gt; ~/.claude/CLAUDE.md &lt;&lt;'EOF'
-# Global Rules (Mac)
+<div class="phase do">
+<span class="phase-label">起動後にClaudeに依頼するプロンプト（コピペ）</span>
+<p>Claude Code が起動したら、下記をそのままコピペして送る：</p>
 
+<div class="cmd-box">~/.claude/CLAUDE.md（グローバル設定）を Mac用に作成してほしい。
+
+要件:
 - 日本語で応答する
 - 結論から入る・推測禁止・不明点は質問する
-- 端末呼称: デスクトップ=Windowsメイン機 / Macbook=この端末
+- 端末呼称: デスクトップ=Windowsメイン機(hostname:HANANO) / Macbook=この端末
 - パス: MyVaultは ~/Documents/MyVault に配置
-- シェル: zsh / bash（PowerShellではない）
+- シェル: zsh / bash（PowerShellではない、Bashツール優先）
 - 一時ファイルは ~/Downloads に出す（MyVault配下に作らない）
 - 認証情報は ~/Documents/MyVault/.secrets/ に格納（git対象外）
-EOF
+- メモリは ~/.claude/projects/-Users-$(whoami)-Documents-MyVault/memory/ にある
+- セッション開始時にメモリ読込
 
-cat ~/.claude/CLAUDE.md</div>
+デスクトップ側のCLAUDE.mdの構成（Plan→Execute / 並列エージェント運用 / 検証 / コーディング原則 / 制約 / Anti-patterns）を踏襲しつつ、Mac環境にfit するように作成して。</div>
 </div>
 
 <div class="phase goal">
 <span class="phase-label">確認</span>
-<p>Claude Code を起動して <span class="inline-code">claude</span> → 何か質問してみる。<br>
-→ メモリの内容（過去の好み・プロジェクト背景）を踏まえた応答が返ってくれば<strong>セットアップ完了</strong>。</p>
+<p>Claude が <span class="inline-code">~/.claude/CLAUDE.md</span> を生成し終わったら、何か業務に関する質問をしてみる。<br>
+→ メモリの内容（過去の好み・プロジェクト背景）を踏まえた応答が返ってくれば<strong>セットアップ完了</strong>。<br>
+例: 「数字合わせのワークフロー教えて」「タスク管理シートのURL覚えてる？」</p>
 </div>
 
 <div class="phase warn">
 <span class="phase-label">プロジェクトCLAUDE.mdは触らない</span>
 <p><span class="inline-code">~/Documents/MyVault/CLAUDE.md</span>（プロジェクトCLAUDE.md）はWindowsパスやPowerShellコマンドが含まれているが、<strong>これはデスクトップでも編集する共有ファイル</strong>。Mac固有の差異は将来 OS判定ブロックで吸収する想定。今は触らずそのまま使う。</p>
+</div>
+
+<div class="phase warn">
+<span class="phase-label">運用ルール（西村さん推奨）</span>
+<p>Claude が「<strong>○○を実行してよいですか？</strong>」と聞いてきたら、基本的に <strong>「はい」</strong> と答える。<br>
+「やっていいよ」「進めて」「OK」など、自然な返答でOK。慎重なら <span class="inline-code">/permissions</span> で個別ツールを許可リストに追加する運用に切り替えると毎回聞かれなくなる。</p>
 </div>
 
 </div>
