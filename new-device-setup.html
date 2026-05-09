@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ゼロから別端末セットアップ — Obsidian + Cursor + GitHub + Claude</title>
+<style>
+:root{
+  --bg:#f8f9fa;
+  --surface:#ffffff;
+  --border:#e5e7eb;
+  --border-soft:#f1f5f9;
+  --text:#1a1a2e;
+  --text-sub:#475569;
+  --text-muted:#64748b;
+  --accent:#7c3aed;
+  --accent2:#0369a1;
+  --accent2-soft:#e0f2fe;
+  --accent3:#b45309;
+  --accent3-soft:#fef3c7;
+  --ok:#15803d;
+  --ok-soft:#dcfce7;
+  --warn:#b91c1c;
+  --warn-soft:#fee2e2;
+  --shadow:0 2px 10px rgba(15,23,42,.06);
+  --shadow-md:0 4px 20px rgba(15,23,42,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);line-height:1.85}
+
+.hero{text-align:center;padding:72px 20px 56px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff}
+.hero h1{font-size:2.2rem;font-weight:800;margin-bottom:10px;color:#fff}
+.hero p{font-size:1.05rem;opacity:.92}
+.hero .badge{display:inline-block;margin-top:14px;background:rgba(255,255,255,.18);padding:6px 18px;border-radius:20px;font-size:.85rem}
+
+.container{max-width:860px;margin:0 auto;padding:0 20px 64px}
+
+nav.toc{position:sticky;top:0;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);z-index:100;padding:10px 0;overflow-x:auto;white-space:nowrap;box-shadow:0 1px 4px rgba(15,23,42,.04)}
+nav.toc .container{padding-top:0;padding-bottom:0}
+nav.toc a{color:var(--text-sub);text-decoration:none;padding:6px 14px;font-size:.88rem;display:inline-block;border-radius:6px;font-weight:500}
+nav.toc a:hover{background:var(--accent2-soft);color:var(--accent2)}
+
+section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px solid var(--border);overflow:hidden;box-shadow:var(--shadow)}
+.section-header{padding:24px 32px 18px;border-bottom:1px solid var(--border-soft)}
+.section-header h2{font-size:1.35rem;font-weight:700;color:var(--text);display:flex;align-items:center;gap:10px}
+.section-body{padding:28px 32px 32px}
+
+/* flow */
+.flow{display:flex;flex-direction:column;gap:10px;margin:8px 0}
+.flow-step{background:#fff;border:1px solid var(--border);border-left:4px solid var(--accent2);border-radius:12px;padding:16px 20px;display:flex;align-items:center;gap:16px;box-shadow:var(--shadow)}
+.flow-step .num{width:32px;height:32px;border-radius:50%;background:var(--accent2);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.95rem;flex-shrink:0}
+.flow-step .body{flex:1}
+.flow-step .body strong{color:var(--text);font-size:1.02rem;display:block;margin-bottom:2px}
+.flow-step .body span{display:block;color:var(--text-muted);font-size:.88rem}
+.flow-step .time{flex-shrink:0;background:var(--accent2-soft);color:var(--accent2);padding:4px 12px;border-radius:14px;font-size:.78rem;font-weight:600}
+.flow-arrow{text-align:center;color:var(--text-muted);font-size:.95rem;line-height:1;padding:2px 0}
+.flow-goal{background:linear-gradient(135deg,rgba(34,197,94,.12),rgba(14,165,233,.06));border-left:4px solid var(--ok)}
+.flow-goal .num{background:var(--ok)}
+
+/* overview */
+.overview{display:grid;grid-template-columns:auto 1fr;gap:14px 22px;margin:4px 0;padding:24px 28px;background:#fff;border:1px solid var(--border);border-left:4px solid var(--accent2);border-radius:12px;box-shadow:var(--shadow)}
+.overview dt{font-size:.78rem;font-weight:700;letter-spacing:.08em;color:var(--accent2);text-transform:uppercase;padding-top:3px;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.overview dt::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent2);display:inline-block}
+.overview dd{margin:0;color:var(--text);font-size:.96rem;line-height:1.7}
+.overview dd .note{color:var(--text-muted);font-size:.85rem;margin-left:6px}
+.overview dd a{color:var(--accent2);text-decoration:none;font-weight:600;border-bottom:1px dashed var(--accent2)}
+.overview dd a:hover{color:var(--accent);border-color:var(--accent)}
+@media(max-width:600px){.overview{grid-template-columns:1fr;gap:4px 0;padding:20px 22px}.overview dt{margin-top:10px}.overview dt:first-child{margin-top:0}}
+
+/* phase blocks */
+.phase{background:#fff;border:1px solid var(--border);border-radius:12px;padding:22px 26px;margin:16px 0;box-shadow:var(--shadow)}
+.phase.do{border-left:4px solid var(--accent2);background:linear-gradient(180deg,rgba(3,105,161,.03),#fff 40%)}
+.phase.goal{border-left:4px solid var(--ok);background:linear-gradient(180deg,rgba(21,128,61,.05),#fff 40%)}
+.phase.warn{border-left:4px solid var(--warn);background:linear-gradient(180deg,rgba(185,28,28,.04),#fff 40%)}
+.phase-label{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;font-weight:700;letter-spacing:.08em;padding:5px 14px;border-radius:20px;margin-bottom:14px;text-transform:uppercase}
+.phase.do .phase-label{background:var(--accent2-soft);color:var(--accent2)}
+.phase.goal .phase-label{background:var(--ok-soft);color:var(--ok)}
+.phase.warn .phase-label{background:var(--warn-soft);color:var(--warn)}
+.phase-label::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor}
+.phase ul,.phase ol{padding-left:1.45em;margin:8px 0 0}
+.phase li{margin-bottom:10px;color:var(--text-sub);line-height:1.8}
+.phase li:last-child{margin-bottom:0}
+.phase p{margin:10px 0;color:var(--text-sub);line-height:1.85}
+.phase p:first-of-type{margin-top:0}
+.phase p:last-child{margin-bottom:0}
+.phase strong{color:var(--accent3);font-weight:700}
+.phase.goal strong{color:var(--ok)}
+.phase.warn strong{color:var(--warn)}
+
+/* OS tag */
+.os-tag{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:700;padding:3px 10px;border-radius:8px;margin:14px 0 6px}
+.os-tag.mac{background:#f1f5f9;color:#475569}
+.os-tag.win{background:#dbeafe;color:#1e40af}
+
+/* code box */
+.cmd-box{background:#1e1e2e;color:#cdd6f4;border-radius:10px;padding:16px 20px;font-family:'SFMono-Regular',Consolas,'Courier New',monospace;font-size:.85rem;margin:6px 0 14px;white-space:pre-wrap;word-break:break-word;line-height:1.7;overflow-x:auto;border:1px solid #313244}
+.cmd-box .comment{color:#6c7086}
+.cmd-box .var{color:#fab387}
+.cmd-box .str{color:#a6e3a1}
+
+.inline-code{font-family:'SFMono-Regular',Consolas,'Courier New',monospace;background:#f1f5f9;color:#475569;padding:2px 8px;border-radius:5px;font-size:.88em;border:1px solid var(--border)}
+
+/* checklist */
+.checklist{background:#fff;border:1px solid var(--border);border-left:4px solid var(--ok);border-radius:12px;padding:22px 26px;box-shadow:var(--shadow)}
+.checklist ul{list-style:none;padding:0;margin:0}
+.checklist li{padding:10px 0;border-bottom:1px solid var(--border-soft);font-size:.95rem;color:var(--text-sub);display:flex;align-items:flex-start;gap:10px}
+.checklist li:last-child{border:none}
+.checklist li::before{content:'☐';font-size:1.1rem;color:var(--ok);flex-shrink:0;line-height:1.4}
+.checklist li strong{color:var(--text);font-weight:600}
+
+/* trouble */
+.trouble-list{display:flex;flex-direction:column;gap:14px;margin:8px 0}
+.trouble-item{background:#fff;border:1px solid var(--border);border-left:4px solid var(--warn);border-radius:12px;padding:18px 22px;box-shadow:var(--shadow)}
+.trouble-q{font-weight:700;font-size:.98rem;color:var(--warn);margin-bottom:8px;display:flex;align-items:flex-start;gap:8px}
+.trouble-q::before{content:'?';flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--warn);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700}
+.trouble-a{font-size:.92rem;color:var(--text-sub);line-height:1.8;padding-left:30px}
+
+/* resources */
+.resources{display:flex;flex-direction:column;gap:14px;margin:8px 0}
+.resource{display:flex;align-items:center;gap:18px;background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px 24px;text-decoration:none;color:var(--text);box-shadow:var(--shadow);transition:transform .2s,box-shadow .2s,border-color .2s}
+.resource:hover{transform:translateX(2px);box-shadow:var(--shadow-md);border-color:var(--accent)}
+.resource .icon{flex-shrink:0;width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#38bdf8);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:700}
+.resource .info{flex:1;min-width:0}
+.resource .title{font-weight:700;color:var(--text);font-size:1.02rem;margin-bottom:3px}
+.resource .url{font-size:.82rem;color:var(--text-muted);word-break:break-all}
+.resource .arrow{flex-shrink:0;color:var(--text-muted);font-size:1.2rem;transition:transform .2s,color .2s}
+.resource:hover .arrow{transform:translateX(4px);color:var(--accent)}
+
+.closing{background:linear-gradient(135deg,#f5f3ff,#eff6ff);border:1px solid #ddd6fe;border-radius:14px;padding:32px 28px;text-align:center;font-size:1.05rem;line-height:2;margin:32px 0 0;color:var(--text-sub)}
+.closing strong{color:var(--accent);font-weight:700}
+
+.back-top{position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;opacity:.9;z-index:99;box-shadow:0 4px 14px rgba(124,58,237,.35)}
+.back-top:hover{opacity:1;transform:translateY(-2px);transition:all .15s}
+
+@media(max-width:600px){
+  .hero h1{font-size:1.6rem}
+  .hero{padding:52px 20px 40px}
+  .section-body{padding:22px 20px 26px}
+  .section-header{padding:20px 22px 16px}
+  .flow-step{padding:14px 16px;gap:12px;flex-wrap:wrap}
+  .flow-step .time{order:3;margin-left:auto}
+  .phase{padding:18px 20px}
+  .cmd-box{padding:14px 16px;font-size:.78rem}
+}
+</style>
+</head>
+<body>
+
+<nav class="toc"><div class="container">
+<a href="#overview">概要</a>
+<a href="#flow">全体の流れ</a>
+<a href="#step1">STEP 1</a>
+<a href="#step2">STEP 2</a>
+<a href="#step3">STEP 3</a>
+<a href="#step4">STEP 4</a>
+<a href="#step5">STEP 5</a>
+<a href="#step6">STEP 6</a>
+<a href="#step7">STEP 7</a>
+<a href="#checklist">完了チェック</a>
+<a href="#trouble">困った時</a>
+<a href="#resources">関連資料</a>
+</div></nav>
+
+<div class="hero">
+<h1>ゼロから別端末セットアップ</h1>
+<p>Obsidian + Cursor + GitHub + Claude Code を一から揃える</p>
+<div class="badge">⏱️ 所要時間：約60分（ダウンロード時間込み）</div>
+</div>
+
+<div class="container">
+
+<section id="overview">
+<div class="section-header"><h2>1. 概要</h2></div>
+<div class="section-body">
+<dl class="overview">
+  <dt>対象</dt>
+  <dd>新しいMacbook/Windows端末を入手したばかりで、Obsidian/Cursor/Git/GitHub の設定経験がない人</dd>
+
+  <dt>ゴール</dt>
+  <dd>メイン端末と同じ環境（Vault・AIルール・Claude Codeのメモリやスキル）を再現する</dd>
+
+  <dt>所要時間</dt>
+  <dd>約60分 <span class="note">※インターネット速度・各サービスのDL時間による</span></dd>
+
+  <dt>事前準備</dt>
+  <dd>Apple ID または Microsoft アカウント / GitHub アカウント / OneDrive の同期</dd>
+
+  <dt>既にMyVaultが入っているなら</dt>
+  <dd><a href="./index.html">「別端末でのセットアップ手順（10分）」</a> を参照</dd>
+</dl>
+</div>
+</section>
+
+<section id="flow">
+<div class="section-header"><h2>2. 全体の流れ</h2></div>
+<div class="section-body">
+<div class="flow">
+
+  <div class="flow-step">
+    <div class="num">1</div>
+    <div class="body"><strong>ベースツールのインストール</strong><span>Homebrew・Git・GitHub CLI・Node</span></div>
+    <div class="time">10分</div>
+  </div>
+  <div class="flow-arrow">↓</div>
+
+  <div class="flow-step">
+    <div class="num">2</div>
+    <div class="body"><strong>GitHub認証</strong><span>gh auth login で1回だけ通す</span></div>
+    <div class="time">5分</div>
+  </div>
+  <div class="flow-arrow">↓</div>
+
+  <div class="flow-step">
+    <div class="num">3</div>
+    <div class="body"><strong>MyVault を clone</strong><span>GitHubから最新を取得</span></div>
+    <div class="time">5分</div>
+  </div>
+  <div class="flow-arrow">↓</div>
+
+  <div class="flow-step">
+    <div class="num">4</div>
+    <div class="body"><strong>.secrets を手動コピー</strong><span>OneDrive経由（Git対象外）</span></div>
+    <div class="time">5分</div>
+  </div>
+  <div class="flow-arrow">↓</div>
+
+  <div class="flow-step">
+    <div class="num">5</div>
+    <div class="body"><strong>Obsidian インストール → Vaultとして開く</strong><span>プラグイン自動有効化</span></div>
+    <div class="time">10分</div>
+  </div>
+  <div class="flow-arrow">↓</div>
+
+  <div class="flow-step">
+    <div class="num">6</div>
+    <div class="body"><strong>Cursor インストール → Settings Sync</strong><span>テーマ・拡張機能を自動同期</span></div>
+    <div class="time">10分</div>
+  </div>
+  <div class="flow-arrow">↓</div>
+
+  <div class="flow-step">
+    <div class="num">7</div>
+    <div class="body"><strong>Claude Code 設定の同期</strong><span>メモリ・skill・CLAUDE.md</span></div>
+    <div class="time">15分</div>
+  </div>
+  <div class="flow-arrow">↓</div>
+
+  <div class="flow-step flow-goal">
+    <div class="num">✓</div>
+    <div class="body"><strong>完了</strong><span>メイン端末と同じ環境で作業できる状態</span></div>
+  </div>
+
+</div>
+</div>
+</section>
+
+<section id="step1">
+<div class="section-header"><h2>STEP 1. ベースツールのインストール</h2></div>
+<div class="section-body">
+
+<div class="phase do">
+<span class="phase-label">Mac の場合</span>
+<p>標準アプリ「<strong>ターミナル.app</strong>」を起動して、以下を順に実行する。</p>
+
+<div class="os-tag mac">🍎 macOS</div>
+<div class="cmd-box"><span class="comment"># 1. Homebrew インストール</span>
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+<span class="comment"># 2. PATH を通す（Apple Silicon の場合）</span>
+echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' &gt;&gt; ~/.zprofile
+source ~/.zprofile
+
+<span class="comment"># 3. 必要なツールを一括インストール</span>
+brew install git gh node@20 pyenv
+
+<span class="comment"># 4. 動作確認</span>
+brew --version
+git --version
+gh --version
+node --version</div>
+</div>
+
+<div class="phase do">
+<span class="phase-label">Windows の場合</span>
+<p>PowerShell（管理者）で実行。Wingetが入っていなければ <a href="https://learn.microsoft.com/ja-jp/windows/package-manager/winget/" target="_blank" rel="noopener">Microsoft公式</a>からインストール。</p>
+
+<div class="os-tag win">🪟 Windows</div>
+<div class="cmd-box"><span class="comment"># Winget で一括インストール</span>
+winget install --id Git.Git -e
+winget install --id GitHub.cli -e
+winget install --id OpenJS.NodeJS.LTS -e
+
+<span class="comment"># 動作確認（新しいPowerShellを開き直して）</span>
+git --version
+gh --version
+node --version</div>
+</div>
+
+</div>
+</section>
+
+<section id="step2">
+<div class="section-header"><h2>STEP 2. GitHub 認証（gh auth login）</h2></div>
+<div class="section-body">
+
+<div class="phase do">
+<span class="phase-label">やること</span>
+<p>GitHub CLI 経由で認証するのが一番ラク。トークン手動発行は不要。</p>
+<div class="cmd-box">gh auth login</div>
+
+<p>対話プロンプトの選択：</p>
+<ol>
+<li><strong>GitHub.com</strong> を選択</li>
+<li><strong>HTTPS</strong> を選択</li>
+<li><strong>Yes</strong>（Authenticate Git with GitHub credentials）</li>
+<li><strong>Login with a web browser</strong> を選択</li>
+<li>表示される8桁コードをコピー → ブラウザで貼り付け → 承認</li>
+</ol>
+
+<div class="cmd-box"><span class="comment"># 確認（✓ Logged in to github.com as ... が出れば成功）</span>
+gh auth status
+
+<span class="comment"># Git のユーザー設定（メイン端末と同じ値で）</span>
+git config --global user.name "MyVault User"
+git config --global user.email "your-email@example.com"</div>
+</div>
+
+<div class="phase goal">
+<span class="phase-label">この後</span>
+<p>一度認証すれば、その端末では <span class="inline-code">git push / pull / clone</span> がすべて自動で認証される。<strong>PAT（Personal Access Token）の手動発行は不要。</strong></p>
+</div>
+
+</div>
+</section>
+
+<section id="step3">
+<div class="section-header"><h2>STEP 3. MyVault を GitHub から clone</h2></div>
+<div class="section-body">
+
+<div class="phase do">
+<span class="phase-label">やること</span>
+
+<div class="os-tag mac">🍎 macOS</div>
+<div class="cmd-box">mkdir -p ~/Documents
+cd ~/Documents
+gh repo clone <span class="var">&lt;your-github-username&gt;</span>/MyVault
+cd MyVault
+git status  <span class="comment"># クリーンならOK</span></div>
+
+<div class="os-tag win">🪟 Windows（PowerShell）</div>
+<div class="cmd-box">cd $env:USERPROFILE\Documents
+gh repo clone <span class="var">&lt;your-github-username&gt;</span>/MyVault
+cd MyVault
+git status</div>
+</div>
+
+<div class="phase warn">
+<span class="phase-label">注意点</span>
+<p><strong>.secrets/ は cloneに含まれない</strong>（gitignoreされている）。次のSTEPで手動コピーが必要。</p>
+</div>
+
+</div>
+</section>
+
+<section id="step4">
+<div class="section-header"><h2>STEP 4. .secrets を手動でコピー</h2></div>
+<div class="section-body">
+
+<div class="phase do">
+<span class="phase-label">やること</span>
+<p>認証情報（Google Sheets / Gmail / Google Ads / Chatwork API）はGit対象外。<strong>OneDrive経由</strong>で運ぶのが安全。</p>
+
+<ol>
+<li>メイン端末の <span class="inline-code">.secrets</span> をOneDriveにアップロード（既に同期済みならスキップ）</li>
+<li>新端末でOneDriveをサインイン → 同期完了を待つ</li>
+<li><span class="inline-code">.secrets</span> フォルダごと <span class="inline-code">~/Documents/MyVault/</span> 配下にコピー</li>
+</ol>
+
+<div class="os-tag mac">🍎 macOS</div>
+<div class="cmd-box"><span class="comment"># OneDriveのパスは環境による（CloudStorage配下）</span>
+cp -r ~/Library/CloudStorage/OneDrive-*/.secrets ~/Documents/MyVault/
+
+<span class="comment"># 認証ファイルのパーミッションを絞る</span>
+chmod 600 ~/Documents/MyVault/.secrets/*.json
+chmod 600 ~/Documents/MyVault/.secrets/*.txt</div>
+
+<div class="os-tag win">🪟 Windows</div>
+<div class="cmd-box">Copy-Item -Recurse $env:OneDrive\.secrets $env:USERPROFILE\Documents\MyVault\</div>
+</div>
+
+<div class="phase warn">
+<span class="phase-label">超重要</span>
+<p><strong>絶対に <span class="inline-code">.secrets/</span> をGit add しないこと。</strong>
+.gitignore に登録済みだが、OS差異で外れることがあるので push前に <span class="inline-code">git status</span> で確認すること。</p>
+</div>
+
+</div>
+</section>
+
+<section id="step5">
+<div class="section-header"><h2>STEP 5. Obsidian インストール → Vaultとして開く</h2></div>
+<div class="section-body">
+
+<div class="phase do">
+<span class="phase-label">インストール</span>
+
+<div class="os-tag mac">🍎 macOS</div>
+<div class="cmd-box">brew install --cask obsidian</div>
+
+<div class="os-tag win">🪟 Windows</div>
+<div class="cmd-box">winget install --id Obsidian.Obsidian -e</div>
+</div>
+
+<div class="phase do">
+<span class="phase-label">起動後の操作</span>
+<ol>
+<li>「<strong>フォルダを Vault として開く</strong>」を選択<br><span style="color:var(--text-muted);font-size:.88rem">（Open folder as vault / フォルダーをボルトとして開く）</span></li>
+<li><span class="inline-code">~/Documents/MyVault</span> を選択</li>
+<li>「コミュニティプラグインを有効化」→「<strong>全て有効化</strong>」<br><span style="color:var(--text-muted);font-size:.88rem"><span class="inline-code">.obsidian/community-plugins.json</span> に記録された全プラグインが自動で再ダウンロードされる（Obsidian Git含む）</span></li>
+</ol>
+</div>
+
+<div class="phase goal">
+<span class="phase-label">この後</span>
+<p>Obsidian の設定（テーマ・ホットキー・スニペット）は <span class="inline-code">.obsidian/</span> 配下にあるため、<strong>git pull した時点で自動で揃う</strong>。</p>
+</div>
+
+</div>
+</section>
+
+<section id="step6">
+<div class="section-header"><h2>STEP 6. Cursor インストール → Settings Sync</h2></div>
+<div class="section-body">
+
+<div class="phase do">
+<span class="phase-label">インストール</span>
+
+<div class="os-tag mac">🍎 macOS</div>
+<div class="cmd-box">brew install --cask cursor</div>
+
+<div class="os-tag win">🪟 Windows</div>
+<div class="cmd-box">winget install --id Anysphere.Cursor -e</div>
+</div>
+
+<div class="phase do">
+<span class="phase-label">起動後の操作</span>
+<ol>
+<li>サインイン（GitHub or Google）— <strong>メイン端末と同じアカウント</strong>を使うとProプランが共有される</li>
+<li>設定 → <strong>Settings Sync</strong> → Turn On → GitHubアカウントで認証</li>
+<li>テーマ・拡張機能・キーバインドが自動同期される</li>
+<li>File → Open Folder → <span class="inline-code">~/Documents/MyVault</span></li>
+</ol>
+</div>
+
+<div class="phase warn">
+<span class="phase-label">注意点</span>
+<p>メイン端末でSettings Sync未設定なら、<strong>先にメイン端末でオンにして設定をアップロード</strong> → その後新端末でオンにする順序で。</p>
+</div>
+
+</div>
+</section>
+
+<section id="step7">
+<div class="section-header"><h2>STEP 7. Claude Code 設定の同期</h2></div>
+<div class="section-body">
+
+<div class="phase do">
+<span class="phase-label">考え方</span>
+<p>グローバルCLAUDE.md・メモリ・skillsを <strong>専用リポジトリ（claude-config）</strong> で管理して、両端末で symlink で参照する。</p>
+</div>
+
+<div class="phase do">
+<span class="phase-label">メイン端末側で1回だけ実行</span>
+<p>既にやっていればスキップ。</p>
+
+<div class="cmd-box"><span class="comment"># 1. プライベートリポジトリ作成</span>
+gh repo create claude-config --private --description "Claude Code設定の同期"
+
+<span class="comment"># 2. 必要ファイルをコピー</span>
+mkdir ~/claude-config
+cd ~/claude-config
+
+cp ~/.claude/CLAUDE.md .
+cp ~/.claude/settings.json .
+cp -r ~/.claude/skills .
+mkdir memory
+cp ~/.claude/projects/<span class="var">&lt;vault-project-id&gt;</span>/memory/*.md memory/
+
+<span class="comment"># 3. .gitignore で不要物を除外</span>
+cat &gt; .gitignore &lt;&lt;EOF
+*.local
+session_*
+*.bak
+EOF
+
+<span class="comment"># 4. push</span>
+git init
+git add .
+git commit -m "initial: Claude Code設定の同期"
+git branch -M main
+git remote add origin https://github.com/<span class="var">&lt;your-github-username&gt;</span>/claude-config.git
+git push -u origin main</div>
+</div>
+
+<div class="phase do">
+<span class="phase-label">新端末側で実行</span>
+
+<div class="cmd-box"><span class="comment"># 1. clone</span>
+cd ~
+gh repo clone <span class="var">&lt;your-github-username&gt;</span>/claude-config
+cd claude-config
+
+<span class="comment"># 2. 既存の ~/.claude/ ファイルをバックアップ → symlink を張る</span>
+mv ~/.claude/CLAUDE.md ~/.claude/CLAUDE.md.bak 2&gt;/dev/null
+ln -s ~/claude-config/CLAUDE.md ~/.claude/CLAUDE.md
+
+mv ~/.claude/settings.json ~/.claude/settings.json.bak 2&gt;/dev/null
+ln -s ~/claude-config/settings.json ~/.claude/settings.json
+
+mv ~/.claude/skills ~/.claude/skills.bak 2&gt;/dev/null
+ln -s ~/claude-config/skills ~/.claude/skills
+
+<span class="comment"># 3. memory フォルダの symlink</span>
+<span class="comment"># Macのプロジェクトディレクトリは ~/.claude/projects/-Users-<user>-Documents-MyVault/</span>
+PROJECT_ID="-Users-$(whoami)-Documents-MyVault"
+mkdir -p ~/.claude/projects/$PROJECT_ID
+ln -s ~/claude-config/memory ~/.claude/projects/$PROJECT_ID/memory</div>
+</div>
+
+<div class="phase warn">
+<span class="phase-label">注意点</span>
+<p><strong>CLAUDE.md の Mac/Win 差異</strong>：パス（<span class="inline-code">C:\Users\...</span> vs <span class="inline-code">/Users/...</span>）やシェル（PowerShell vs zsh）の記述差を吸収するため、CLAUDE.mdに OS判定ブロックを追加するか、必要箇所だけMac用に書き換える。</p>
+<p>メモリは両端末で共有・追記される。<strong>同時に2端末で開いて編集すると競合</strong>するので、片方を閉じてから作業を切り替える運用を推奨。</p>
+</div>
+
+</div>
+</section>
+
+<section id="checklist">
+<div class="section-header"><h2>3. 完了チェック</h2></div>
+<div class="section-body">
+
+<div class="checklist">
+<ul>
+<li><strong>brew / git / gh / node</strong> コマンドが新端末で動く</li>
+<li><span class="inline-code">gh auth status</span> で認証済みと表示される</li>
+<li><span class="inline-code">~/Documents/MyVault</span> が cloneされ、<span class="inline-code">git status</span> がクリーン</li>
+<li><span class="inline-code">~/Documents/MyVault/.secrets/</span> に認証ファイル群がある</li>
+<li><strong>Obsidian</strong> で MyVault が開け、コミュニティプラグインが有効</li>
+<li><strong>Cursor</strong> で Settings Sync が有効、MyVault フォルダを開いている</li>
+<li><span class="inline-code">~/.claude/CLAUDE.md</span> が <span class="inline-code">~/claude-config/CLAUDE.md</span> へのsymlink</li>
+<li><span class="inline-code">~/.claude/projects/.../memory</span> に過去のメモリファイルが見える</li>
+</ul>
+</div>
+
+</div>
+</section>
+
+<section id="trouble">
+<div class="section-header"><h2>4. 困った時（トラブルシューティング）</h2></div>
+<div class="section-body">
+
+<div class="trouble-list">
+
+<div class="trouble-item">
+<div class="trouble-q">brew install で「command not found: brew」</div>
+<div class="trouble-a">Homebrew のPATHが通っていない。<span class="inline-code">echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' &gt;&gt; ~/.zprofile</span> → <span class="inline-code">source ~/.zprofile</span> を実行。Intel Macは <span class="inline-code">/usr/local/bin/brew</span>。</div>
+</div>
+
+<div class="trouble-item">
+<div class="trouble-q">gh auth login で「could not prompt」エラー</div>
+<div class="trouble-a">対話モードが効いていない。新しいターミナルウィンドウで実行する。SSH越しの場合は <span class="inline-code">--web</span> オプションを付ける：<span class="inline-code">gh auth login --web</span></div>
+</div>
+
+<div class="trouble-item">
+<div class="trouble-q">git clone で「Permission denied」または「Authentication failed」</div>
+<div class="trouble-a">STEP 2 の gh auth login が完了していない可能性。<span class="inline-code">gh auth status</span> で確認 → 失敗していたら再度 <span class="inline-code">gh auth login</span>。</div>
+</div>
+
+<div class="trouble-item">
+<div class="trouble-q">.secrets が同期されない</div>
+<div class="trouble-a"><span class="inline-code">.gitignore</span> に <span class="inline-code">.secrets/</span> が登録されているため、git経由では絶対に来ない。OneDrive・USB・AirDrop 等で<strong>手動コピーが必須</strong>。</div>
+</div>
+
+<div class="trouble-item">
+<div class="trouble-q">Obsidian でプラグインが有効にならない</div>
+<div class="trouble-a">設定 → コミュニティプラグイン → 「制限モード」をオフ → プラグイン一覧で個別に「有効化」ボタンを押す。<span class="inline-code">.obsidian/community-plugins.json</span> に記録があれば、必要なプラグインは自動でインストール提案される。</div>
+</div>
+
+<div class="trouble-item">
+<div class="trouble-q">Claude Code を起動してもメモリが反映されない</div>
+<div class="trouble-a">symlink先のパスが間違っている可能性。<span class="inline-code">ls -la ~/.claude/projects/</span> で実際のプロジェクトディレクトリ名を確認 → そこに claude-config/memory のsymlinkを張り直す。プロジェクトID は端末・OS・ユーザー名で変わる。</div>
+</div>
+
+<div class="trouble-item">
+<div class="trouble-q">同期で衝突（conflict）</div>
+<div class="trouble-a">2端末で同じファイルを同時に編集した場合に発生。Obsidian Git で「Pull」→ 衝突マーカー（<span class="inline-code">&lt;&lt;&lt;</span>）を手動解決 → コミット。<strong>同時に2端末で開かない運用</strong>が予防策。</div>
+</div>
+
+</div>
+
+</div>
+</section>
+
+<section id="resources">
+<div class="section-header"><h2>5. 関連資料</h2></div>
+<div class="section-body">
+
+<div class="resources">
+
+<a class="resource" href="./index.html">
+  <div class="icon">📄</div>
+  <div class="info">
+    <div class="title">別端末でのセットアップ手順（簡易版・10分）</div>
+    <div class="url">既にMyVaultフォルダがある場合はこちら</div>
+  </div>
+  <div class="arrow">→</div>
+</a>
+
+<a class="resource" href="https://obsidian.md/" target="_blank" rel="noopener">
+  <div class="icon">📓</div>
+  <div class="info">
+    <div class="title">Obsidian 公式</div>
+    <div class="url">obsidian.md</div>
+  </div>
+  <div class="arrow">→</div>
+</a>
+
+<a class="resource" href="https://cursor.com/" target="_blank" rel="noopener">
+  <div class="icon">🤖</div>
+  <div class="info">
+    <div class="title">Cursor 公式</div>
+    <div class="url">cursor.com</div>
+  </div>
+  <div class="arrow">→</div>
+</a>
+
+<a class="resource" href="https://cli.github.com/" target="_blank" rel="noopener">
+  <div class="icon">🐙</div>
+  <div class="info">
+    <div class="title">GitHub CLI（gh）公式</div>
+    <div class="url">cli.github.com</div>
+  </div>
+  <div class="arrow">→</div>
+</a>
+
+<a class="resource" href="https://docs.claude.com/en/docs/claude-code/overview" target="_blank" rel="noopener">
+  <div class="icon">🧠</div>
+  <div class="info">
+    <div class="title">Claude Code ドキュメント</div>
+    <div class="url">docs.claude.com</div>
+  </div>
+  <div class="arrow">→</div>
+</a>
+
+</div>
+
+<div class="closing">
+新端末セットアップは1度きりの作業。<br>
+ここでしっかり同期できる構造を作っておくと、<strong>以降の端末追加・移行が一気にラクになる。</strong>
+</div>
+
+</div>
+</section>
+
+</div>
+
+<button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+</body>
+</html>
