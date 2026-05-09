@@ -203,13 +203,13 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 <li><strong>MyVault</strong> が <a href="https://github.com/tsutsuihanano/MyVault" target="_blank" rel="noopener">github.com/tsutsuihanano/MyVault</a> にpush済み（5分ごと自動同期で常時最新）</li>
 <li><strong>secrets.zip</strong> がCWマイチャットに送信済み（認証情報一式）</li>
 <li><strong>memory.zip</strong> がCWマイチャットに送信済み（Claudeのメモリ30+件）</li>
-<li>Cursor の<strong>Settings Sync</strong> がデスクトップでオン（テーマ・拡張をMacbookに引き継ぐため）</li>
 </ul>
+<p style="margin-top:14px;font-size:.92rem;color:var(--text-muted);">※ Cursor は <strong>ターミナルで Claude Code を動かす用途のみ</strong>なので Settings Sync の事前準備は不要。デフォルト設定でインストールするだけ。</p>
 </div>
 
 <div class="phase warn">
 <span class="phase-label">もし未完了なら</span>
-<p>デスクトップ側に戻って、Cursor Settings Sync をオンにする・必要なzipをCWマイチャットに送る作業を先に済ませてから、Macbookの作業を開始する。</p>
+<p>デスクトップ側に戻って、必要なzipをCWマイチャットに送る作業を先に済ませてから、Macbookの作業を開始する。</p>
 </div>
 
 </div>
@@ -264,7 +264,7 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 
   <div class="flow-step">
     <div class="num">7</div>
-    <div class="body"><strong>Cursor インストール → Settings Sync</strong><span>テーマ・拡張機能を自動取り込み</span></div>
+    <div class="body"><strong>Cursor インストール（ターミナル用途）</strong><span>Claude Code を動かす場として最小設定で</span></div>
     <div class="time">10分</div>
   </div>
   <div class="flow-arrow">↓</div>
@@ -482,8 +482,13 @@ ls -la "$TARGET"</div>
 </section>
 
 <section id="step7">
-<div class="section-header"><h2>STEP 7. Cursor インストール → Settings Sync</h2></div>
+<div class="section-header"><h2>STEP 7. Cursor インストール（ターミナル用途・最小設定）</h2></div>
 <div class="section-body">
+
+<div class="phase do">
+<span class="phase-label">前提</span>
+<p>はな乃さんの運用は <strong>「Cursorのターミナルで Claude Code を起動」</strong> がメイン。エディタ・拡張機能・テーマは使わない想定なので、<strong>Settings Sync などの追加設定は不要</strong>。デフォルト状態でインストールするだけ。</p>
+</div>
 
 <div class="phase do">
 <span class="phase-label">インストール</span>
@@ -494,17 +499,22 @@ ls -la "$TARGET"</div>
 <div class="phase do">
 <span class="phase-label">起動後の操作</span>
 <ol>
-<li>サインイン（GitHub or Google） — <strong>デスクトップと同じアカウント</strong></li>
-<li>設定 → <strong>Settings Sync</strong> → Turn On → GitHubアカウントで認証</li>
-<li>テーマ・拡張機能・キーバインドが自動同期される</li>
-<li>File → Open Folder → <span class="inline-code">~/Documents/MyVault</span></li>
+<li>初回起動でサインイン画面が出る → <strong>GitHub or Google</strong>でログイン（デスクトップと同じアカウントが望ましい）</li>
+<li><strong>File → Open Folder</strong> → <span class="inline-code">~/Documents/MyVault</span> を選択</li>
+<li><strong>ターミナルを開く</strong>: メニューの「Terminal」→「New Terminal」 または ショートカット <span class="inline-code">⌃ + `</span></li>
+<li>ターミナルで <span class="inline-code">claude</span> と打って Claude Code を起動</li>
 </ol>
 </div>
 
+<div class="phase goal">
+<span class="phase-label">この後</span>
+<p>これでデスクトップと同じく <strong>「Cursorを開いて → ターミナル → claude」</strong> の流れで作業できる状態。<br>
+拡張機能やテーマの同期は不要なので、Settings Sync の設定は触らない。</p>
+</div>
+
 <div class="phase warn">
-<span class="phase-label">前提確認</span>
-<p>デスクトップ側で<strong>事前にSettings Syncをオン</strong>にしてあれば、Macbook側で取り込みされる。<br>
-オンになっていなかった場合は、デスクトップに戻ってSettings Syncをオン → アップロード待ち → Macで再度同期、という順序になる。</p>
+<span class="phase-label">補足</span>
+<p>Claude Code 本体（<span class="inline-code">claude</span> コマンド）は次の STEP 8 でインストールするので、ここで <span class="inline-code">claude</span> を打って動かなくても問題ない。</p>
 </div>
 
 </div>
@@ -572,7 +582,7 @@ cat ~/.claude/CLAUDE.md</div>
 <li><span class="inline-code">~/Documents/MyVault/.secrets/</span> に認証ファイル群（<strong>10ファイル以上</strong>）が見える</li>
 <li><span class="inline-code">~/.claude/projects/.../memory/</span> に <strong>30以上のmdファイル</strong>が見える</li>
 <li><strong>Obsidian</strong> でMyVaultが開け、右下にGitの同期アイコン</li>
-<li><strong>Cursor</strong> でSettings Syncが稼働、MyVaultフォルダを開いている</li>
+<li><strong>Cursor</strong> でMyVaultフォルダを開いて、ターミナル（⌃+`）で <span class="inline-code">claude</span> が起動できる</li>
 <li><strong>Claude Code</strong> がメモリを認識して応答する</li>
 <li><strong>CWマイチャット</strong>からsecrets.zip / memory.zip を削除済み</li>
 </ul>
