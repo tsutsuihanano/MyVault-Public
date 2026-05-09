@@ -531,7 +531,7 @@ ls -la "$TARGET"</div>
 </section>
 
 <section id="step8">
-<div class="section-header"><h2>STEP 8. Claude Code インストール → グローバル CLAUDE.md 配置</h2></div>
+<div class="section-header"><h2>STEP 8. Claude Code インストール → CLAUDE.md / settings.json 配置</h2></div>
 <div class="section-body">
 
 <div class="phase do">
@@ -556,9 +556,9 @@ claude</div>
 <span class="phase-label">起動後にClaudeに依頼するプロンプト（コピペ）</span>
 <p>Claude Code が起動したら、下記をそのままコピペして送る：</p>
 
-<div class="cmd-box">~/.claude/CLAUDE.md（グローバル設定）を Mac用に作成してほしい。
+<div class="cmd-box">~/.claude/CLAUDE.md（グローバル設定）と ~/.claude/settings.json を Mac用に配置してほしい。
 
-要件:
+【1】~/.claude/CLAUDE.md の要件:
 - 日本語で応答する
 - 結論から入る・推測禁止・不明点は質問する
 - 端末呼称: デスクトップ=Windowsメイン機(hostname:HANANO) / Macbook=この端末
@@ -569,7 +569,18 @@ claude</div>
 - メモリは ~/.claude/projects/-Users-$(whoami)-Documents-MyVault/memory/ にある
 - セッション開始時にメモリ読込
 
-デスクトップ側のCLAUDE.mdの構成（Plan→Execute / 並列エージェント運用 / 検証 / コーディング原則 / 制約 / Anti-patterns）を踏襲しつつ、Mac環境にfit するように作成して。</div>
+デスクトップ側のCLAUDE.mdの構成（Plan→Execute / 並列エージェント運用 / 検証 / コーディング原則 / 制約 / Anti-patterns）を踏襲しつつ、Mac環境にfitするように作成して。
+
+【2】~/.claude/settings.json は以下の内容で作成:
+
+{
+  "permissions": {
+    "allow": ["Bash", "Read", "Edit", "Write", "Glob", "Grep"]
+  },
+  "theme": "dark-daltonized"
+}
+
+→ これによりBash/Read/Edit/Write/Glob/Grep は毎回確認なしで自動実行になり、デスクトップと同じ快適さで使える。</div>
 </div>
 
 <div class="phase goal">
