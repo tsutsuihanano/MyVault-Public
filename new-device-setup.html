@@ -219,7 +219,7 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 
   <div class="flow-step">
     <div class="num">4</div>
-    <div class="body"><strong>.secrets を手動コピー</strong><span>OneDrive経由（Git対象外）</span></div>
+    <div class="body"><strong>.secrets を手動コピー</strong><span>Google Drive経由（Git対象外）</span></div>
     <div class="time">5分</div>
   </div>
   <div class="flow-arrow">↓</div>
@@ -363,35 +363,64 @@ git status</div>
 </section>
 
 <section id="step4">
-<div class="section-header"><h2>STEP 4. .secrets を手動でコピー</h2></div>
+<div class="section-header"><h2>STEP 4. .secrets を手動でコピー（Google Drive経由）</h2></div>
 <div class="section-body">
 
 <div class="phase do">
-<span class="phase-label">やること</span>
-<p>認証情報（Google Sheets / Gmail / Google Ads / Chatwork API）はGit対象外。<strong>OneDrive経由</strong>で運ぶのが安全。</p>
+<span class="phase-label">考え方</span>
+<p>認証情報（Google Sheets / Gmail / Google Ads / Chatwork API）はGit対象外。<strong>業務用Google Drive</strong>に一時アップロード → Mac でダウンロード → ドライブから削除、という手順で安全に運ぶ。</p>
+</div>
+
+<div class="phase do">
+<span class="phase-label">メイン端末側（Windows）でやること</span>
 
 <ol>
-<li>メイン端末の <span class="inline-code">.secrets</span> をOneDriveにアップロード（既に同期済みならスキップ）</li>
-<li>新端末でOneDriveをサインイン → 同期完了を待つ</li>
-<li><span class="inline-code">.secrets</span> フォルダごと <span class="inline-code">~/Documents/MyVault/</span> 配下にコピー</li>
+<li>エクスプローラーで <span class="inline-code">C:\Users\&lt;ユーザー名&gt;\Documents\MyVault\.secrets</span> を開く<br><span style="color:var(--text-muted);font-size:.88rem">※ <span class="inline-code">.secrets</span> は隠しフォルダ。表示されない場合は「表示」→「隠しファイル」をオンに</span></li>
+<li><span class="inline-code">.secrets</span> フォルダを<strong>右クリック →「圧縮（ZIP）」</strong>で <span class="inline-code">.secrets.zip</span> を作成</li>
+<li>ブラウザで <a href="https://drive.google.com/" target="_blank" rel="noopener">drive.google.com</a> を開く（業務アカウントでログイン）</li>
+<li>「マイドライブ」直下に <span class="inline-code">.secrets.zip</span> をドラッグ&amp;ドロップでアップロード</li>
+</ol>
+</div>
+
+<div class="phase do">
+<span class="phase-label">新端末（Mac）でやること</span>
+
+<ol>
+<li>Safari/Chrome で <a href="https://drive.google.com/" target="_blank" rel="noopener">drive.google.com</a> を開く（同じ業務アカウントでログイン）</li>
+<li><span class="inline-code">.secrets.zip</span> を右クリック →「ダウンロード」</li>
+<li>ターミナルで以下を実行：</li>
 </ol>
 
-<div class="os-tag mac">🍎 macOS</div>
-<div class="cmd-box"><span class="comment"># OneDriveのパスは環境による（CloudStorage配下）</span>
-cp -r ~/Library/CloudStorage/OneDrive-*/.secrets ~/Documents/MyVault/
+<div class="cmd-box"><span class="comment"># 1. ダウンロードしたZIPを MyVault 配下に展開</span>
+cd ~/Documents/MyVault
+unzip ~/Downloads/.secrets.zip -d .
 
-<span class="comment"># 認証ファイルのパーミッションを絞る</span>
-chmod 600 ~/Documents/MyVault/.secrets/*.json
-chmod 600 ~/Documents/MyVault/.secrets/*.txt</div>
+<span class="comment"># 2. 認証ファイルのパーミッションを絞る</span>
+chmod 700 .secrets
+chmod 600 .secrets/*.json
+chmod 600 .secrets/*.txt
 
-<div class="os-tag win">🪟 Windows</div>
-<div class="cmd-box">Copy-Item -Recurse $env:OneDrive\.secrets $env:USERPROFILE\Documents\MyVault\</div>
+<span class="comment"># 3. 中身確認</span>
+ls -la .secrets/</div>
 </div>
 
 <div class="phase warn">
-<span class="phase-label">超重要</span>
-<p><strong>絶対に <span class="inline-code">.secrets/</span> をGit add しないこと。</strong>
-.gitignore に登録済みだが、OS差異で外れることがあるので push前に <span class="inline-code">git status</span> で確認すること。</p>
+<span class="phase-label">作業後 必ずやること</span>
+<ol>
+<li>転送が完了したら、<strong>Google Drive上の <span class="inline-code">.secrets.zip</span> を削除</strong>（ゴミ箱からも完全削除）</li>
+<li>ダウンロードフォルダの <span class="inline-code">.secrets.zip</span> も削除</li>
+<li><strong>絶対に <span class="inline-code">.secrets/</span> をGit add しないこと。</strong> .gitignore に登録済みだが、OS差異で外れることがあるので push前に <span class="inline-code">git status</span> で確認</li>
+</ol>
+</div>
+
+<div class="phase goal">
+<span class="phase-label">補足：再認証で済む系のファイル</span>
+<p>下記2ファイルは新端末で初回コマンド実行時に自動でブラウザ認証 → 再生成される。コピー漏れがあっても問題なし：</p>
+<ul>
+<li><span class="inline-code">.secrets/gmail-token.json</span></li>
+<li><span class="inline-code">.secrets/google-ads-token.json</span></li>
+</ul>
+<p>絶対にコピーが必要なのは <strong>サービスアカウントキー</strong>（<span class="inline-code">sheets-bot-key.json</span>）と <strong>OAuthクライアント設定</strong>（<span class="inline-code">*-oauth-client.json</span>）と <strong>Chatwork APIトークン</strong>（<span class="inline-code">.env</span>）。</p>
 </div>
 
 </div>
@@ -579,7 +608,12 @@ ln -s ~/claude-config/memory ~/.claude/projects/$PROJECT_ID/memory</div>
 
 <div class="trouble-item">
 <div class="trouble-q">.secrets が同期されない</div>
-<div class="trouble-a"><span class="inline-code">.gitignore</span> に <span class="inline-code">.secrets/</span> が登録されているため、git経由では絶対に来ない。OneDrive・USB・AirDrop 等で<strong>手動コピーが必須</strong>。</div>
+<div class="trouble-a"><span class="inline-code">.gitignore</span> に <span class="inline-code">.secrets/</span> が登録されているため、git経由では絶対に来ない。Google Drive 経由で<strong>手動コピーが必須</strong>（STEP 4参照）。</div>
+</div>
+
+<div class="trouble-item">
+<div class="trouble-q">unzip コマンドが見つからない</div>
+<div class="trouble-a">macOS には標準で入っているはず。出ない場合は <span class="inline-code">brew install unzip</span>。あるいはFinderで<span class="inline-code">.secrets.zip</span>をダブルクリック → 展開されたフォルダを <span class="inline-code">~/Documents/MyVault/</span> にドラッグ&amp;ドロップでも可。</div>
 </div>
 
 <div class="trouble-item">
