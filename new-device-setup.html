@@ -158,6 +158,7 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 <a href="#step6">STEP 6</a>
 <a href="#step7">STEP 7</a>
 <a href="#step8">STEP 8</a>
+<a href="#step9">STEP 9</a>
 <a href="#checklist">完了チェック</a>
 <a href="#trouble">困った時</a>
 </div></nav>
@@ -273,6 +274,15 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
     <div class="num">8</div>
     <div class="body"><strong>Claude Code インストール → CLAUDE.md 配置</strong><span>面倒な部分は Claude 自身に依頼する</span></div>
     <div class="time">10分</div>
+  </div>
+  <div class="flow-arrow">↓</div>
+
+  <div class="flow-arrow">↓</div>
+
+  <div class="flow-step">
+    <div class="num">9</div>
+    <div class="body"><strong>AXAD DB の MCP 接続設定（任意）</strong><span>DBクエリを使う場合のみ</span></div>
+    <div class="time">5分</div>
   </div>
   <div class="flow-arrow">↓</div>
 
@@ -583,6 +593,54 @@ claude</div>
 </div>
 </section>
 
+<section id="step9">
+<div class="section-header"><h2>STEP 9. AXAD DB の MCP 接続設定（任意）</h2></div>
+<div class="section-body">
+
+<div class="phase do">
+<span class="phase-label">対象</span>
+<p>Macbookから AXAD DB（PostgreSQL/Neon）にクエリを投げたい場合だけ実行する。<br>
+数字合わせ・案件分析・campaigns テーブル参照などで <span class="inline-code">mcp__axad__query</span> を使う運用ならこのSTEPが必要。</p>
+</div>
+
+<div class="phase do">
+<span class="phase-label">手順</span>
+<p>Claude Code（前STEPで起動済み）に下記プロンプトを<strong>そのまま貼り付ける</strong>。MCP設定ファイル <span class="inline-code">~/.mcp.json</span> が自動生成される（西村さん提供方式）。</p>
+
+<div class="cmd-box">以下の手順を実行して、AXADデータベースへのMCP接続を設定してください。
+
+1. ~/.mcp.json を読み込む（なければ新規作成）
+2. mcpServers に以下を追加（既存の設定は残す）:
+
+{
+  "axad": {
+    "command": "npx",
+    "args": [
+      "-y",
+      "@modelcontextprotocol/server-postgres",
+      "postgresql://tsutsui:38a2683c2dc1d1b1fbf1212f6312fb37babcd0775e048cd2@ep-frosty-mountain-a1l9h522-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require"
+    ]
+  }
+}
+
+3. 設定完了後「SELECT count(*) FROM campaigns」を実行して接続確認</div>
+</div>
+
+<div class="phase goal">
+<span class="phase-label">確認</span>
+<p>Claude が <span class="inline-code">~/.mcp.json</span> 作成 → <span class="inline-code">SELECT count(*) FROM campaigns</span> 実行 → 件数が返ってくれば成功。<br>
+※ MCP接続を有効化するには Claude Code の再起動が必要な場合あり。<span class="inline-code">/quit</span> で抜けてもう一度 <span class="inline-code">claude</span>。</p>
+</div>
+
+<div class="phase warn">
+<span class="phase-label">注意</span>
+<p>この接続文字列は <strong>個人用（はな乃さん専用）</strong>。他人と共有しない。<br>
+権限: <span class="inline-code">campaigns</span> テーブルのみ参照可（SELECTのみ）。</p>
+</div>
+
+</div>
+</section>
+
 <section id="checklist">
 <div class="section-header"><h2>4. 完了チェック</h2></div>
 <div class="section-body">
@@ -597,6 +655,7 @@ claude</div>
 <li><strong>Obsidian</strong> でMyVaultが開け、右下にGitの同期アイコン</li>
 <li><strong>Cursor</strong> でMyVaultフォルダを開いて、ターミナル（⌃+`）で <span class="inline-code">claude</span> が起動できる</li>
 <li><strong>Claude Code</strong> がメモリを認識して応答する</li>
+<li>（任意）<strong>AXAD DB</strong> に <span class="inline-code">mcp__axad__query</span> でアクセスできる</li>
 <li><strong>CWマイチャット</strong>からsecrets.zip / memory.zip を削除済み</li>
 </ul>
 </div>
