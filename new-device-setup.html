@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ゼロから別端末セットアップ — Obsidian + Cursor + GitHub + Claude</title>
+<title>Macbookセットアップ手順 — デスクトップと同環境を作る</title>
 <style>
 :root{
   --bg:#f8f9fa;
@@ -87,11 +87,6 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 .phase.goal strong{color:var(--ok)}
 .phase.warn strong{color:var(--warn)}
 
-/* OS tag */
-.os-tag{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:700;padding:3px 10px;border-radius:8px;margin:14px 0 6px}
-.os-tag.mac{background:#f1f5f9;color:#475569}
-.os-tag.win{background:#dbeafe;color:#1e40af}
-
 /* code box */
 .cmd-box{background:#1e1e2e;color:#cdd6f4;border-radius:10px;padding:16px 20px;font-family:'SFMono-Regular',Consolas,'Courier New',monospace;font-size:.85rem;margin:6px 0 14px;white-space:pre-wrap;word-break:break-word;line-height:1.7;overflow-x:auto;border:1px solid #313244}
 .cmd-box .comment{color:#6c7086}
@@ -99,6 +94,11 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 .cmd-box .str{color:#a6e3a1}
 
 .inline-code{font-family:'SFMono-Regular',Consolas,'Courier New',monospace;background:#f1f5f9;color:#475569;padding:2px 8px;border-radius:5px;font-size:.88em;border:1px solid var(--border)}
+
+/* device tag */
+.device-tag{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:700;padding:3px 10px;border-radius:8px;margin:14px 0 6px}
+.device-tag.macbook{background:#fae8ff;color:#86198f}
+.device-tag.desktop{background:#dbeafe;color:#1e40af}
 
 /* checklist */
 .checklist{background:#fff;border:1px solid var(--border);border-left:4px solid var(--ok);border-radius:12px;padding:22px 26px;box-shadow:var(--shadow)}
@@ -148,6 +148,7 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 
 <nav class="toc"><div class="container">
 <a href="#overview">概要</a>
+<a href="#prereq">前提（デスクトップ側）</a>
 <a href="#flow">全体の流れ</a>
 <a href="#step1">STEP 1</a>
 <a href="#step2">STEP 2</a>
@@ -156,15 +157,15 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 <a href="#step5">STEP 5</a>
 <a href="#step6">STEP 6</a>
 <a href="#step7">STEP 7</a>
+<a href="#step8">STEP 8</a>
 <a href="#checklist">完了チェック</a>
 <a href="#trouble">困った時</a>
-<a href="#resources">関連資料</a>
 </div></nav>
 
 <div class="hero">
-<h1>ゼロから別端末セットアップ</h1>
-<p>Obsidian + Cursor + GitHub + Claude Code を一から揃える</p>
-<div class="badge">⏱️ 所要時間：約60分（ダウンロード時間込み）</div>
+<h1>Macbookセットアップ手順</h1>
+<p>デスクトップ（Windows）と同環境をMacbookに作る</p>
+<div class="badge">⏱️ 所要時間：約60分（DL時間込み）</div>
 </div>
 
 <div class="container">
@@ -173,26 +174,49 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 <div class="section-header"><h2>1. 概要</h2></div>
 <div class="section-body">
 <dl class="overview">
-  <dt>対象</dt>
-  <dd>新しいMacbook/Windows端末を入手したばかりで、Obsidian/Cursor/Git/GitHub の設定経験がない人</dd>
+  <dt>対象端末</dt>
+  <dd><strong>Macbook</strong>（新規セットアップする端末）</dd>
+
+  <dt>同期元</dt>
+  <dd><strong>デスクトップ</strong>（Windows・hostname: HANANO）</dd>
 
   <dt>ゴール</dt>
-  <dd>メイン端末と同じ環境（Vault・AIルール・Claude Codeのメモリやスキル）を再現する</dd>
-
-  <dt>所要時間</dt>
-  <dd>約60分 <span class="note">※インターネット速度・各サービスのDL時間による</span></dd>
+  <dd>デスクトップと同じ環境（MyVault・Obsidian設定・Cursor・Claudeメモリ）でMacbookを動かせる状態</dd>
 
   <dt>事前準備</dt>
-  <dd>Apple ID または Microsoft アカウント / GitHub アカウント / OneDrive の同期</dd>
+  <dd>Apple ID 設定済み・GitHub アカウント有り</dd>
 
-  <dt>既にMyVaultが入っているなら</dt>
-  <dd><a href="./index.html">「別端末でのセットアップ手順（10分）」</a> を参照</dd>
+  <dt>作業場所</dt>
+  <dd><strong>このページの操作はすべてMacbookで実行</strong> <span class="note">※デスクトップ側の事前作業は完了済み</span></dd>
 </dl>
 </div>
 </section>
 
+<section id="prereq">
+<div class="section-header"><h2>2. 前提（デスクトップ側で済んでいるはず）</h2></div>
+<div class="section-body">
+
+<div class="phase do">
+<span class="phase-label">確認だけしておく</span>
+<p>下記はデスクトップ側で完了している前提。Macbookの作業前にCWマイチャットを確認すれば判断できる。</p>
+<ul>
+<li><strong>MyVault</strong> が <a href="https://github.com/tsutsuihanano/MyVault" target="_blank" rel="noopener">github.com/tsutsuihanano/MyVault</a> にpush済み（5分ごと自動同期で常時最新）</li>
+<li><strong>secrets.zip</strong> がCWマイチャットに送信済み（認証情報一式）</li>
+<li><strong>memory.zip</strong> がCWマイチャットに送信済み（Claudeのメモリ30+件）</li>
+<li>Cursor の<strong>Settings Sync</strong> がデスクトップでオン（テーマ・拡張をMacbookに引き継ぐため）</li>
+</ul>
+</div>
+
+<div class="phase warn">
+<span class="phase-label">もし未完了なら</span>
+<p>デスクトップ側に戻って、Cursor Settings Sync をオンにする・必要なzipをCWマイチャットに送る作業を先に済ませてから、Macbookの作業を開始する。</p>
+</div>
+
+</div>
+</section>
+
 <section id="flow">
-<div class="section-header"><h2>2. 全体の流れ</h2></div>
+<div class="section-header"><h2>3. 全体の流れ（Macbookで実行）</h2></div>
 <div class="section-body">
 <div class="flow">
 
@@ -212,42 +236,49 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 
   <div class="flow-step">
     <div class="num">3</div>
-    <div class="body"><strong>MyVault を clone</strong><span>GitHubから最新を取得</span></div>
+    <div class="body"><strong>MyVault を clone</strong><span>GitHubから取得</span></div>
     <div class="time">5分</div>
   </div>
   <div class="flow-arrow">↓</div>
 
   <div class="flow-step">
     <div class="num">4</div>
-    <div class="body"><strong>.secrets を手動コピー</strong><span>Google Drive経由（Git対象外）</span></div>
+    <div class="body"><strong>secrets.zip を CWからダウンロード→展開</strong><span>認証情報をMyVault配下に配置</span></div>
     <div class="time">5分</div>
   </div>
   <div class="flow-arrow">↓</div>
 
   <div class="flow-step">
     <div class="num">5</div>
+    <div class="body"><strong>memory.zip を CWからダウンロード→展開</strong><span>Claudeのメモリを所定パスに配置</span></div>
+    <div class="time">5分</div>
+  </div>
+  <div class="flow-arrow">↓</div>
+
+  <div class="flow-step">
+    <div class="num">6</div>
     <div class="body"><strong>Obsidian インストール → Vaultとして開く</strong><span>プラグイン自動有効化</span></div>
     <div class="time">10分</div>
   </div>
   <div class="flow-arrow">↓</div>
 
   <div class="flow-step">
-    <div class="num">6</div>
-    <div class="body"><strong>Cursor インストール → Settings Sync</strong><span>テーマ・拡張機能を自動同期</span></div>
+    <div class="num">7</div>
+    <div class="body"><strong>Cursor インストール → Settings Sync</strong><span>テーマ・拡張機能を自動取り込み</span></div>
     <div class="time">10分</div>
   </div>
   <div class="flow-arrow">↓</div>
 
   <div class="flow-step">
-    <div class="num">7</div>
-    <div class="body"><strong>Claude Code 設定の同期</strong><span>メモリ・skill・CLAUDE.md</span></div>
-    <div class="time">15分</div>
+    <div class="num">8</div>
+    <div class="body"><strong>Claude Code グローバル CLAUDE.md を Mac用に作成</strong><span>パス・シェルをMac仕様に</span></div>
+    <div class="time">10分</div>
   </div>
   <div class="flow-arrow">↓</div>
 
   <div class="flow-step flow-goal">
     <div class="num">✓</div>
-    <div class="body"><strong>完了</strong><span>メイン端末と同じ環境で作業できる状態</span></div>
+    <div class="body"><strong>完了</strong><span>デスクトップと同じ感覚で作業できる状態</span></div>
   </div>
 
 </div>
@@ -259,10 +290,10 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 <div class="section-body">
 
 <div class="phase do">
-<span class="phase-label">Mac の場合</span>
-<p>標準アプリ「<strong>ターミナル.app</strong>」を起動して、以下を順に実行する。</p>
+<span class="phase-label">Macbookでやる</span>
+<p>標準アプリ <strong>ターミナル.app</strong>（Spotlight検索で「ターミナル」）を起動して、以下を順に実行。</p>
 
-<div class="os-tag mac">🍎 macOS</div>
+<div class="device-tag macbook">💻 Macbook</div>
 <div class="cmd-box"><span class="comment"># 1. Homebrew インストール</span>
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
@@ -270,8 +301,8 @@ section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px so
 echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' &gt;&gt; ~/.zprofile
 source ~/.zprofile
 
-<span class="comment"># 3. 必要なツールを一括インストール</span>
-brew install git gh node@20 pyenv
+<span class="comment"># 3. 必要ツール一括インストール</span>
+brew install git gh node@20
 
 <span class="comment"># 4. 動作確認</span>
 brew --version
@@ -280,32 +311,20 @@ gh --version
 node --version</div>
 </div>
 
-<div class="phase do">
-<span class="phase-label">Windows の場合</span>
-<p>PowerShell（管理者）で実行。Wingetが入っていなければ <a href="https://learn.microsoft.com/ja-jp/windows/package-manager/winget/" target="_blank" rel="noopener">Microsoft公式</a>からインストール。</p>
-
-<div class="os-tag win">🪟 Windows</div>
-<div class="cmd-box"><span class="comment"># Winget で一括インストール</span>
-winget install --id Git.Git -e
-winget install --id GitHub.cli -e
-winget install --id OpenJS.NodeJS.LTS -e
-
-<span class="comment"># 動作確認（新しいPowerShellを開き直して）</span>
-git --version
-gh --version
-node --version</div>
+<div class="phase warn">
+<span class="phase-label">注意</span>
+<p>Intel Mac の場合、Homebrew のパスが <span class="inline-code">/usr/local/bin/brew</span> になる。エラーが出たらこちらでPATHを通す。</p>
 </div>
 
 </div>
 </section>
 
 <section id="step2">
-<div class="section-header"><h2>STEP 2. GitHub 認証（gh auth login）</h2></div>
+<div class="section-header"><h2>STEP 2. GitHub 認証</h2></div>
 <div class="section-body">
 
 <div class="phase do">
-<span class="phase-label">やること</span>
-<p>GitHub CLI 経由で認証するのが一番ラク。トークン手動発行は不要。</p>
+<span class="phase-label">Macbookでやる</span>
 <div class="cmd-box">gh auth login</div>
 
 <p>対話プロンプトの選択：</p>
@@ -317,164 +336,165 @@ node --version</div>
 <li>表示される8桁コードをコピー → ブラウザで貼り付け → 承認</li>
 </ol>
 
-<div class="cmd-box"><span class="comment"># 確認（✓ Logged in to github.com as ... が出れば成功）</span>
+<div class="cmd-box"><span class="comment"># 確認: ✓ Logged in to github.com as tsutsuihanano が出れば成功</span>
 gh auth status
 
-<span class="comment"># Git のユーザー設定（メイン端末と同じ値で）</span>
+<span class="comment"># Git のユーザー設定（デスクトップと揃える）</span>
 git config --global user.name "MyVault User"
-git config --global user.email "your-email@example.com"</div>
-</div>
-
-<div class="phase goal">
-<span class="phase-label">この後</span>
-<p>一度認証すれば、その端末では <span class="inline-code">git push / pull / clone</span> がすべて自動で認証される。<strong>PAT（Personal Access Token）の手動発行は不要。</strong></p>
+git config --global user.email "tsutsui@shibuya-ad.com"</div>
 </div>
 
 </div>
 </section>
 
 <section id="step3">
-<div class="section-header"><h2>STEP 3. MyVault を GitHub から clone</h2></div>
+<div class="section-header"><h2>STEP 3. MyVault を clone</h2></div>
 <div class="section-body">
 
 <div class="phase do">
-<span class="phase-label">やること</span>
+<span class="phase-label">Macbookでやる</span>
 
-<div class="os-tag mac">🍎 macOS</div>
+<div class="device-tag macbook">💻 Macbook</div>
 <div class="cmd-box">mkdir -p ~/Documents
 cd ~/Documents
-gh repo clone <span class="var">&lt;your-github-username&gt;</span>/MyVault
+gh repo clone tsutsuihanano/MyVault
 cd MyVault
-git status  <span class="comment"># クリーンならOK</span></div>
-
-<div class="os-tag win">🪟 Windows（PowerShell）</div>
-<div class="cmd-box">cd $env:USERPROFILE\Documents
-gh repo clone <span class="var">&lt;your-github-username&gt;</span>/MyVault
-cd MyVault
-git status</div>
+git status  <span class="comment"># クリーンならOK</span>
+ls -la       <span class="comment"># .obsidian/ .claude/ 00_Inbox/ などが見えれば成功</span></div>
 </div>
 
 <div class="phase warn">
-<span class="phase-label">注意点</span>
-<p><strong>.secrets/ は cloneに含まれない</strong>（gitignoreされている）。次のSTEPで手動コピーが必要。</p>
+<span class="phase-label">注意</span>
+<p><strong>.secrets/ は cloneに含まれない</strong>（gitignoreされている）→ 次のSTEP 4 でCWから取得する。</p>
 </div>
 
 </div>
 </section>
 
 <section id="step4">
-<div class="section-header"><h2>STEP 4. .secrets を手動でコピー（Google Drive経由）</h2></div>
+<div class="section-header"><h2>STEP 4. secrets.zip を CW から取得して展開</h2></div>
 <div class="section-body">
 
 <div class="phase do">
-<span class="phase-label">考え方</span>
-<p>認証情報（Google Sheets / Gmail / Google Ads / Chatwork API）はGit対象外。<strong>業務用Google Drive</strong>に一時アップロード → Mac でダウンロード → ドライブから削除、という手順で安全に運ぶ。</p>
-</div>
-
-<div class="phase do">
-<span class="phase-label">メイン端末側（Windows）でやること</span>
-
+<span class="phase-label">手順</span>
 <ol>
-<li>エクスプローラーで <span class="inline-code">C:\Users\&lt;ユーザー名&gt;\Documents\MyVault\.secrets</span> を開く<br><span style="color:var(--text-muted);font-size:.88rem">※ <span class="inline-code">.secrets</span> は隠しフォルダ。表示されない場合は「表示」→「隠しファイル」をオンに</span></li>
-<li><span class="inline-code">.secrets</span> フォルダを<strong>右クリック →「圧縮（ZIP）」</strong>で <span class="inline-code">.secrets.zip</span> を作成</li>
-<li>ブラウザで <a href="https://drive.google.com/" target="_blank" rel="noopener">drive.google.com</a> を開く（業務アカウントでログイン）</li>
-<li>「マイドライブ」直下に <span class="inline-code">.secrets.zip</span> をドラッグ&amp;ドロップでアップロード</li>
-</ol>
-</div>
-
-<div class="phase do">
-<span class="phase-label">新端末（Mac）でやること</span>
-
-<ol>
-<li>Safari/Chrome で <a href="https://drive.google.com/" target="_blank" rel="noopener">drive.google.com</a> を開く（同じ業務アカウントでログイン）</li>
-<li><span class="inline-code">.secrets.zip</span> を右クリック →「ダウンロード」</li>
+<li>Macbookで <a href="https://www.chatwork.com/" target="_blank" rel="noopener">Chatwork</a> を開く（業務アカウントでログイン）</li>
+<li><strong>マイチャット</strong>を開く</li>
+<li><strong>secrets_YYYYMMDD_HHMMSS.zip</strong> という添付ファイルを探す</li>
+<li>ダウンロード（標準では <span class="inline-code">~/Downloads/</span> に入る）</li>
 <li>ターミナルで以下を実行：</li>
 </ol>
 
-<div class="cmd-box"><span class="comment"># 1. ダウンロードしたZIPを MyVault 配下に展開</span>
+<div class="device-tag macbook">💻 Macbook</div>
+<div class="cmd-box"><span class="comment"># MyVault配下の .secrets として展開</span>
 cd ~/Documents/MyVault
-unzip ~/Downloads/.secrets.zip -d .
+mkdir -p .secrets
+unzip -o ~/Downloads/secrets_*.zip -d .secrets
 
-<span class="comment"># 2. 認証ファイルのパーミッションを絞る</span>
+<span class="comment"># パーミッションを絞る（漏洩対策）</span>
 chmod 700 .secrets
 chmod 600 .secrets/*.json
 chmod 600 .secrets/*.txt
 
-<span class="comment"># 3. 中身確認</span>
+<span class="comment"># 中身確認</span>
 ls -la .secrets/</div>
 </div>
 
 <div class="phase warn">
 <span class="phase-label">作業後 必ずやること</span>
 <ol>
-<li>転送が完了したら、<strong>Google Drive上の <span class="inline-code">.secrets.zip</span> を削除</strong>（ゴミ箱からも完全削除）</li>
-<li>ダウンロードフォルダの <span class="inline-code">.secrets.zip</span> も削除</li>
-<li><strong>絶対に <span class="inline-code">.secrets/</span> をGit add しないこと。</strong> .gitignore に登録済みだが、OS差異で外れることがあるので push前に <span class="inline-code">git status</span> で確認</li>
+<li>展開が成功したら、<strong>CWマイチャットの secrets.zip メッセージを削除</strong>（添付ファイル含めて完全削除）</li>
+<li>Macbookの <span class="inline-code">~/Downloads/secrets_*.zip</span> も削除</li>
+<li><strong>絶対に <span class="inline-code">.secrets/</span> をGit add しないこと。</strong>push前に <span class="inline-code">git status</span> で確認</li>
 </ol>
-</div>
-
-<div class="phase goal">
-<span class="phase-label">補足：再認証で済む系のファイル</span>
-<p>下記2ファイルは新端末で初回コマンド実行時に自動でブラウザ認証 → 再生成される。コピー漏れがあっても問題なし：</p>
-<ul>
-<li><span class="inline-code">.secrets/gmail-token.json</span></li>
-<li><span class="inline-code">.secrets/google-ads-token.json</span></li>
-</ul>
-<p>絶対にコピーが必要なのは <strong>サービスアカウントキー</strong>（<span class="inline-code">sheets-bot-key.json</span>）と <strong>OAuthクライアント設定</strong>（<span class="inline-code">*-oauth-client.json</span>）と <strong>Chatwork APIトークン</strong>（<span class="inline-code">.env</span>）。</p>
 </div>
 
 </div>
 </section>
 
 <section id="step5">
-<div class="section-header"><h2>STEP 5. Obsidian インストール → Vaultとして開く</h2></div>
+<div class="section-header"><h2>STEP 5. memory.zip を CW から取得して展開</h2></div>
 <div class="section-body">
 
 <div class="phase do">
-<span class="phase-label">インストール</span>
-
-<div class="os-tag mac">🍎 macOS</div>
-<div class="cmd-box">brew install --cask obsidian</div>
-
-<div class="os-tag win">🪟 Windows</div>
-<div class="cmd-box">winget install --id Obsidian.Obsidian -e</div>
-</div>
-
-<div class="phase do">
-<span class="phase-label">起動後の操作</span>
+<span class="phase-label">手順</span>
 <ol>
-<li>「<strong>フォルダを Vault として開く</strong>」を選択<br><span style="color:var(--text-muted);font-size:.88rem">（Open folder as vault / フォルダーをボルトとして開く）</span></li>
-<li><span class="inline-code">~/Documents/MyVault</span> を選択</li>
-<li>「コミュニティプラグインを有効化」→「<strong>全て有効化</strong>」<br><span style="color:var(--text-muted);font-size:.88rem"><span class="inline-code">.obsidian/community-plugins.json</span> に記録された全プラグインが自動で再ダウンロードされる（Obsidian Git含む）</span></li>
+<li>同じくCWマイチャットを開く</li>
+<li><strong>memory_YYYYMMDD_HHMMSS.zip</strong> をダウンロード</li>
+<li>ターミナルで以下を実行：</li>
 </ol>
+
+<div class="device-tag macbook">💻 Macbook</div>
+<div class="cmd-box"><span class="comment"># Claude Codeのプロジェクトディレクトリに memory フォルダを作成</span>
+<span class="comment"># Macのプロジェクトディレクトリ命名: -Users-&lt;user&gt;-Documents-MyVault</span>
+PROJECT_ID="-Users-$(whoami)-Documents-MyVault"
+TARGET="$HOME/.claude/projects/$PROJECT_ID/memory"
+
+mkdir -p "$TARGET"
+unzip -o ~/Downloads/memory_*.zip -d "$TARGET"
+
+<span class="comment"># 中身確認（30+件のmdファイルが見えれば成功）</span>
+ls -la "$TARGET"</div>
 </div>
 
 <div class="phase goal">
-<span class="phase-label">この後</span>
-<p>Obsidian の設定（テーマ・ホットキー・スニペット）は <span class="inline-code">.obsidian/</span> 配下にあるため、<strong>git pull した時点で自動で揃う</strong>。</p>
+<span class="phase-label">補足</span>
+<p>このメモリには「<strong>はな乃さんの好み</strong>」「<strong>業務プロジェクトの背景</strong>」「<strong>過去の指摘事項</strong>」など、Claude Codeとの会話を蓄積した知見が入っている。これがあるとMacでもClaudeが「同じ感覚」で受け答えできる。</p>
+</div>
+
+<div class="phase warn">
+<span class="phase-label">作業後 必ずやること</span>
+<ol>
+<li>展開成功後、<strong>CWマイチャットの memory.zip メッセージを削除</strong></li>
+<li><span class="inline-code">~/Downloads/memory_*.zip</span> も削除</li>
+</ol>
 </div>
 
 </div>
 </section>
 
 <section id="step6">
-<div class="section-header"><h2>STEP 6. Cursor インストール → Settings Sync</h2></div>
+<div class="section-header"><h2>STEP 6. Obsidian インストール → Vaultとして開く</h2></div>
 <div class="section-body">
 
 <div class="phase do">
 <span class="phase-label">インストール</span>
-
-<div class="os-tag mac">🍎 macOS</div>
-<div class="cmd-box">brew install --cask cursor</div>
-
-<div class="os-tag win">🪟 Windows</div>
-<div class="cmd-box">winget install --id Anysphere.Cursor -e</div>
+<div class="device-tag macbook">💻 Macbook</div>
+<div class="cmd-box">brew install --cask obsidian</div>
 </div>
 
 <div class="phase do">
 <span class="phase-label">起動後の操作</span>
 <ol>
-<li>サインイン（GitHub or Google）— <strong>メイン端末と同じアカウント</strong>を使うとProプランが共有される</li>
+<li>「<strong>フォルダを Vault として開く</strong>」を選択<br><span style="color:var(--text-muted);font-size:.88rem">（Open folder as vault）</span></li>
+<li><span class="inline-code">~/Documents/MyVault</span> を選択</li>
+<li>「コミュニティプラグインを有効化」→<strong>制限モードを解除</strong>→「有効化」を全プラグインに対して実行<br><span style="color:var(--text-muted);font-size:.88rem"><span class="inline-code">.obsidian/community-plugins.json</span> に記録された全プラグインが自動で再ダウンロードされる（Obsidian Git含む）</span></li>
+<li>右下にGitアイコン（同期マーク）が出れば、自動同期が稼働している証拠</li>
+</ol>
+</div>
+
+<div class="phase goal">
+<span class="phase-label">この後</span>
+<p>Obsidian の設定（テーマ・ホットキー・スニペット）は <span class="inline-code">.obsidian/</span> 配下にあり、git pull で自動取得済み。<strong>追加設定は不要。</strong></p>
+</div>
+
+</div>
+</section>
+
+<section id="step7">
+<div class="section-header"><h2>STEP 7. Cursor インストール → Settings Sync</h2></div>
+<div class="section-body">
+
+<div class="phase do">
+<span class="phase-label">インストール</span>
+<div class="device-tag macbook">💻 Macbook</div>
+<div class="cmd-box">brew install --cask cursor</div>
+</div>
+
+<div class="phase do">
+<span class="phase-label">起動後の操作</span>
+<ol>
+<li>サインイン（GitHub or Google） — <strong>デスクトップと同じアカウント</strong></li>
 <li>設定 → <strong>Settings Sync</strong> → Turn On → GitHubアカウントで認証</li>
 <li>テーマ・拡張機能・キーバインドが自動同期される</li>
 <li>File → Open Folder → <span class="inline-code">~/Documents/MyVault</span></li>
@@ -482,103 +502,79 @@ ls -la .secrets/</div>
 </div>
 
 <div class="phase warn">
-<span class="phase-label">注意点</span>
-<p>メイン端末でSettings Sync未設定なら、<strong>先にメイン端末でオンにして設定をアップロード</strong> → その後新端末でオンにする順序で。</p>
+<span class="phase-label">前提確認</span>
+<p>デスクトップ側で<strong>事前にSettings Syncをオン</strong>にしてあれば、Macbook側で取り込みされる。<br>
+オンになっていなかった場合は、デスクトップに戻ってSettings Syncをオン → アップロード待ち → Macで再度同期、という順序になる。</p>
 </div>
 
 </div>
 </section>
 
-<section id="step7">
-<div class="section-header"><h2>STEP 7. Claude Code 設定の同期</h2></div>
+<section id="step8">
+<div class="section-header"><h2>STEP 8. Claude Code グローバル CLAUDE.md を Mac用に作成</h2></div>
 <div class="section-body">
 
 <div class="phase do">
 <span class="phase-label">考え方</span>
-<p>グローバルCLAUDE.md・メモリ・skillsを <strong>専用リポジトリ（claude-config）</strong> で管理して、両端末で symlink で参照する。</p>
+<p>デスクトップの <span class="inline-code">~/.claude/CLAUDE.md</span> はWindowsパス・PowerShellコマンド前提で書かれている。<strong>そのままMacに持ち込むと矛盾する</strong>ので、Mac用にゼロから作る。プロジェクトCLAUDE.md（<span class="inline-code">MyVault/CLAUDE.md</span>）はMyVault同期で既に揃っているのでそのまま使える。</p>
 </div>
 
 <div class="phase do">
-<span class="phase-label">メイン端末側で1回だけ実行</span>
-<p>既にやっていればスキップ。</p>
+<span class="phase-label">手順</span>
 
-<div class="cmd-box"><span class="comment"># 1. プライベートリポジトリ作成</span>
-gh repo create claude-config --private --description "Claude Code設定の同期"
+<div class="device-tag macbook">💻 Macbook</div>
+<div class="cmd-box"><span class="comment"># Claude Code をまだ入れていなければインストール</span>
+npm install -g @anthropic-ai/claude-code
 
-<span class="comment"># 2. 必要ファイルをコピー</span>
-mkdir ~/claude-config
-cd ~/claude-config
+<span class="comment"># Claude Code を一度起動して ~/.claude/ を初期化</span>
+cd ~/Documents/MyVault
+claude  <span class="comment"># 一度起動して /quit で抜ける</span>
 
-cp ~/.claude/CLAUDE.md .
-cp ~/.claude/settings.json .
-cp -r ~/.claude/skills .
-mkdir memory
-cp ~/.claude/projects/<span class="var">&lt;vault-project-id&gt;</span>/memory/*.md memory/
+<span class="comment"># グローバル CLAUDE.md を Mac用に作成</span>
+cat &gt; ~/.claude/CLAUDE.md &lt;&lt;'EOF'
+# Global Rules (Mac)
 
-<span class="comment"># 3. .gitignore で不要物を除外</span>
-cat &gt; .gitignore &lt;&lt;EOF
-*.local
-session_*
-*.bak
+- 日本語で応答する
+- 結論から入る・推測禁止・不明点は質問する
+- 端末呼称: デスクトップ=Windowsメイン機 / Macbook=この端末
+- パス: MyVaultは ~/Documents/MyVault に配置
+- シェル: zsh / bash（PowerShellではない）
+- 一時ファイルは ~/Downloads に出す（MyVault配下に作らない）
+- 認証情報は ~/Documents/MyVault/.secrets/ に格納（git対象外）
 EOF
 
-<span class="comment"># 4. push</span>
-git init
-git add .
-git commit -m "initial: Claude Code設定の同期"
-git branch -M main
-git remote add origin https://github.com/<span class="var">&lt;your-github-username&gt;</span>/claude-config.git
-git push -u origin main</div>
+cat ~/.claude/CLAUDE.md</div>
 </div>
 
-<div class="phase do">
-<span class="phase-label">新端末側で実行</span>
-
-<div class="cmd-box"><span class="comment"># 1. clone</span>
-cd ~
-gh repo clone <span class="var">&lt;your-github-username&gt;</span>/claude-config
-cd claude-config
-
-<span class="comment"># 2. 既存の ~/.claude/ ファイルをバックアップ → symlink を張る</span>
-mv ~/.claude/CLAUDE.md ~/.claude/CLAUDE.md.bak 2&gt;/dev/null
-ln -s ~/claude-config/CLAUDE.md ~/.claude/CLAUDE.md
-
-mv ~/.claude/settings.json ~/.claude/settings.json.bak 2&gt;/dev/null
-ln -s ~/claude-config/settings.json ~/.claude/settings.json
-
-mv ~/.claude/skills ~/.claude/skills.bak 2&gt;/dev/null
-ln -s ~/claude-config/skills ~/.claude/skills
-
-<span class="comment"># 3. memory フォルダの symlink</span>
-<span class="comment"># Macのプロジェクトディレクトリは ~/.claude/projects/-Users-<user>-Documents-MyVault/</span>
-PROJECT_ID="-Users-$(whoami)-Documents-MyVault"
-mkdir -p ~/.claude/projects/$PROJECT_ID
-ln -s ~/claude-config/memory ~/.claude/projects/$PROJECT_ID/memory</div>
+<div class="phase goal">
+<span class="phase-label">確認</span>
+<p>Claude Code を起動して <span class="inline-code">claude</span> → 何か質問してみる。<br>
+→ メモリの内容（過去の好み・プロジェクト背景）を踏まえた応答が返ってくれば<strong>セットアップ完了</strong>。</p>
 </div>
 
 <div class="phase warn">
-<span class="phase-label">注意点</span>
-<p><strong>CLAUDE.md の Mac/Win 差異</strong>：パス（<span class="inline-code">C:\Users\...</span> vs <span class="inline-code">/Users/...</span>）やシェル（PowerShell vs zsh）の記述差を吸収するため、CLAUDE.mdに OS判定ブロックを追加するか、必要箇所だけMac用に書き換える。</p>
-<p>メモリは両端末で共有・追記される。<strong>同時に2端末で開いて編集すると競合</strong>するので、片方を閉じてから作業を切り替える運用を推奨。</p>
+<span class="phase-label">プロジェクトCLAUDE.mdは触らない</span>
+<p><span class="inline-code">~/Documents/MyVault/CLAUDE.md</span>（プロジェクトCLAUDE.md）はWindowsパスやPowerShellコマンドが含まれているが、<strong>これはデスクトップでも編集する共有ファイル</strong>。Mac固有の差異は将来 OS判定ブロックで吸収する想定。今は触らずそのまま使う。</p>
 </div>
 
 </div>
 </section>
 
 <section id="checklist">
-<div class="section-header"><h2>3. 完了チェック</h2></div>
+<div class="section-header"><h2>4. 完了チェック</h2></div>
 <div class="section-body">
 
 <div class="checklist">
 <ul>
-<li><strong>brew / git / gh / node</strong> コマンドが新端末で動く</li>
-<li><span class="inline-code">gh auth status</span> で認証済みと表示される</li>
-<li><span class="inline-code">~/Documents/MyVault</span> が cloneされ、<span class="inline-code">git status</span> がクリーン</li>
-<li><span class="inline-code">~/Documents/MyVault/.secrets/</span> に認証ファイル群がある</li>
-<li><strong>Obsidian</strong> で MyVault が開け、コミュニティプラグインが有効</li>
-<li><strong>Cursor</strong> で Settings Sync が有効、MyVault フォルダを開いている</li>
-<li><span class="inline-code">~/.claude/CLAUDE.md</span> が <span class="inline-code">~/claude-config/CLAUDE.md</span> へのsymlink</li>
-<li><span class="inline-code">~/.claude/projects/.../memory</span> に過去のメモリファイルが見える</li>
+<li><strong>brew / git / gh / node</strong> がMacbookで動く</li>
+<li><span class="inline-code">gh auth status</span> で「Logged in to github.com as tsutsuihanano」と表示</li>
+<li><span class="inline-code">~/Documents/MyVault</span> がclone済み、<span class="inline-code">git status</span> がクリーン</li>
+<li><span class="inline-code">~/Documents/MyVault/.secrets/</span> に認証ファイル群（<strong>10ファイル以上</strong>）が見える</li>
+<li><span class="inline-code">~/.claude/projects/.../memory/</span> に <strong>30以上のmdファイル</strong>が見える</li>
+<li><strong>Obsidian</strong> でMyVaultが開け、右下にGitの同期アイコン</li>
+<li><strong>Cursor</strong> でSettings Syncが稼働、MyVaultフォルダを開いている</li>
+<li><strong>Claude Code</strong> がメモリを認識して応答する</li>
+<li><strong>CWマイチャット</strong>からsecrets.zip / memory.zip を削除済み</li>
 </ul>
 </div>
 
@@ -586,112 +582,56 @@ ln -s ~/claude-config/memory ~/.claude/projects/$PROJECT_ID/memory</div>
 </section>
 
 <section id="trouble">
-<div class="section-header"><h2>4. 困った時（トラブルシューティング）</h2></div>
+<div class="section-header"><h2>5. 困った時（トラブルシューティング）</h2></div>
 <div class="section-body">
 
 <div class="trouble-list">
 
 <div class="trouble-item">
-<div class="trouble-q">brew install で「command not found: brew」</div>
-<div class="trouble-a">Homebrew のPATHが通っていない。<span class="inline-code">echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' &gt;&gt; ~/.zprofile</span> → <span class="inline-code">source ~/.zprofile</span> を実行。Intel Macは <span class="inline-code">/usr/local/bin/brew</span>。</div>
+<div class="trouble-q">brew で「command not found: brew」</div>
+<div class="trouble-a">PATHが通っていない。<span class="inline-code">echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' &gt;&gt; ~/.zprofile</span> → <span class="inline-code">source ~/.zprofile</span>。Intel Macは <span class="inline-code">/usr/local/bin/brew</span>。</div>
 </div>
 
 <div class="trouble-item">
-<div class="trouble-q">gh auth login で「could not prompt」エラー</div>
-<div class="trouble-a">対話モードが効いていない。新しいターミナルウィンドウで実行する。SSH越しの場合は <span class="inline-code">--web</span> オプションを付ける：<span class="inline-code">gh auth login --web</span></div>
+<div class="trouble-q">gh auth login で「could not prompt」</div>
+<div class="trouble-a">対話モードが効いていない。新しいターミナルウィンドウで実行。SSH越しの場合は <span class="inline-code">gh auth login --web</span>。</div>
 </div>
 
 <div class="trouble-item">
-<div class="trouble-q">git clone で「Permission denied」または「Authentication failed」</div>
-<div class="trouble-a">STEP 2 の gh auth login が完了していない可能性。<span class="inline-code">gh auth status</span> で確認 → 失敗していたら再度 <span class="inline-code">gh auth login</span>。</div>
-</div>
-
-<div class="trouble-item">
-<div class="trouble-q">.secrets が同期されない</div>
-<div class="trouble-a"><span class="inline-code">.gitignore</span> に <span class="inline-code">.secrets/</span> が登録されているため、git経由では絶対に来ない。Google Drive 経由で<strong>手動コピーが必須</strong>（STEP 4参照）。</div>
+<div class="trouble-q">git clone で「Permission denied」</div>
+<div class="trouble-a">STEP 2 の <span class="inline-code">gh auth login</span> が完了していない。<span class="inline-code">gh auth status</span> で確認 → 失敗していたら再度ログイン。</div>
 </div>
 
 <div class="trouble-item">
 <div class="trouble-q">unzip コマンドが見つからない</div>
-<div class="trouble-a">macOS には標準で入っているはず。出ない場合は <span class="inline-code">brew install unzip</span>。あるいはFinderで<span class="inline-code">.secrets.zip</span>をダブルクリック → 展開されたフォルダを <span class="inline-code">~/Documents/MyVault/</span> にドラッグ&amp;ドロップでも可。</div>
+<div class="trouble-a">macOS には標準で入っているはず。出ない場合は <span class="inline-code">brew install unzip</span>。あるいはFinderで該当zipをダブルクリック → 展開フォルダを所定パスにドラッグ&amp;ドロップでも可。</div>
+</div>
+
+<div class="trouble-item">
+<div class="trouble-q">CWマイチャットにzipファイルが見当たらない</div>
+<div class="trouble-a">デスクトップ側でアップロードが完了していない可能性。デスクトップ側に戻って、<span class="inline-code">.secrets</span> と <span class="inline-code">memory</span> をzip化 → CW APIまたはCWアプリでマイチャット（ルームID 375447268）にアップロード。ファイル名は <span class="inline-code">secrets_YYYYMMDD_HHMMSS.zip</span> / <span class="inline-code">memory_YYYYMMDD_HHMMSS.zip</span> 形式。</div>
 </div>
 
 <div class="trouble-item">
 <div class="trouble-q">Obsidian でプラグインが有効にならない</div>
-<div class="trouble-a">設定 → コミュニティプラグイン → 「制限モード」をオフ → プラグイン一覧で個別に「有効化」ボタンを押す。<span class="inline-code">.obsidian/community-plugins.json</span> に記録があれば、必要なプラグインは自動でインストール提案される。</div>
+<div class="trouble-a">設定 → コミュニティプラグイン → 「制限モード」をオフ → プラグイン一覧で個別「有効化」。<span class="inline-code">.obsidian/community-plugins.json</span> に記録があれば必要なものは自動でインストール提案される。</div>
 </div>
 
 <div class="trouble-item">
-<div class="trouble-q">Claude Code を起動してもメモリが反映されない</div>
-<div class="trouble-a">symlink先のパスが間違っている可能性。<span class="inline-code">ls -la ~/.claude/projects/</span> で実際のプロジェクトディレクトリ名を確認 → そこに claude-config/memory のsymlinkを張り直す。プロジェクトID は端末・OS・ユーザー名で変わる。</div>
+<div class="trouble-q">Claude Code を起動してもメモリが認識されない</div>
+<div class="trouble-a">PROJECT_IDのパスが間違っている可能性。<span class="inline-code">ls ~/.claude/projects/</span> で実際のディレクトリ名を確認 → そこに memory フォルダを置き直す。Mac版の命名は <span class="inline-code">-Users-&lt;ユーザー名&gt;-Documents-MyVault</span>。</div>
 </div>
 
 <div class="trouble-item">
-<div class="trouble-q">同期で衝突（conflict）</div>
-<div class="trouble-a">2端末で同じファイルを同時に編集した場合に発生。Obsidian Git で「Pull」→ 衝突マーカー（<span class="inline-code">&lt;&lt;&lt;</span>）を手動解決 → コミット。<strong>同時に2端末で開かない運用</strong>が予防策。</div>
+<div class="trouble-q">Obsidian Gitで競合（conflict）</div>
+<div class="trouble-a">2端末で同じファイルを同時に編集した場合に発生。Obsidian Git の「Pull」→ 衝突マーカーを手動解決 → コミット。<strong>同時に2端末で開かない運用</strong>が予防策。</div>
 </div>
-
-</div>
-
-</div>
-</section>
-
-<section id="resources">
-<div class="section-header"><h2>5. 関連資料</h2></div>
-<div class="section-body">
-
-<div class="resources">
-
-<a class="resource" href="./index.html">
-  <div class="icon">📄</div>
-  <div class="info">
-    <div class="title">別端末でのセットアップ手順（簡易版・10分）</div>
-    <div class="url">既にMyVaultフォルダがある場合はこちら</div>
-  </div>
-  <div class="arrow">→</div>
-</a>
-
-<a class="resource" href="https://obsidian.md/" target="_blank" rel="noopener">
-  <div class="icon">📓</div>
-  <div class="info">
-    <div class="title">Obsidian 公式</div>
-    <div class="url">obsidian.md</div>
-  </div>
-  <div class="arrow">→</div>
-</a>
-
-<a class="resource" href="https://cursor.com/" target="_blank" rel="noopener">
-  <div class="icon">🤖</div>
-  <div class="info">
-    <div class="title">Cursor 公式</div>
-    <div class="url">cursor.com</div>
-  </div>
-  <div class="arrow">→</div>
-</a>
-
-<a class="resource" href="https://cli.github.com/" target="_blank" rel="noopener">
-  <div class="icon">🐙</div>
-  <div class="info">
-    <div class="title">GitHub CLI（gh）公式</div>
-    <div class="url">cli.github.com</div>
-  </div>
-  <div class="arrow">→</div>
-</a>
-
-<a class="resource" href="https://docs.claude.com/en/docs/claude-code/overview" target="_blank" rel="noopener">
-  <div class="icon">🧠</div>
-  <div class="info">
-    <div class="title">Claude Code ドキュメント</div>
-    <div class="url">docs.claude.com</div>
-  </div>
-  <div class="arrow">→</div>
-</a>
 
 </div>
 
 <div class="closing">
-新端末セットアップは1度きりの作業。<br>
-ここでしっかり同期できる構造を作っておくと、<strong>以降の端末追加・移行が一気にラクになる。</strong>
+ここまで完了すればMacbookは<strong>デスクトップとほぼ同じ環境</strong>。<br>
+以降はMyVault変更は5分ごとに両端末で自動同期、Claudeのメモリも引き継がれた状態で作業を継続できる。
 </div>
 
 </div>
