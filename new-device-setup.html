@@ -387,11 +387,10 @@ ls -la       <span class="comment"># .obsidian/ .claude/ 00_Inbox/ などが見�
 
 <div class="phase do">
 <span class="phase-label">手順</span>
+<p>📥 <strong><a href="https://www.chatwork.com/#!rid375447268-2104884186786828288" target="_blank" rel="noopener">CWの該当メッセージを開く（secrets.zip）</a></strong></p>
 <ol>
-<li>Macbookで <a href="https://www.chatwork.com/" target="_blank" rel="noopener">Chatwork</a> を開く（業務アカウントでログイン）</li>
-<li><strong>マイチャット</strong>を開く</li>
-<li><strong>secrets_YYYYMMDD_HHMMSS.zip</strong> という添付ファイルを探す</li>
-<li>ダウンロード（標準では <span class="inline-code">~/Downloads/</span> に入る）</li>
+<li>上のリンクを開く（ブラウザでChatworkの該当メッセージに直接ジャンプ。業務アカウントでログイン状態が必要）</li>
+<li>添付の <strong>secrets_YYYYMMDD_HHMMSS.zip</strong> をクリック → ダウンロード（標準で <span class="inline-code">~/Downloads/</span>）</li>
 <li>ターミナルで以下を実行：</li>
 </ol>
 
@@ -428,9 +427,10 @@ ls -la .secrets/</div>
 
 <div class="phase do">
 <span class="phase-label">手順</span>
+<p>📥 <strong><a href="https://www.chatwork.com/#!rid375447268-2104884187411775488" target="_blank" rel="noopener">CWの該当メッセージを開く（memory.zip）</a></strong></p>
 <ol>
-<li>同じくCWマイチャットを開く</li>
-<li><strong>memory_YYYYMMDD_HHMMSS.zip</strong> をダウンロード</li>
+<li>上のリンクを開く</li>
+<li>添付の <strong>memory_YYYYMMDD_HHMMSS.zip</strong> をクリック → ダウンロード</li>
 <li>ターミナルで以下を実行：</li>
 </ol>
 
@@ -473,6 +473,12 @@ ls -la "$TARGET"</div>
 <div class="cmd-box">brew install --cask obsidian</div>
 </div>
 
+<div class="phase warn">
+<span class="phase-label">初回起動時の警告</span>
+<p>初回起動時に「<strong>開発元が確認できないため開けません</strong>」というGatekeeper警告が出ることがある。その場合：<br>
+<strong>Finder で アプリケーション → Obsidian を右クリック →「開く」</strong>を選ぶ → 警告ダイアログで「開く」をクリック。次回からは普通に起動できる。</p>
+</div>
+
 <div class="phase do">
 <span class="phase-label">起動後の操作</span>
 <ol>
@@ -504,6 +510,11 @@ ls -la "$TARGET"</div>
 <span class="phase-label">インストール</span>
 <div class="device-tag macbook">💻 Macbook</div>
 <div class="cmd-box">brew install --cask cursor</div>
+</div>
+
+<div class="phase warn">
+<span class="phase-label">初回起動時の警告</span>
+<p>同様にGatekeeper警告が出る場合あり：<strong>アプリケーション → Cursor を右クリック →「開く」</strong>。</p>
 </div>
 
 <div class="phase do">
@@ -550,6 +561,8 @@ npm install -g @anthropic-ai/claude-code
 <span class="comment"># MyVaultフォルダで Claude Code 起動</span>
 cd ~/Documents/MyVault
 claude</div>
+
+<p style="margin-top:14px;font-size:.92rem;">📌 <strong>初回起動時のログイン</strong>: <span class="inline-code">claude</span> を実行すると、ブラウザが自動で開いて Anthropic アカウントのログイン画面に飛ぶ。<strong>Claude Max を契約しているアカウント</strong>でログイン → 承認 → ターミナルに戻る → プランは「Max」を選択。</p>
 </div>
 
 <div class="phase do">
