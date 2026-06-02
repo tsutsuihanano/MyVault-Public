@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mac セットアップ最低限ガイド — Windows から乗り換えた人向け</title>
+<style>
+:root{
+  --bg:#f8f9fa;
+  --surface:#ffffff;
+  --border:#e5e7eb;
+  --border-soft:#f1f5f9;
+  --text:#1a1a2e;
+  --text-sub:#475569;
+  --text-muted:#64748b;
+  --accent:#7c3aed;
+  --accent2:#0369a1;
+  --accent2-soft:#e0f2fe;
+  --accent3:#b45309;
+  --accent3-soft:#fef3c7;
+  --ok:#15803d;
+  --ok-soft:#dcfce7;
+  --warn:#b91c1c;
+  --warn-soft:#fee2e2;
+  --shadow:0 2px 10px rgba(15,23,42,.06);
+  --shadow-md:0 4px 20px rgba(15,23,42,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);line-height:1.85}
+
+.hero{text-align:center;padding:72px 20px 56px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff}
+.hero h1{font-size:2.2rem;font-weight:800;margin-bottom:10px;color:#fff}
+.hero p{font-size:1.05rem;opacity:.92}
+.hero .badge{display:inline-block;margin-top:14px;background:rgba(255,255,255,.18);padding:6px 18px;border-radius:20px;font-size:.85rem}
+
+.container{max-width:860px;margin:0 auto;padding:0 20px 64px}
+
+nav.toc{position:sticky;top:0;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);z-index:100;padding:10px 0;overflow-x:auto;white-space:nowrap;box-shadow:0 1px 4px rgba(15,23,42,.04)}
+nav.toc .container{padding-top:0;padding-bottom:0}
+nav.toc a{color:var(--text-sub);text-decoration:none;padding:6px 14px;font-size:.88rem;display:inline-block;border-radius:6px;font-weight:500}
+nav.toc a:hover{background:var(--accent2-soft);color:var(--accent2)}
+
+section{margin:40px 0;background:var(--surface);border-radius:16px;border:1px solid var(--border);overflow:hidden;box-shadow:var(--shadow)}
+.section-header{padding:24px 32px 18px;border-bottom:1px solid var(--border-soft)}
+.section-header h2{font-size:1.35rem;font-weight:700;color:var(--text);display:flex;align-items:center;gap:10px}
+.section-body{padding:28px 32px 32px}
+
+/* flow */
+.flow{display:flex;flex-direction:column;gap:10px;margin:8px 0}
+.flow-step{background:#fff;border:1px solid var(--border);border-left:4px solid var(--accent2);border-radius:12px;padding:16px 20px;display:flex;align-items:center;gap:16px;box-shadow:var(--shadow)}
+.flow-step .num{width:32px;height:32px;border-radius:50%;background:var(--accent2);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.95rem;flex-shrink:0}
+.flow-step .body{flex:1}
+.flow-step .body strong{color:var(--text);font-size:1.02rem;display:block;margin-bottom:2px}
+.flow-step .body span{display:block;color:var(--text-muted);font-size:.88rem}
+.flow-step .time{flex-shrink:0;background:var(--accent2-soft);color:var(--accent2);padding:4px 12px;border-radius:14px;font-size:.78rem;font-weight:600}
+.flow-arrow{text-align:center;color:var(--text-muted);font-size:.95rem;line-height:1;padding:2px 0}
+.flow-goal{background:linear-gradient(135deg,rgba(34,197,94,.12),rgba(14,165,233,.06));border-left:4px solid var(--ok)}
+.flow-goal .num{background:var(--ok)}
+
+/* before-after grid */
+.ba-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:8px 0}
+.ba-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:22px 24px;box-shadow:var(--shadow)}
+.ba-card.before{border-left:4px solid var(--warn)}
+.ba-card.after{border-left:4px solid var(--ok)}
+.ba-card h3{font-size:1rem;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.ba-card.before h3{color:var(--warn)}
+.ba-card.after h3{color:var(--ok)}
+.ba-card ul{list-style:none;padding:0;margin:0}
+.ba-card li{padding:8px 0;font-size:.9rem;line-height:1.7;color:var(--text-sub);border-bottom:1px solid var(--border-soft);display:flex;gap:8px;align-items:flex-start}
+.ba-card li:last-child{border:none}
+.ba-card.before li::before{content:'×';color:var(--warn);font-weight:700;flex-shrink:0}
+.ba-card.after li::before{content:'○';color:var(--ok);font-weight:700;flex-shrink:0}
+@media(max-width:600px){.ba-grid{grid-template-columns:1fr}}
+
+/* tools table */
+.tools-table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);font-size:.92rem}
+.tools-table th{background:#f1f5f9;padding:12px 16px;text-align:left;font-weight:700;color:var(--text);font-size:.85rem;border-bottom:1px solid var(--border)}
+.tools-table td{padding:14px 16px;border-bottom:1px solid var(--border-soft);color:var(--text-sub);line-height:1.6}
+.tools-table tr:last-child td{border:none}
+.tools-table .cat{font-weight:700;color:var(--accent2);font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}
+.tools-table .name{font-weight:700;color:var(--text);white-space:nowrap}
+
+/* phase blocks */
+.phase{background:#fff;border:1px solid var(--border);border-radius:12px;padding:22px 26px;margin:16px 0;box-shadow:var(--shadow)}
+.phase.do{border-left:4px solid var(--accent2);background:linear-gradient(180deg,rgba(3,105,161,.03),#fff 40%)}
+.phase.goal{border-left:4px solid var(--ok);background:linear-gradient(180deg,rgba(21,128,61,.05),#fff 40%)}
+.phase.warn{border-left:4px solid var(--warn);background:linear-gradient(180deg,rgba(185,28,28,.04),#fff 40%)}
+.phase-label{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;font-weight:700;letter-spacing:.08em;padding:5px 14px;border-radius:20px;margin-bottom:14px;text-transform:uppercase}
+.phase.do .phase-label{background:var(--accent2-soft);color:var(--accent2)}
+.phase.goal .phase-label{background:var(--ok-soft);color:var(--ok)}
+.phase.warn .phase-label{background:var(--warn-soft);color:var(--warn)}
+.phase-label::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor}
+.phase ul,.phase ol{padding-left:1.45em;margin:8px 0 0}
+.phase li{margin-bottom:10px;color:var(--text-sub);line-height:1.8}
+.phase li:last-child{margin-bottom:0}
+.phase p{margin:10px 0;color:var(--text-sub);line-height:1.85}
+.phase p:first-of-type{margin-top:0}
+.phase p:last-child{margin-bottom:0}
+.phase strong{color:var(--accent3);font-weight:700}
+.phase.goal strong{color:var(--ok)}
+.phase.warn strong{color:var(--warn)}
+
+/* code box */
+.cmd-box{background:#1e1e2e;color:#cdd6f4;border-radius:10px;padding:16px 20px;font-family:'SFMono-Regular',Consolas,'Courier New',monospace;font-size:.85rem;margin:6px 0 14px;white-space:pre-wrap;word-break:break-word;line-height:1.7;overflow-x:auto;border:1px solid #313244}
+.cmd-box .comment{color:#6c7086}
+.cmd-box .var{color:#fab387}
+.cmd-box .str{color:#a6e3a1}
+
+.inline-code{font-family:'SFMono-Regular',Consolas,'Courier New',monospace;background:#f1f5f9;color:#475569;padding:2px 8px;border-radius:5px;font-size:.88em;border:1px solid var(--border)}
+
+/* shortcut table */
+.sc-table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);font-size:.92rem;margin:8px 0}
+.sc-table th{background:#f1f5f9;padding:12px 16px;text-align:left;font-weight:700;color:var(--text);font-size:.85rem;border-bottom:1px solid var(--border)}
+.sc-table td{padding:12px 16px;border-bottom:1px solid var(--border-soft);color:var(--text-sub)}
+.sc-table tr:last-child td{border:none}
+.sc-table .key{font-family:'SFMono-Regular',Consolas,monospace;background:#f1f5f9;color:#1e293b;padding:3px 10px;border-radius:6px;font-size:.85em;border:1px solid var(--border);font-weight:600;white-space:nowrap}
+
+/* checklist */
+.checklist{background:#fff;border:1px solid var(--border);border-left:4px solid var(--ok);border-radius:12px;padding:22px 26px;box-shadow:var(--shadow)}
+.checklist ul{list-style:none;padding:0;margin:0}
+.checklist li{padding:10px 0;border-bottom:1px solid var(--border-soft);font-size:.95rem;color:var(--text-sub);display:flex;align-items:flex-start;gap:10px}
+.checklist li:last-child{border:none}
+.checklist li::before{content:'☐';font-size:1.1rem;color:var(--ok);flex-shrink:0;line-height:1.4}
+.checklist li strong{color:var(--text);font-weight:600}
+
+/* trouble */
+.trouble-list{display:flex;flex-direction:column;gap:14px;margin:8px 0}
+.trouble-item{background:#fff;border:1px solid var(--border);border-left:4px solid var(--warn);border-radius:12px;padding:18px 22px;box-shadow:var(--shadow)}
+.trouble-q{font-weight:700;font-size:.98rem;color:var(--warn);margin-bottom:8px;display:flex;align-items:flex-start;gap:8px}
+.trouble-q::before{content:'?';flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--warn);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700}
+.trouble-a{font-size:.92rem;color:var(--text-sub);line-height:1.8;padding-left:30px}
+
+.closing{background:linear-gradient(135deg,#f5f3ff,#eff6ff);border:1px solid #ddd6fe;border-radius:14px;padding:32px 28px;text-align:center;font-size:1.05rem;line-height:2;margin:32px 0 0;color:var(--text-sub)}
+.closing strong{color:var(--accent);font-weight:700}
+
+.back-top{position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;opacity:.9;z-index:99;box-shadow:0 4px 14px rgba(124,58,237,.35)}
+.back-top:hover{opacity:1;transform:translateY(-2px);transition:all .15s}
+
+@media(max-width:600px){
+  .hero h1{font-size:1.6rem}
+  .hero{padding:52px 20px 40px}
+  .section-body{padding:22px 20px 26px}
+  .section-header{padding:20px 22px 16px}
+  .flow-step{padding:14px 16px;gap:12px;flex-wrap:wrap}
+  .flow-step .time{order:3;margin-left:auto}
+  .phase{padding:18px 20px}
+  .cmd-box{padding:14px 16px;font-size:.78rem}
+}
+</style>
+</head>
+<body>
+
+<nav class="toc"><div class="container">
+<a href="#why">なぜやる？</a>
+<a href="#tools">入れるもの</a>
+<a href="#flow">全体の流れ</a>
+<a href="#step1">STEP 1 Homebrew</a>
+<a href="#step2">STEP 2 アプリ一括</a>
+<a href="#step3">STEP 3 アプリ設定</a>
+<a href="#step4">STEP 4 OS設定</a>
+<a href="#shortcuts">ショートカット表</a>
+<a href="#checklist">完了チェック</a>
+<a href="#trouble">困った時</a>
+</div></nav>
+
+<div class="hero">
+<h1>Mac セットアップ最低限ガイド</h1>
+<p>Windows から Mac に乗り換えた人向け・仕事で困らない最小構成</p>
+<div class="badge">⏱️ 所要時間：約30〜60分</div>
+</div>
+
+<div class="container">
+
+<section id="why">
+<div class="section-header"><h2>1. なぜやる？（Before / After）</h2></div>
+<div class="section-body">
+
+<div class="ba-grid">
+  <div class="ba-card before">
+    <h3>素の Mac だと</h3>
+    <ul>
+      <li>アプリ起動が Launchpad から手探り</li>
+      <li>ウィンドウを画面の半分にしたい時は手動ドラッグ</li>
+      <li>スクショ撮ってもファイルだけ、Slack 貼付が一手間</li>
+      <li>1個前にコピーした内容は消える</li>
+      <li>⌘+Tab で同じアプリの別ウィンドウが出ない</li>
+      <li>日本語入力が「Caps Lock 風」のキーで切替</li>
+      <li>紛失したら中身丸見え</li>
+    </ul>
+  </div>
+  <div class="ba-card after">
+    <h3>このガイドの後</h3>
+    <ul>
+      <li><span class="inline-code">⌘+Space</span> → 「fig」で Figma 即起動</li>
+      <li><span class="inline-code">Control+Option+→</span> でウィンドウ右半分にスナップ</li>
+      <li>スクショは自動でクリップボードへ → 即貼付</li>
+      <li><span class="inline-code">Option+V</span> でコピー履歴を呼び出せる</li>
+      <li><span class="inline-code">Option+Tab</span> で全ウィンドウのサムネ一覧</li>
+      <li>「英数」キー連打で英数⇔かなトグル（Windows 風）</li>
+      <li>FileVault で盗難・紛失時もデータ保護</li>
+    </ul>
+  </div>
+</div>
+
+</div>
+</section>
+
+<section id="tools">
+<div class="section-header"><h2>2. 入れるもの一覧</h2></div>
+<div class="section-body">
+
+<table class="tools-table">
+  <thead><tr><th>カテゴリ</th><th>名前</th><th>何のため</th></tr></thead>
+  <tbody>
+    <tr><td class="cat">基盤</td><td class="name">Homebrew</td><td>Mac 用アプリの管理ツール。これ入れると以降のインストールが超楽</td></tr>
+    <tr><td class="cat">ランチャー</td><td class="name">Raycast</td><td>アプリ起動・計算・クリップボード履歴・なんでも</td></tr>
+    <tr><td class="cat">ウィンドウ</td><td class="name">Rectangle</td><td>キーボードでウィンドウを半分・1/4 にスナップ</td></tr>
+    <tr><td class="cat">ウィンドウ切替</td><td class="name">AltTab</td><td>Windows の Alt+Tab と同じ挙動（同アプリの別ウィンドウも個別に）</td></tr>
+    <tr><td class="cat">スクショ</td><td class="name">Shottr</td><td>クリップボード＋ファイル両方に保存される高機能スクショ</td></tr>
+    <tr><td class="cat">入力</td><td class="name">Karabiner-Elements</td><td>英数/かなキーを Windows の半角/全角風にトグル動作させる</td></tr>
+    <tr><td class="cat">セキュリティ</td><td class="name">LuLu</td><td>怪しいアプリの外向き通信をブロック</td></tr>
+    <tr><td class="cat">OS 設定</td><td class="name">FileVault</td><td>ディスク全体を暗号化（紛失・盗難対策）</td></tr>
+    <tr><td class="cat">OS 設定</td><td class="name">ファイアウォール</td><td>外部からの不正接続を遮断</td></tr>
+    <tr><td class="cat">OS 設定</td><td class="name">Dock 自動非表示</td><td>画面の縦方向を広く使う</td></tr>
+    <tr><td class="cat">OS 設定</td><td class="name">Finder 拡張子表示</td><td>ファイルの種類が一目で分かる</td></tr>
+    <tr><td class="cat">OS 設定</td><td class="name">CapsLock → Control</td><td>使わない CapsLock を活かす</td></tr>
+  </tbody>
+</table>
+
+</div>
+</section>
+
+<section id="flow">
+<div class="section-header"><h2>3. 全体の流れ</h2></div>
+<div class="section-body">
+<div class="flow">
+
+  <div class="flow-step">
+    <div class="num">1</div>
+    <div class="body"><strong>Homebrew インストール</strong><span>これがあると以降のアプリ追加がコマンド1本で済む</span></div>
+    <div class="time">5分</div>
+  </div>
+  <div class="flow-arrow">↓</div>
+
+  <div class="flow-step">
+    <div class="num">2</div>
+    <div class="body"><strong>アプリ一括インストール</strong><span>Raycast / Rectangle / AltTab / Shottr / Karabiner / LuLu</span></div>
+    <div class="time">5分</div>
+  </div>
+  <div class="flow-arrow">↓</div>
+
+  <div class="flow-step">
+    <div class="num">3</div>
+    <div class="body"><strong>各アプリの初期設定</strong><span>ショートカット登録・権限許可</span></div>
+    <div class="time">10〜15分</div>
+  </div>
+  <div class="flow-arrow">↓</div>
+
+  <div class="flow-step">
+    <div class="num">4</div>
+    <div class="body"><strong>macOS のシステム設定</strong><span>FileVault・ファイアウォール・Dock・Finder・CapsLock</span></div>
+    <div class="time">10分</div>
+  </div>
+  <div class="flow-arrow">↓</div>
+
+  <div class="flow-step flow-goal">
+    <div class="num">✓</div>
+    <div class="body"><strong>完了</strong><span>仕事で困らないMac環境</span></div>
+  </div>
+
+</div>
+</div>
+</section>
+
+<section id="step1">
+<div class="section-header"><h2>STEP 1. Homebrew のインストール</h2></div>
+<div class="section-body">
+
+<div class="phase do">
+<span class="phase-label">やること</span>
+<p>標準アプリ <strong>ターミナル.app</strong>（Spotlight検索で「ターミナル」または Launchpad → その他 → ターミナル）を起動して、以下を順に実行。</p>
+
+<div class="cmd-box"><span class="comment"># 1. Homebrew インストール（公式コマンド）</span>
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+<span class="comment"># パスワード求められたら Mac のログインパスワードを入力</span>
+<span class="comment"># 終わったら表示される「Next steps:」のコマンド2行をコピペして実行（PATHを通す）</span>
+
+<span class="comment"># 2. 動作確認</span>
+brew --version</div>
+
+<p><span class="inline-code">Homebrew 4.x.x</span> と表示されればOK。</p>
+</div>
+
+<div class="phase warn">
+<span class="phase-label">補足</span>
+<p>Intel Mac の場合、Homebrew のパスが <span class="inline-code">/usr/local/bin/brew</span> になる。Apple Silicon（M1/M2/M3/M4）は <span class="inline-code">/opt/homebrew/bin/brew</span>。</p>
+</div>
+
+</div>
+</section>
+
+<section id="step2">
+<div class="section-header"><h2>STEP 2. アプリ一括インストール</h2></div>
+<div class="section-body">
+
+<div class="phase do">
+<span class="phase-label">やること</span>
+<p>ターミナルで以下を1コマンドで実行。これだけで主要アプリが入る。</p>
+
+<div class="cmd-box">brew install --cask raycast rectangle alt-tab shottr karabiner-elements lulu</div>
+
+<p>ダウンロード&インストールが順次走る。各アプリ <span class="inline-code">/Applications/</span> 配下に配置される。所要 5 分前後。</p>
+</div>
+
+</div>
+</section>
+
+<section id="step3">
+<div class="section-header"><h2>STEP 3. 各アプリの初期設定</h2></div>
+<div class="section-body">
+
+<div class="phase do">
+<span class="phase-label">3-1. Raycast（最重要）</span>
+<ol>
+<li>Launchpad から <strong>Raycast</strong> 起動</li>
+<li>ウィザードに従って進める</li>
+<li><strong><span class="inline-code">⌘+Space</span> を Raycast のホットキーに設定</strong>（macOS 標準の Spotlight は無効化される）</li>
+<li>クリップボード履歴: Raycast 起動 → 「Clipboard History」検索 → Record Hotkey で <strong><span class="inline-code">Option+V</span></strong> を設定</li>
+</ol>
+</div>
+
+<div class="phase do">
+<span class="phase-label">3-2. Rectangle</span>
+<ol>
+<li>Launchpad から <strong>Rectangle</strong> 起動</li>
+<li>「アクセシビリティ」の権限要求 → システム設定で許可</li>
+<li>デフォルトのショートカットでOK（左半分 <span class="inline-code">Control+Option+←</span> / 右半分 <span class="inline-code">Control+Option+→</span> / 最大化 <span class="inline-code">Control+Option+Return</span>）</li>
+</ol>
+</div>
+
+<div class="phase do">
+<span class="phase-label">3-3. AltTab</span>
+<ol>
+<li>Launchpad から <strong>AltTab</strong> 起動</li>
+<li>「アクセシビリティ」「画面収録」の権限要求 → 許可</li>
+<li>デフォルトの <span class="inline-code">Option+Tab</span> でOK</li>
+</ol>
+</div>
+
+<div class="phase do">
+<span class="phase-label">3-4. Shottr</span>
+<ol>
+<li>Launchpad から <strong>Shottr</strong> 起動</li>
+<li>「画面収録」の権限要求 → 許可</li>
+<li>環境設定 → ショートカット → 範囲スクショを <strong><span class="inline-code">Option+S</span></strong> に設定</li>
+<li>環境設定 → 一般 → <strong>「Copy and Save」を ON</strong>（クリップボード＋ファイル保存）</li>
+</ol>
+</div>
+
+<div class="phase do">
+<span class="phase-label">3-5. Karabiner-Elements（英数/かなトグル）</span>
+<ol>
+<li>Launchpad から <strong>Karabiner-Elements</strong> 起動</li>
+<li>各種権限ダイアログ → システム設定で順次許可
+  <ul style="margin-top:6px">
+    <li>Background Services（ログイン項目）</li>
+    <li>Accessibility（アクセシビリティ）</li>
+    <li>Capture Input Events（入力監視）</li>
+    <li>Driver Extension（ドライバ機能拡張）</li>
+  </ul>
+</li>
+<li>ターミナルで以下を実行して設定ファイルを配置（「英数キー / かなキー単独押しで英数⇔かなをトグル」ルール）:</li>
+</ol>
+
+<div class="cmd-box">mkdir -p ~/.config/karabiner
+cat &gt; ~/.config/karabiner/karabiner.json &lt;&lt; 'EOF'
+{
+    "global": {
+        "check_for_updates_on_startup": true,
+        "show_in_menu_bar": true,
+        "show_profile_name_in_menu_bar": false
+    },
+    "profiles": [
+        {
+            "complex_modifications": {
+                "rules": [
+                    {
+                        "description": "英数キーまたはかなキー単独押しで英数⇔かなをトグル",
+                        "manipulators": [
+                            {
+                                "type": "basic",
+                                "from": { "key_code": "japanese_eisuu" },
+                                "to": [
+                                    { "key_code": "japanese_kana" },
+                                    { "set_variable": { "name": "ime_state", "value": 1 } }
+                                ],
+                                "conditions": [
+                                    { "type": "variable_unless", "name": "ime_state", "value": 1 }
+                                ]
+                            },
+                            {
+                                "type": "basic",
+                                "from": { "key_code": "japanese_eisuu" },
+                                "to": [
+                                    { "key_code": "japanese_eisuu" },
+                                    { "set_variable": { "name": "ime_state", "value": 0 } }
+                                ],
+                                "conditions": [
+                                    { "type": "variable_if", "name": "ime_state", "value": 1 }
+                                ]
+                            },
+                            {
+                                "type": "basic",
+                                "from": { "key_code": "japanese_kana" },
+                                "to": [
+                                    { "key_code": "japanese_kana" },
+                                    { "set_variable": { "name": "ime_state", "value": 1 } }
+                                ],
+                                "conditions": [
+                                    { "type": "variable_unless", "name": "ime_state", "value": 1 }
+                                ]
+                            },
+                            {
+                                "type": "basic",
+                                "from": { "key_code": "japanese_kana" },
+                                "to": [
+                                    { "key_code": "japanese_eisuu" },
+                                    { "set_variable": { "name": "ime_state", "value": 0 } }
+                                ],
+                                "conditions": [
+                                    { "type": "variable_if", "name": "ime_state", "value": 1 }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            "name": "Default profile",
+            "selected": true,
+            "virtual_hid_keyboard": {
+                "country_code": 8,
+                "keyboard_type_v2": "jis"
+            }
+        }
+    ]
+}
+EOF</div>
+
+<p>Karabiner-Elements を一度終了 → 起動し直すと反映。</p>
+</div>
+
+<div class="phase warn">
+<span class="phase-label">Karabiner の注意</span>
+<p>Karabiner はキー入力を全部処理する性質上、稀に <span class="inline-code">Ctrl+Shift+◯</span> などの組み合わせを取りこぼすことがある。問題が出たら Karabiner 設定で該当ルールを OFF にすれば素の動作（英数キーで英数固定・かなキーでかな固定）に戻る。</p>
+</div>
+
+<div class="phase do">
+<span class="phase-label">3-6. LuLu</span>
+<ol>
+<li>Launchpad から <strong>LuLu</strong> 起動</li>
+<li>ウィザードに従って <strong>Install</strong></li>
+<li>システム拡張の許可ダイアログ → システム設定 → ログイン項目と機能拡張 → 機能拡張セクション内の「ネットワーク機能拡張」→ LuLu のトグル ON → 認証</li>
+<li>「"LuLu" Would Like to Filter Network Content」→ <strong>Allow</strong></li>
+<li>以降、知らないアプリが通信しようとすると通知が出る → 信頼できるなら Allow、不審なら Block</li>
+</ol>
+</div>
+
+</div>
+</section>
+
+<section id="step4">
+<div class="section-header"><h2>STEP 4. macOS のシステム設定</h2></div>
+<div class="section-body">
+
+<div class="phase do">
+<span class="phase-label">4-1. Dock 自動非表示 + Finder 拡張子表示（ターミナルで一括）</span>
+<div class="cmd-box"><span class="comment"># Dock を自動非表示</span>
+defaults write com.apple.dock autohide -bool true &amp;&amp; killall Dock
+
+<span class="comment"># Finder で拡張子を常に表示</span>
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true &amp;&amp; killall Finder</div>
+</div>
+
+<div class="phase do">
+<span class="phase-label">4-2. FileVault（⭐最重要・ディスク暗号化）</span>
+<ol>
+<li>システム設定 → <strong>プライバシーとセキュリティ</strong> → 下の方の <strong>FileVault</strong> → 「オンにする」</li>
+<li>復旧方法 → <strong>「iCloud アカウントを使用」</strong>（推奨・パスワード忘れた時に Apple ID で復旧可）</li>
+<li>パスワード入力 → 暗号化が開始（バックグラウンドで進行・放置で OK）</li>
+</ol>
+<p>M1/M2/M3/M4 Mac はハードウェア暗号化なので動作速度の体感差ゼロ。仕事用なら絶対 ON 推奨。</p>
+</div>
+
+<div class="phase do">
+<span class="phase-label">4-3. ファイアウォール</span>
+<ol>
+<li>システム設定 → <strong>ネットワーク</strong> → <strong>ファイアウォール</strong> → トグル ON</li>
+</ol>
+</div>
+
+<div class="phase do">
+<span class="phase-label">4-4. CapsLock → Control（任意）</span>
+<ol>
+<li>システム設定 → <strong>キーボード</strong> → 「キーボードショートカット…」 → <strong>修飾キー</strong></li>
+<li>「Caps Lock キー」のプルダウンを <strong>Control</strong> に変更 → OK</li>
+</ol>
+<p>普段使わない CapsLock を Control として活用できる。元に戻したくなったら同じ画面で「Caps Lock」に戻すだけ。</p>
+</div>
+
+</div>
+</section>
+
+<section id="shortcuts">
+<div class="section-header"><h2>4. ショートカット早見表</h2></div>
+<div class="section-body">
+
+<table class="sc-table">
+  <thead><tr><th>操作</th><th>キー</th></tr></thead>
+  <tbody>
+    <tr><td>Raycast 起動（≒アプリ起動・計算・検索）</td><td><span class="key">⌘ + Space</span></td></tr>
+    <tr><td>クリップボード履歴</td><td><span class="key">Option + V</span></td></tr>
+    <tr><td>ウィンドウ切替（全ウィンドウサムネ）</td><td><span class="key">Option + Tab</span></td></tr>
+    <tr><td>ウィンドウ 左半分</td><td><span class="key">Control + Option + ←</span></td></tr>
+    <tr><td>ウィンドウ 右半分</td><td><span class="key">Control + Option + →</span></td></tr>
+    <tr><td>ウィンドウ 最大化</td><td><span class="key">Control + Option + Return</span></td></tr>
+    <tr><td>範囲スクショ（クリップボード+ファイル）</td><td><span class="key">Option + S</span></td></tr>
+    <tr><td>英数/かなトグル</td><td><span class="key">英数</span> または <span class="key">かな</span></td></tr>
+    <tr><td>強制終了ウィンドウ</td><td><span class="key">⌘ + Option + Esc</span></td></tr>
+    <tr><td>隠しファイル表示切替</td><td><span class="key">⌘ + Shift + .</span></td></tr>
+    <tr><td>絵文字入力</td><td><span class="key">⌘ + Control + Space</span></td></tr>
+  </tbody>
+</table>
+
+</div>
+</section>
+
+<section id="checklist">
+<div class="section-header"><h2>5. 完了チェックリスト</h2></div>
+<div class="section-body">
+
+<div class="checklist">
+<ul>
+<li><span class="inline-code">⌘+Space</span> で <strong>Raycast</strong> が起動する</li>
+<li>Raycast で「fin」と打って <strong>Finder</strong> が起動できる</li>
+<li><span class="inline-code">Option+V</span> でクリップボード履歴が出る</li>
+<li><span class="inline-code">Control+Option+→</span> で今のウィンドウが右半分にスナップ</li>
+<li><span class="inline-code">Option+Tab</span> で全ウィンドウのサムネが出る</li>
+<li><span class="inline-code">Option+S</span> で範囲スクショが撮れる（クリップボードに自動で入る）</li>
+<li>何かの入力欄で <strong>「英数」キー or「かな」キーを連打すると英数⇔かながトグル</strong>する</li>
+<li><strong>LuLu</strong> のメニューバーアイコンが出ている</li>
+<li>システム設定 → <strong>FileVault が「オン」</strong>になっている</li>
+<li>システム設定 → <strong>ファイアウォールが「オン」</strong>になっている</li>
+<li>Dock が自動で隠れる・ファイル名の拡張子が見える</li>
+</ul>
+</div>
+
+</div>
+</section>
+
+<section id="trouble">
+<div class="section-header"><h2>6. 困った時</h2></div>
+<div class="section-body">
+
+<div class="trouble-list">
+
+<div class="trouble-item">
+<div class="trouble-q">brew で「command not found: brew」</div>
+<div class="trouble-a">PATH が通っていない。Apple Silicon は <span class="inline-code">echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' &gt;&gt; ~/.zprofile</span> → <span class="inline-code">source ~/.zprofile</span>。Intel Mac は <span class="inline-code">/usr/local/bin/brew</span>。</div>
+</div>
+
+<div class="trouble-item">
+<div class="trouble-q">アプリのショートカットが効かない</div>
+<div class="trouble-a">ほぼ「権限が許可されていない」のが原因。システム設定 → プライバシーとセキュリティ → アクセシビリティ / 入力監視 / 画面収録 の各タブで該当アプリのトグルが ON か確認。</div>
+</div>
+
+<div class="trouble-item">
+<div class="trouble-q">スクショ撮ってもクリップボードに入らない</div>
+<div class="trouble-a">Shottr の環境設定 → 一般 → 「Copy and Save」が ON か確認。OFF だとファイル保存のみ。</div>
+</div>
+
+<div class="trouble-item">
+<div class="trouble-q">英数/かなトグルが動かない</div>
+<div class="trouble-a">Karabiner-Elements が起動しているか確認（メニューバーにアイコン）。設定ファイル <span class="inline-code">~/.config/karabiner/karabiner.json</span> の内容が正しいか確認。Karabiner を再起動すると反映。</div>
+</div>
+
+<div class="trouble-item">
+<div class="trouble-q">Karabiner で Ctrl+Shift+◯ が時々効かない</div>
+<div class="trouble-a">Karabiner のキー処理タイミングの問題。気になるなら Karabiner 設定 → Complex Modifications で該当ルールを Disable。素の挙動（英数キー/かなキーがそれぞれモード固定）に戻る。</div>
+</div>
+
+<div class="trouble-item">
+<div class="trouble-q">LuLu のシステム拡張が許可できない</div>
+<div class="trouble-a">システム設定 → プライバシーとセキュリティ の一番下に「LuLu のシステムソフトウェアの読み込みがブロックされました」のような表示があれば「許可」を押す。または ログイン項目と機能拡張 → 機能拡張 → ネットワーク機能拡張 のリストから LuLu を ON。</div>
+</div>
+
+<div class="trouble-item">
+<div class="trouble-q">FileVault 暗号化が終わらない</div>
+<div class="trouble-a">バックグラウンドで進行するので普通に使ってOK。電源につないでおくと早く完了する。途中で電源切れても再開される。</div>
+</div>
+
+<div class="trouble-item">
+<div class="trouble-q">困ったら最終手段</div>
+<div class="trouble-a">スクショ撮ってチャットで聞く。設定で迷ったら、ほぼ全部「システム設定 → プライバシーとセキュリティ」で権限 ON/OFF が確認できる。Raycast (<span class="inline-code">⌘+Space</span>) でアプリ名を打てば大抵起動できる。</div>
+</div>
+
+</div>
+
+<div class="closing">
+ここまで完了すれば、<strong>Windows でやってた便利な操作のほとんどが Mac でもできる</strong>状態。<br>
+迷ったら気軽に聞いてください 🙌
+</div>
+
+</div>
+</section>
+
+</div>
+
+<button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+</body>
+</html>
